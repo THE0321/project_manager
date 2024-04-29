@@ -1,0 +1,44 @@
+:root {
+    --white: #ffffff;
+    --grey: #5b5b5b;
+    --dark: #04023b;
+    --deep-dark: #02002a;
+    --black: #111111;
+}
+
+/* COMMON */
+*::-webkit-scrollbar {width: 8px; background-color: #00000088;}
+*::-webkit-scrollbar-thumb {background: #666;}
+*::-webkit-scrollbar-track {background: #ddd;}
+body {font-size: 20px; overflow-y: hidden;}
+div {box-sizing: border-box;}
+ul {padding-inline-start: 0; margin-block-start: 0; margin-block-end: 0;}
+li {list-style: none;}
+a {display: inline-block; text-decoration: none;}
+select {width: 300px; height: 30px;}
+select option[value=""]:disabled {display: none;}
+select option {padding: 10px 5px;}
+select option:checked, select option:focus {background-color: var(--dark); color: var(--white); font-weight: bold;}
+
+/* NAV */
+.header-nav {position: fixed; left: 10px; top: 10px; width: calc(100vw - 20px); height: 30px; display: flex; justify-content: space-between; background-color: var(--white);}
+.header-nav a {color: var(--black); font-weight: bold;}
+.nav {display: flex;}
+.nav .nav-item {margin: 0 10px;}
+.nav .nav-link {font-size: 15px;}
+.nav .nav-link.active {text-decoration: underline;}
+
+/* LOGO */
+.logo {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; cursor: pointer;}
+
+/* GNB */
+.header-gnb {position: fixed; left: 0; top: 50px; width: 100vw; height: 50px; line-height: 45px; display: flex; justify-content: center; background-color: var(--dark);}
+.header-gnb a {color: var(--white); font-weight: bold;}
+.header-gnb .nav-item {margin: 0 15px;}
+
+/* BODY */
+.body {overflow-y: scroll;}
+
+/* STYLE */
+.ml_20 {margin-left: 20px;}
+.bold_t {font-weight: bold;}
