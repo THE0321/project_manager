@@ -5,6 +5,7 @@
     --dark: #04023b;
     --deep-dark: #02002a;
     --black: #111111;
+    --black-tr: #11111122;
 
     --primary: #0d6efd; --primary-dark: #084298;
     --secondary: #6c757d; --secondary-dark: #41464b;
@@ -15,23 +16,29 @@
     --light: #f8f9fa; --light-dark: #343a40;
 
     --icon-close: url('/icons/x.svg');
+    --icon-left: url('/icons/left.svg');
+    --icon-right: url('/icons/right.svg');
+    --icon-left-over: url('/icons/left_over.svg');
+    --icon-right-over: url('/icons/right_over.svg');
 }
 
 /* COMMON */
 *::-webkit-scrollbar {width: 8px; background-color: #00000088;}
 *::-webkit-scrollbar-thumb {background: #666;}
 *::-webkit-scrollbar-track {background: #ddd;}
-body {font-size: 20px; overflow-y: hidden;}
+body {font-size: 15px; overflow-y: hidden;}
 div {box-sizing: border-box;}
 ul {padding-inline-start: 0; margin-block-start: 0; margin-block-end: 0;}
 li {list-style: none;}
 a {display: inline-block; text-decoration: none;}
+input {width: 100%;}
 select {width: 300px; height: 30px;}
 select option[value=""]:disabled {display: none;}
 select option {padding: 10px 5px;}
 select option:checked, select option:focus {background-color: var(--dark); color: var(--white); font-weight: bold;}
 
 /* NAV */
+.header-dom {font-size: 20px;}
 .header-nav {position: fixed; left: 10px; top: 10px; width: calc(100vw - 20px); height: 30px; display: flex; justify-content: space-between; background-color: var(--white);}
 .header-nav a {color: var(--black); font-weight: bold;}
 .nav {display: flex;}
@@ -41,6 +48,9 @@ select option:checked, select option:focus {background-color: var(--dark); color
 
 /* LOGO */
 .logo {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; cursor: pointer;}
+
+/* TITLE */
+.title {font-size: 20px; font-weight: bold; text-align: center;}
 
 /* GNB */
 .header-gnb {position: fixed; left: 0; top: 50px; width: 100vw; height: 50px; line-height: 45px; display: flex; justify-content: center; background-color: var(--dark);}
@@ -70,10 +80,70 @@ select option:checked, select option:focus {background-color: var(--dark); color
 .btn.light {border: solid 2px var(--light-dark); background-color: var(--light); color: var(--black);}
 
 /* TABLE */
-table {width: 100%; border: solid 2px var(--light-grey); border-collapse: collapse;}
-tr, td {border: solid 1px var(--light-grey); border-collapse: collapse;}
-th {background-color: var(--light-grey); border: solid 2px var(--white); border-collapse: collapse;}
+table {width: 100%;}
+tfoot {text-align: center; height: 60px; vertical-align: bottom;}
+.table {border: solid 2px var(--light-grey); border-collapse: collapse; margin-top: 10px;}
+.table tr, .table td, .table tbody th {height: 30px; border: solid 1px var(--light-grey); border-collapse: collapse;}
+.table thead th {height: 50px; background-color: var(--light-grey); border-left: solid 2px var(--white); border-right: solid 2px var(--white); border-collapse: collapse;}
+.table thead th:first-of-type {border-left: solid 2px var(--light-grey);}
+.table thead th:last-of-type {border-right: solid 2px var(--light-grey);}
 
-    /* STYLE */
-.ml_20 {margin-left: 20px;}
-.bold_t {font-weight: bold;}
+/* PAGINATION */
+.pagination {display: flex; justify-content: center; align-items: center; margin-top: 20px;}
+.pagination li {margin: 0 10px; cursor: pointer; text-align: center; color: var(--black); opacity: 0.4; transition-duration: 1s; transition-timing-function: linear;}
+.pagination li.before {width: 15px; height: 15px; background-image: var(--icon-left); background-size: 15px; background-repeat: no-repeat; background-position: center;}
+.pagination li.before-over {width: 15px; height: 15px; background-image: var(--icon-left-over); background-size: 15px; background-repeat: no-repeat; background-position: center;}
+.pagination li.next {width: 15px; height: 15px; background-image: var(--icon-right); background-size: 15px; background-repeat: no-repeat; background-position: center;}
+.pagination li.next-over {width: 15px; height: 15px; background-image: var(--icon-right-over); background-size: 15px; background-repeat: no-repeat; background-position: center;}
+.pagination li.on {opacity: 1; font-weight: bold; text-decoration: underline;}
+.pagination li:hover {opacity: 1; font-weight: bold;}
+
+/* CHECKBOX */
+input[type="checkbox"], input[type="radio"]{display: none;}
+input[type="checkbox"] + label, input[type="radio"] + label{display: inline-block; width: 20px; height: 20px; margin-right: 5px; margin-left: 10px; background-color: #ffffff; border: 1px solid var(--dark); position: relative;}
+input[type="checkbox"] + label + span, input[type="radio"] + label + span {cursor: default;}
+input[type="checkbox"]:checked + label::after, input[type="radio"]:checked + label::after{content:'✔'; font-size: 20px; width: 20px; height: 20px; text-align: center; position: absolute; left: 0; top: -5px;}
+
+/* FORM DATE*/
+.form_date {position: relative;}
+.form_date input {width: 100%; padding-left: 10px;}
+.form_date label {position: absolute; left: 0; top: 0; width: 100%;}
+.form_date input:focus ~ label, .form_date input:valid ~ label {display: none;}
+
+/* SEARCH FORM */
+.search_form table {margin: 0 auto; border: 2px solid var(--dark); border-radius: 10px; padding: 20px;}
+
+/* STYLE */
+.flex {display: flex;}
+
+.m_auto {margin-left: auto !important; margin-right: auto !important;}
+.ml_20 {margin-left: 20px !important;}
+
+.left_t {text-align: left !important;}
+.center_t {text-align: center !important;}
+.right_t {text-align: right !important;}
+.bold_t {font-weight: bold !important;}
+
+/* WIDTH */
+.w_10 {width: 10% !important;}
+.w_20 {width: 20% !important;}
+.w_30 {width: 30% !important;}
+.w_40 {width: 40% !important;}
+.w_50 {width: 50% !important;}
+.w_60 {width: 60% !important;}
+.w_70 {width: 70% !important;}
+.w_80 {width: 80% !important;}
+.w_90 {width: 90% !important;}
+.w_full {width: 100% !important;}
+
+/* HEIGHT */
+.h_10 {height: 10% !important;}
+.h_20 {height: 20% !important;}
+.h_30 {height: 30% !important;}
+.h_40 {height: 40% !important;}
+.h_50 {height: 50% !important;}
+.h_60 {height: 60% !important;}
+.h_70 {height: 70% !important;}
+.h_80 {height: 80% !important;}
+.h_90 {height: 90% !important;}
+.h_full {height: 100% !important;}
