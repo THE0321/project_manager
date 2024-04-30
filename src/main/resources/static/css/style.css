@@ -61,7 +61,7 @@ select option:checked, select option:focus {background-color: var(--primary); co
 
 /* TITLE */
 .title {font-size: 25px; font-weight: bold; text-align: center;}
-.title_btn {position: absolute; top: 23px; right: 15vh;}
+.title-btn {position: absolute; top: 23px; right: 15vh;}
 
 /* GNB */
 .header-gnb {position: fixed; left: 0; top: 50px; width: 100vw; height: 50px; line-height: 45px; display: flex; justify-content: center; background-color: var(--dark);}
@@ -75,11 +75,11 @@ select option:checked, select option:focus {background-color: var(--primary); co
 .popup {position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 999; display: none;}
 .popup .background {width: 100%; height: 100%; background: #00000099;}
 .popup section {position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); min-width: 300px; min-height: 200px; padding: 20px; background-color: var(--white); border-radius: 20px; text-align: center; display: none;}
-.pop_title {width: 100%; display: flex; justify-content: space-between; font-weight: bold;}
-.pop_title span {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}
-.pop_title .close_btn {width: 30px; height: 30px; background-image: var(--icon-close); background-size: 30px; background-repeat: no-repeat; background-position: center; cursor: pointer;}
-.pop_content {position: relative; top: 10px; margin-bottom: 55px; max-height: calc(100vh - 200px); overflow-y: auto;}
-.pop_footer {position: fixed; left: 0; bottom: 0; width: 100%; height: 60px; border-top: 1px solid var(--grey); display: flex; justify-content: center; align-items: center;}
+.pop-title {width: 100%; display: flex; justify-content: space-between; font-weight: bold;}
+.pop-title span {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}
+.pop-title .close-btn {width: 30px; height: 30px; background-image: var(--icon-close); background-size: 30px; background-repeat: no-repeat; background-position: center; cursor: pointer;}
+.pop-content {position: relative; top: 10px; margin-bottom: 55px; max-height: calc(100vh - 200px); overflow-y: auto;}
+.pop-footer {position: fixed; left: 0; bottom: 0; width: 100%; height: 60px; border-top: 1px solid var(--grey); display: flex; justify-content: center; align-items: center;}
 
 /* BUTTON */
 .btn {display: inline-block; width: 120px; height: 40px; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; line-height: 38px; text-align: center; border: solid 2px var(--dark); background-color: var(--deep-dark); color: var(--white); font-weight: bold; border-radius: 10px; box-sizing: border-box; cursor: pointer;}
@@ -96,15 +96,17 @@ select option:checked, select option:focus {background-color: var(--primary); co
 table {width: 100%;}
 tfoot {text-align: center; height: 60px; vertical-align: bottom;}
 .table {border: solid 2px var(--light-grey); border-collapse: collapse; margin-top: 10px;}
+.table td {padding-left: 10px; padding-right: 10px;}
 .table tr, .table td, .table tbody th {height: 30px; border: solid 1px var(--light-grey); border-collapse: collapse;}
 .table thead th {height: 50px; background-color: var(--dark); border-left: solid 2px var(--white); border-right: solid 2px var(--white); border-collapse: collapse; color: var(--white);}
 .table thead th:first-of-type {border-left: solid 2px var(--light-grey);}
 .table thead th:last-of-type {border-right: solid 2px var(--light-grey);}
+.table select {border: none;}
 
 /* MANAGER DOM */
-.manager_dom div {display: inline-flex; background-color: var(--dark); padding: 5px 10px; margin-right: 5px; margin-bottom: 5px; border: 2px solid var(--deep-dark); color: var(--white); border-radius: 10px; font-weight: bold;}
-.manager_dom div .profile {height: 20px; width: 20px; display: block; margin-right: 5px; border: 2px solid var(--white); border-radius: 100%; background-size: 20px; background-repeat: no-repeat; background-position: center;}
-.manager_dom div i {height: 20px; width: 20px; display: block; margin-left: 5px; background-color: var(--white); -webkit-mask-image: var(--icon-close); mask-image: var(--icon-close); -webkit-mask-size: cover; mask-size: cover; background-image: none;}
+.manager-dom div {display: inline-flex; height: 33px; background-color: var(--dark); padding: 5px 10px; margin-right: 5px; margin-bottom: 5px; border: 2px solid var(--deep-dark); color: var(--white); border-radius: 10px; font-weight: bold;}
+.manager-dom div .profile {height: 20px; width: 20px; display: block; margin-right: 5px; border: 2px solid var(--white); border-radius: 100%; background-size: 20px; background-repeat: no-repeat; background-position: center;}
+.manager-dom div i {height: 20px; width: 20px; display: block; margin-left: 5px; background-color: var(--white); -webkit-mask-image: var(--icon-close); mask-image: var(--icon-close); -webkit-mask-size: cover; mask-size: cover; background-image: none;}
 
 /* PAGINATION */
 .pagination {display: flex; justify-content: center; align-items: center; margin-top: 20px;}
@@ -119,25 +121,26 @@ tfoot {text-align: center; height: 60px; vertical-align: bottom;}
 /* CHECKBOX */
 input[type="checkbox"], input[type="radio"]{display: none;}
 input[type="checkbox"] + label, input[type="radio"] + label{display: inline-block; width: 20px; height: 20px; margin-right: 5px; margin-left: 10px; background-color: #ffffff; border: 1px solid var(--dark); position: relative;}
-input[type="checkbox"] + label + span, input[type="radio"] + label + span {cursor: default;}
+input[type="checkbox"] + label + span, input[type="radio"] + label + span {cursor: default; font-weight: bold;}
 input[type="checkbox"]:checked + label::after, input[type="radio"]:checked + label::after{content:'✔'; font-size: 20px; width: 20px; height: 20px; text-align: center; position: absolute; left: 0; top: -5px;}
 
 /* FORM DATE */
-.form_date {position: relative;}
-.form_date input {width: 100%; padding-left: 10px;}
-.form_date label {position: absolute; left: 0; top: 0; width: 100%;}
-.form_date input:focus ~ label, .form_date input:valid ~ label {display: none;}
+.form-date {position: relative;}
+.form-date input {width: 100%; padding-left: 10px;}
+.form-date label {position: absolute; left: 0; top: 0; width: 100%;}
+.form-date input:focus ~ label, .form-date input:valid ~ label {display: none;}
 
 /* SEARCH FORM */
-.search_form table {border: 2px solid var(--dark); border-radius: 10px; padding: 20px;}
+.search-form table {border: 2px solid var(--dark); border-radius: 10px; padding: 20px;}
 
 /* FORM */
-.detail_form table {border: 2px solid var(--dark); border-radius: 10px; padding: 20px;}
-.detail_form tr {height: 40px;}
-.detail_form th {text-align: right; padding-right: 10px}
+.detail-form table {border: 2px solid var(--dark); border-radius: 10px; padding: 20px;}
+.detail-form tr {height: 40px;}
+.detail-form th {text-align: right; padding-right: 10px}
 
 /* STYLE */
 .flex {display: flex;}
+.inline-flex {display: inline-flex;}
 
 .m_auto {margin-left: auto !important; margin-right: auto !important;}
 .ml_20 {margin-left: 20px !important;}

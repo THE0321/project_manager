@@ -4,12 +4,13 @@
 <body>
 <main>
     <div class="header-dom" th:insert="common/header.html"></div>
+    <input type="hidden" id="page" th:value="${page.page}"/>
     <div class="body">
         <p class="title">PROJECT</p>
-        <div class="title_btn">
+        <div class="title-btn">
             <a class="btn light clipboard">등록하기</a>
         </div>
-        <div class="search_form">
+        <div class="search-form">
             <table>
                 <colgroup>
                     <col style="width: 10%;">
@@ -19,30 +20,31 @@
                 </colgroup>
                 <tbody>
                     <tr>
-                        <th>프로젝트명</th>
-                        <td><input type="text" /></td>
+                        <th><label for="title">프로젝트명</label></th>
+                        <td><input type="text" id="title" placeholder="프로젝트명" th:value="${param_title}" /></td>
                         <th>상태</th>
                         <td>
-                            <div class="flex">
-                                <input type="radio" id="type1" name="type"><label for="type1"></label>
-                                <span onclick="type1.click()">ㅁㅁㅁ</span>
-                                <input type="radio" id="type2" name="type"><label for="type2"></label>
-                                <span onclick="type2.click()">ㅁㅁㅁ</span>
+                            <div>
+                                <div th:each="status : ${status_list}" class="inline-flex">
+                                    <input type="radio" th:id="|status${status.idx}|" name="status_idx" th:value="${status.idx}" th:checked="${status.idx == param_status_idx}">
+                                    <label th:for="|status${status.idx}|"></label>
+                                    <span th:onclick="|status${status.idx}.click()|">[[${status.name}]]</span>
+                                </div>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th>시작일자</th>
-                        <td><input type="text" id="start_date"></td>
-                        <th>종료일자</th>
-                        <td><input type="text" id="end_date"></td>
+                        <th><label for="start_date">시작일자</label></th>
+                        <td><input type="text" id="start_date" placeholder="시작일자" th:value="${param_start_date}"></td>
+                        <th><label for="end_date">종료일자</label></th>
+                        <td><input type="text" id="end_date" placeholder="종료일자" th:value="${param_end_date}"></td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <td colspan="4">
-                            <a class="btn light">초기화</a>
-                            <a class="btn">검색</a>
+                            <a id="refresh_btn" class="btn light">초기화</a>
+                            <a id="search_btn" class="btn">검색</a>
                         </td>
                     </tr>
                 </tfoot>
@@ -56,6 +58,7 @@
                     <col style="width: 150px;">
                     <col style="width: 100px;">
                     <col style="width: 100px;">
+                    <col style="width: 100px;">
                 </colgroup>
                 <thead>
                     <tr>
@@ -64,72 +67,32 @@
                         <th>담당자</th>
                         <th>시작일자</th>
                         <th>종료일자</th>
+                        <th>등록자</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
+                <tbody id="item_list">
+                    <tr th:each="item : ${list}" th:data-idx="${item.idx}">
                         <td>
                             <select class="center_t w_full">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
+                                <option th:each="status : ${status_list}" th:value="${status.idx}" th:selected="${status.idx == item.idx}">[[${status.name}]]</option>
                             </select>
                         </td>
-                        <td>프로젝트명</td>
-                        <td class="center_t">담당자</td>
-                        <td class="center_t">시작일자</td>
-                        <td class="center_t">종료일자</td>
-                    </tr>
-                    <tr>
-                        <td class="center_t">상태</td>
-                        <td>프로젝트명</td>
-                        <td class="center_t">담당자</td>
-                        <td class="center_t">시작일자</td>
-                        <td class="center_t">종료일자</td>
-                    </tr>
-                    <tr>
-                        <td class="center_t">상태</td>
-                        <td>프로젝트명</td>
-                        <td class="center_t">담당자</td>
-                        <td class="center_t">시작일자</td>
-                        <td class="center_t">종료일자</td>
-                    </tr>
-                    <tr>
-                        <td class="center_t">상태</td>
-                        <td>프로젝트명</td>
-                        <td class="center_t">담당자</td>
-                        <td class="center_t">시작일자</td>
-                        <td class="center_t">종료일자</td>
-                    </tr>
-                    <tr>
-                        <td class="center_t">상태</td>
-                        <td>프로젝트명</td>
-                        <td class="center_t">담당자</td>
-                        <td class="center_t">시작일자</td>
-                        <td class="center_t">종료일자</td>
-                    </tr>
-                    <tr>
-                        <td class="center_t">상태</td>
-                        <td>프로젝트명</td>
-                        <td class="center_t">담당자</td>
-                        <td class="center_t">시작일자</td>
-                        <td class="center_t">종료일자</td>
+                        <td th:text="${item.title}"></td>
+                        <td>담당자</td>
+                        <td class="center_t" th:text="${#dates.format(item.registDate, 'yyyy-MM-dd')}"></td>
+                        <td class="center_t" th:text="${#dates.format(item.registDate, 'yyyy-MM-dd')}"></td>
+                        <td>등록자</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div>
             <ul class="pagination">
-                <li class="before-over"></li>
-                <li class="before"></li>
-                <li class="on">1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li class="next"></li>
-                <li class="next-over"></li>
+                <li th:if="${page.before_over != null}" class="before-over" th:data-page="${page.before_over}"></li>
+                <li th:if="${page.before != null}" class="before" th:data-page="${page.before}"></li>
+                <li th:each="item : ${page.pageList}" th:class="${item == page.page ? 'on' : ''}" th:text="${item}"></li>
+                <li th:if="${page.next != null}" class="next" th:data-page="${page.next}"></li>
+                <li th:if="${page.next_over != null}" class="next-over" th:data-page="${page.next_over}"></li>
             </ul>
         </div>
     </div>
