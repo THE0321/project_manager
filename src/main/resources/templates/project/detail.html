@@ -6,7 +6,7 @@
     <div class="header-dom" th:insert="common/header.html"></div>
     <div class="body">
         <p class="title">PROJECT</p>
-        <div class="detail_form">
+        <div class="detail-form">
             <table>
                 <colgroup>
                     <col style="width: 10%;">
@@ -15,7 +15,11 @@
                 <tbody>
                     <tr>
                         <th>프로젝트명</th>
-                        <td><input type="text" /></td>
+                        <td><input type="text" data-max="100" /></td>
+                    </tr>
+                    <tr>
+                        <th>프로젝트명</th>
+                        <td><textarea data-max="500"></textarea></td>
                     </tr>
                     <tr>
                         <th>상태</th>
@@ -43,7 +47,7 @@
                     <tr>
                         <th></th>
                         <td>
-                            <div class="manager_dom">
+                            <div class="manager-dom">
                                 <div><div class="profile"></div>김신<i></i></div>
                             </div>
                         </td>
@@ -55,7 +59,7 @@
                     <tr>
                         <th></th>
                         <td>
-                            <div class="manager_dom">
+                            <div class="manager-dom">
                                 <div>개발팀<i></i></div>
                             </div>
                         </td>
