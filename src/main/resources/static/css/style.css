@@ -22,7 +22,6 @@
     --icon-right-over: url('/icons/right_over.svg');
     --icon-clipboard: url('/icons/clipboard.svg');
 }
-
 /* COMMON */
 *::-webkit-scrollbar {width: 8px; background-color: #00000088;}
 *::-webkit-scrollbar-thumb {background: #666;}
@@ -34,9 +33,12 @@ li {list-style: none;}
 a {display: inline-block; text-decoration: none;}
 
 /* INPUT */
-input {width: 100%; padding: 5px; border: solid 1px var(--dark); box-sizing: border-box; background-color: #ffffff; font-weight: bold; font-size: 15px;}
+input {width: 100%; padding: 5px; border: solid 1px var(--dark); box-sizing: border-box; background-color: var(--white); font-weight: bold; font-size: 15px;}
 input::placeholder {color: var(--grey); font-style: italic; font-weight: bold; font-size: 15px;}
 input:disabled {background: var(--light-grey);}
+
+/* TEXTAREA */
+textarea {width: 100%; padding: 5px; resize:none; box-sizing: border-box; background-color: var(--white); font-weight: bold; font-size: 15px;}
 
 /* SELECT */
 select {width: 300px; height: 30px; font-size: 16px;}
@@ -100,7 +102,7 @@ tfoot {text-align: center; height: 60px; vertical-align: bottom;}
 .table thead th:last-of-type {border-right: solid 2px var(--light-grey);}
 
 /* MANAGER DOM */
-.manager_dom div {display: inline-flex; background-color: var(--dark); padding: 5px 10px; border: 2px solid var(--deep-dark); color: var(--white); border-radius: 10px; font-weight: bold;}
+.manager_dom div {display: inline-flex; background-color: var(--dark); padding: 5px 10px; margin-right: 5px; margin-bottom: 5px; border: 2px solid var(--deep-dark); color: var(--white); border-radius: 10px; font-weight: bold;}
 .manager_dom div .profile {height: 20px; width: 20px; display: block; margin-right: 5px; border: 2px solid var(--white); border-radius: 100%; background-size: 20px; background-repeat: no-repeat; background-position: center;}
 .manager_dom div i {height: 20px; width: 20px; display: block; margin-left: 5px; background-color: var(--white); -webkit-mask-image: var(--icon-close); mask-image: var(--icon-close); -webkit-mask-size: cover; mask-size: cover; background-image: none;}
 
