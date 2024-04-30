@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-bs-theme="auto">
+<head th:insert="common/head.html"></head>
+<body>
+<main>
+    <div class="header-dom" th:insert="common/header.html"></div>
+    <div class="body">
+        <p class="title">PROJECT</p>
+        <div class="detail_form">
+            <table>
+                <colgroup>
+                    <col style="width: 10%;">
+                    <col style="width: 90%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th>프로젝트명</th>
+                        <td><input type="text" /></td>
+                    </tr>
+                    <tr>
+                        <th>상태</th>
+                        <td>
+                            <div class="flex">
+                                <input type="radio" id="type1" name="type"><label for="type1"></label>
+                                <span onclick="type1.click()">ㅁㅁㅁ</span>
+                                <input type="radio" id="type2" name="type"><label for="type2"></label>
+                                <span onclick="type2.click()">ㅁㅁㅁ</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>시작일자</th>
+                        <td><input type="text" id="start_date" /></td>
+                    </tr>
+                    <tr>
+                        <th>종료일자</th>
+                        <td><input type="text" id="end_date" /></td>
+                    </tr>
+                    <tr>
+                        <th>팀</th>
+                        <td><input type="text" /></td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <div class="manager_dom">
+                                <div><div class="profile"></div>김신<i></i></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>담당자</th>
+                        <td><input type="text" /></td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <div class="manager_dom">
+                                <div>개발팀<i></i></div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <a class="btn light">목록으로</a>
+                        <a class="btn">등록하기</a>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="popup">
+        <div class="background pop_close"></div>
+        <section id="alert_pop" th:insert="popup/alert_pop.html"></section>
+    </div>
+</main>
+</body>
+<script>
+    $(function(){
+        setDatepicker("start_date")
+        setDatepicker("end_date")
+    });
+</script>
+</html>
