@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-bs-theme="auto">
+<head th:insert="common/head.html"></head>
+<body>
+<main>
+    <div class="header-dom" th:insert="common/header.html"></div>
+    <div class="body">
+        <p class="title">PROJECT</p>
+        <div class="title_btn">
+            <a class="btn light clipboard">등록하기</a>
+        </div>
+        <div class="search_form">
+            <table>
+                <colgroup>
+                    <col style="width: 10%;">
+                    <col style="width: 30%;">
+                    <col style="width: 10%;">
+                    <col style="width: 30%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th>프로젝트명</th>
+                        <td><input type="text" /></td>
+                        <th>상태</th>
+                        <td>
+                            <div class="flex">
+                                <input type="radio" id="type1" name="type"><label for="type1"></label>
+                                <span onclick="type1.click()">ㅁㅁㅁ</span>
+                                <input type="radio" id="type2" name="type"><label for="type2"></label>
+                                <span onclick="type2.click()">ㅁㅁㅁ</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>시작일자</th>
+                        <td><input type="text" id="start_date"></td>
+                        <th>종료일자</th>
+                        <td><input type="text" id="end_date"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <a class="btn light">초기화</a>
+                            <a class="btn">검색</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div>
+            <table class="table">
+                <colgroup>
+                    <col style="width: 100px;">
+                    <col style="min-width: 300px;">
+                    <col style="width: 150px;">
+                    <col style="width: 100px;">
+                    <col style="width: 100px;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>상태</th>
+                        <th>프로젝트명</th>
+                        <th>담당자</th>
+                        <th>시작일자</th>
+                        <th>종료일자</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <select class="center_t w_full">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </td>
+                        <td>프로젝트명</td>
+                        <td class="center_t">담당자</td>
+                        <td class="center_t">시작일자</td>
+                        <td class="center_t">종료일자</td>
+                    </tr>
+                    <tr>
+                        <td class="center_t">상태</td>
+                        <td>프로젝트명</td>
+                        <td class="center_t">담당자</td>
+                        <td class="center_t">시작일자</td>
+                        <td class="center_t">종료일자</td>
+                    </tr>
+                    <tr>
+                        <td class="center_t">상태</td>
+                        <td>프로젝트명</td>
+                        <td class="center_t">담당자</td>
+                        <td class="center_t">시작일자</td>
+                        <td class="center_t">종료일자</td>
+                    </tr>
+                    <tr>
+                        <td class="center_t">상태</td>
+                        <td>프로젝트명</td>
+                        <td class="center_t">담당자</td>
+                        <td class="center_t">시작일자</td>
+                        <td class="center_t">종료일자</td>
+                    </tr>
+                    <tr>
+                        <td class="center_t">상태</td>
+                        <td>프로젝트명</td>
+                        <td class="center_t">담당자</td>
+                        <td class="center_t">시작일자</td>
+                        <td class="center_t">종료일자</td>
+                    </tr>
+                    <tr>
+                        <td class="center_t">상태</td>
+                        <td>프로젝트명</td>
+                        <td class="center_t">담당자</td>
+                        <td class="center_t">시작일자</td>
+                        <td class="center_t">종료일자</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <ul class="pagination">
+                <li class="before-over"></li>
+                <li class="before"></li>
+                <li class="on">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li class="next"></li>
+                <li class="next-over"></li>
+            </ul>
+        </div>
+    </div>
+    <div class="popup">
+        <div class="background pop_close"></div>
+        <section id="alert_pop" th:insert="popup/alert_pop.html"></section>
+    </div>
+</main>
+</body>
+<script>
+    $(function(){
+        setDatepicker("start_date")
+        setDatepicker("end_date")
+    });
+</script>
+</html>
