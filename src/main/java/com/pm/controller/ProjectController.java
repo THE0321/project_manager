@@ -1,7 +1,9 @@
 package com.pm.controller;
 
+import com.pm.dto.ProjectDto;
+import com.pm.dto.ProjectMemberDto;
 import com.pm.service.ProjectService;
-import com.pm.values.Paging;
+import com.pm.util.Paging;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -56,7 +60,14 @@ public class ProjectController {
     public String detail(@PathVariable(required = false) Long idx,
                          HttpServletRequest request, Model model) {
         model.addAttribute("status_list", projectService.getStatus());
-        model.addAttribute("detail", projectService.getOne(idx));
+
+        if(idx == null) {
+            model.addAttribute("detail", new ProjectDto());
+            model.addAttribute("member_list", new ArrayList<ProjectMemberDto>());
+        } else {
+            model.addAttribute("detail", projectService.getOne(idx));
+            model.addAttribute("member_list", projectService.getMemberList(idx));
+        }
 
         return "/project/detail";
     }

@@ -4,6 +4,7 @@
 <body>
 <main>
     <div class="header-dom" th:insert="common/header.html"></div>
+    <input type="hidden" id="idx" th:value="${detail.idx}">
     <div class="body">
         <p class="title">PROJECT</p>
         <div class="detail-form">
@@ -14,53 +15,62 @@
                 </colgroup>
                 <tbody>
                     <tr>
-                        <th>프로젝트명</th>
-                        <td><input type="text" data-max="100" /></td>
+                        <th><label for="title">프로젝트명</label></th>
+                        <td><input type="text" id="title" data-max="100" placeholder="프로젝트명" th:value="${detail.title}" /></td>
                     </tr>
                     <tr>
-                        <th>프로젝트명</th>
-                        <td><textarea data-max="500"></textarea></td>
+                        <th><label for="description">프로젝트 설명</label></th>
+                        <td><textarea id="description" data-max="500" placeholder="프로젝트 설명">[[${detail.description}]]</textarea></td>
                     </tr>
                     <tr>
                         <th>상태</th>
                         <td>
-                            <div class="flex">
-                                <input type="radio" id="type1" name="type"><label for="type1"></label>
-                                <span onclick="type1.click()">ㅁㅁㅁ</span>
-                                <input type="radio" id="type2" name="type"><label for="type2"></label>
-                                <span onclick="type2.click()">ㅁㅁㅁ</span>
+                            <div>
+                                <div th:each="status : ${status_list}" class="inline-flex">
+                                    <input type="radio" th:id="|status${status.idx}|" name="status_idx" th:value="${status.idx}" th:checked="${status.idx == param_status_idx}">
+                                    <label th:for="|status${status.idx}|"></label>
+                                    <span th:onclick="|status${status.idx}.click()|">[[${status.name}]]</span>
+                                </div>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th>시작일자</th>
-                        <td><input type="text" id="start_date" /></td>
+                        <th><label for="start_date">시작일자</label></th>
+                        <td><input type="text" id="start_date" placeholder="시작일자" th:value="${detail.startDate}" /></td>
                     </tr>
                     <tr>
-                        <th>종료일자</th>
-                        <td><input type="text" id="end_date" /></td>
+                        <th><label for="end_date">종료일자</label></th>
+                        <td><input type="text" id="end_date" placeholder="종료일자" th:value="${detail.endDate}" /></td>
                     </tr>
                     <tr>
-                        <th>팀</th>
-                        <td><input type="text" /></td>
+                        <th><label for="team_search">팀</label></th>
+                        <!-- TODO: 팀 검색 -->
+                        <td><input type="text" id="team_search" placeholder="팀을 선택해주세요." /></td>
                     </tr>
                     <tr>
                         <th></th>
                         <td>
-                            <div class="manager-dom">
-                                <div><div class="profile"></div>김신<i></i></div>
+                            <!-- TODO: 팀명 추가 필요 -->
+                            <div id="team_list" class="manager-dom">
+                                <div th:each="member : ${member_list}" th:if="${member.teamIdx != null}" class="team" th:data-idx="${member.idx}">
+                                    팀명<i class="delete_item"></i>
+                                </div>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th>담당자</th>
-                        <td><input type="text" /></td>
+                        <th><label for="member_search">담당자</label></th>
+                        <!-- TODO: 멤버 검색 -->
+                        <td><input type="text" id="member_search" placeholder="유저를 선택해주세요." /></td>
                     </tr>
                     <tr>
                         <th></th>
                         <td>
-                            <div class="manager-dom">
-                                <div>개발팀<i></i></div>
+                            <div id="member_list" class="manager-dom">
+                                <!-- TODO: 멤버명 추가 필요 -->
+                                <div th:each="member : ${member_list}" th:if="${member.memberIdx != null}" class="member" th:data-idx="${member.idx}">
+                                    <div class="profile"></div>멤버명<i class="delete_item"></i>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -68,8 +78,8 @@
                 <tfoot>
                 <tr>
                     <td colspan="4">
-                        <a class="btn light">목록으로</a>
-                        <a class="btn">등록하기</a>
+                        <a id="history_back" class="btn light">목록으로</a>
+                        <a id="save_btn" class="btn">등록하기</a>
                     </td>
                 </tr>
                 </tfoot>
@@ -82,10 +92,5 @@
     </div>
 </main>
 </body>
-<script>
-    $(function(){
-        setDatepicker("start_date")
-        setDatepicker("end_date")
-    });
-</script>
+<script th:src="@{/js/project/detail.js}"></script>
 </html>

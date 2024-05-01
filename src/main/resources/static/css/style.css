@@ -39,6 +39,7 @@ input:disabled {background: var(--light-grey);}
 
 /* TEXTAREA */
 textarea {width: 100%; padding: 5px; resize:none; box-sizing: border-box; background-color: var(--white); font-weight: bold; font-size: 15px;}
+textarea::placeholder {color: var(--grey); font-style: italic; font-weight: bold; font-size: 15px;}
 
 /* SELECT */
 select {width: 300px; height: 30px; font-size: 16px;}

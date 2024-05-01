@@ -47,12 +47,11 @@ public class ProjectService {
     // 목록 조회
     @Transactional
     public List<ProjectDto> getList(String title, Long statusIdx, String startDate, String endDate, Long page) {
-        List<Project> projectList = projectRepository.findByTitleAndStatusIdxAndStartDateAndEndDateOrderByIdxDesc(title, statusIdx, startDate, endDate);
         List<ProjectDto> resultList = new ArrayList<>();
 
-        for (Project project : projectList) {
+        projectRepository.findByTitleAndStatusIdxAndStartDateAndEndDateOrderByIdxDesc(title, statusIdx, startDate, endDate).forEach(project -> {
             resultList.add(project.toDto());
-        }
+        });
 
         return resultList;
     }
@@ -60,8 +59,7 @@ public class ProjectService {
     // 단건 조회
     @Transactional
     public ProjectDto getOne(Long idx) {
-        Optional<Project> wrapper = projectRepository.findById(idx);
-        return wrapper.map(Project::toDto).orElse(null);
+        return projectRepository.findById(idx).map(Project::toDto).orElse(null);
     }
 
     // 생성/수정
@@ -76,12 +74,24 @@ public class ProjectService {
         projectRepository.deleteById(idx);
     }
 
+    // 담당자 조회
+    @Transactional
+    public List<ProjectMemberDto> getMemberList(Long projectIdx) {
+        List<ProjectMemberDto> resultList = new ArrayList<>();
+        projectMemberRepository.findByProjectIdxOrderByIdxDesc(projectIdx).forEach(projectMember -> {
+            resultList.add(projectMember.toDto());
+        });
+
+        return resultList;
+    }
+
     // 담당자 추가
     @Transactional
-    public void saveMember(List<ProjectMemberDto> projectMemberDtoList) {
-        for (ProjectMemberDto projectMemberDto : projectMemberDtoList) {
+    public void saveMember(Long projectIdx, List<ProjectMemberDto> projectMemberDtoList) {
+        projectMemberDtoList.forEach(projectMemberDto -> {
+            projectMemberDto.setProjectIdx(projectIdx);
             projectMemberRepository.save(projectMemberDto.toEntity());
-        }
+        });
     }
 
     // 담당자 삭제
@@ -95,13 +105,12 @@ public class ProjectService {
     // 내 프로젝트 조회
     @Transactional
     public List<ProjectDto> getMyProject(Long memberIdx) {
-        // TODO: 팀 기준 조회 추가 필요
-        List<Project> projectList = projectRepository.findByMemberIdxOrderByTitle(memberIdx);
         List<ProjectDto> resultList = new ArrayList<>();
 
-        for (Project project : projectList) {
+        // TODO: 팀 기준 조회 추가 필요
+        projectRepository.findByMemberIdxOrderByTitle(memberIdx).forEach(project -> {
             resultList.add(project.toDto());
-        }
+        });
 
         return resultList;
     }
@@ -109,14 +118,11 @@ public class ProjectService {
     // 상태 조회
     @Transactional
     public List<ProjectStatusDto> getStatus() {
-        List<ProjectStatus> statusList = projectStatusRepository.findAll();
         List<ProjectStatusDto> resultList = new ArrayList<>();
-
-        for (ProjectStatus status : statusList) {
+        projectStatusRepository.findAll().forEach(status -> {
             resultList.add(status.toDto());
-        }
+        });
 
         return resultList;
     }
-
 }

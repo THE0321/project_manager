@@ -47,9 +47,25 @@ function setDatepicker(id = "") {
     }
 }
 
+// max length
+$("input").on("keyup keydown input", function() {
+    const max = $(this).data("max");
+    if(max) {
+        const value = $(this).val();
+        if(value.length > max) {
+            $(this).val(value.substring(0, max));
+        }
+    }
+});
+
 // alert
 function alertMsg(msg, title = "") {
     $("#pop_title").text(title);
     $("#alert_message").text(msg);
     onPopup("alert_pop");
 }
+
+// history back
+$("#history_back").on("click", function() {
+    history.back();
+});

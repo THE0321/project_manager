@@ -8,7 +8,7 @@
     <div class="body">
         <p class="title">PROJECT</p>
         <div class="title-btn">
-            <a class="btn light clipboard">등록하기</a>
+            <a id="regist_btn" class="btn light clipboard">등록하기</a>
         </div>
         <div class="search-form">
             <table>
@@ -73,7 +73,7 @@
                 <tbody id="item_list">
                     <tr th:each="item : ${list}" th:data-idx="${item.idx}">
                         <td>
-                            <select class="center_t w_full">
+                            <select class="center_t w_full status_select">
                                 <option th:each="status : ${status_list}" th:value="${status.idx}" th:selected="${status.idx == item.idx}">[[${status.name}]]</option>
                             </select>
                         </td>
@@ -102,10 +102,5 @@
     </div>
 </main>
 </body>
-<script>
-    $(function(){
-        setDatepicker("start_date")
-        setDatepicker("end_date")
-    });
-</script>
+<script th:src="@{/js/project/list.js}" defer></script>
 </html>
