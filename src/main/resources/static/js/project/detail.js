@@ -14,7 +14,7 @@ $("#save_btn").click(function() {
     const member_list = $("#member_list .member");
 
     if(!title) {
-        alert("프로젝트명을 입력해주세요.");
+        alertMsg("프로젝트명을 입력해주세요.");
         return;
     }
 
@@ -44,14 +44,17 @@ function save(form_data, retry = false) {
             const msg = data.msg ?? null;
             const code = data.code ?? null;
 
-            if(msg ?? null) {
-                alert(msg);
+            let clicked = function(){};
+            if(code === "200") {
+                alert_param = data.result;
+                clicked = function() {
+                    if(alert_param) {
+                        location.replace(`/project/detail/${alert_param}`);
+                    }
+                }
             }
 
-            if(code === "200") {
-                const result = data.result ?? null;
-                location.replace(`/detail/detail/${result}`);
-            }
+            if(msg ?? null) alertMsg(msg, clicked);
         }, error: function () {
             if(!retry) save(form_data, true);
         }

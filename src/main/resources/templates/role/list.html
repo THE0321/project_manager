@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-bs-theme="auto">
+<head th:insert="common/head.html"></head>
+<body>
+<main>
+    <div class="header-dom" th:insert="common/header.html"></div>
+    <div class="body">
+        <p class="title">ROLE</p>
+        <div class="title-btn">
+            <a id="regist_btn" class="btn light bookmark">등록하기</a>
+        </div>
+
+        <!-- BEGIN::SEARCH FORM -->
+        <div class="search-form">
+            <table>
+                <colgroup>
+                    <col style="width: 10%;">
+                    <col style="width: 90%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th><label for="name">역할명</label></th>
+                        <td><input type="text" id="name" placeholder="역할명" /></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <a id="refresh_btn" class="btn light">초기화</a>
+                            <a id="search_btn" class="btn">검색</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- END::SEARCH FORM -->
+    </div>
+    <div class="popup">
+        <div class="background pop_close"></div>
+        <section id="alert_pop" th:insert="popup/alert_pop.html"></section>
+    </div>
+</main>
+</body>
+</html>

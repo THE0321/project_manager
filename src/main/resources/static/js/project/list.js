@@ -65,10 +65,7 @@ function saveStatus(form_data, retry = false) {
         processData: false,
         success: function (data) {
             const msg = data.msg ?? null;
-
-            if(msg ?? null) {
-                alert(msg);
-            }
+            if(msg ?? null) alertMsg(msg);
         }, error: function () {
             if(!retry) saveStatus(form_data, true);
         }

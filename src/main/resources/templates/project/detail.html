@@ -29,7 +29,7 @@
                                 <div th:each="status : ${status_list}" class="inline-flex">
                                     <input type="radio" th:id="|status${status.idx}|" name="status_idx" th:value="${status.idx}" th:checked="${status.idx == param_status_idx}">
                                     <label th:for="|status${status.idx}|"></label>
-                                    <span th:onclick="|status${status.idx}.click()|">[[${status.name}]]</span>
+                                    <span th:onclick="|status${status.idx}.click()|" th:text="${status.name}"></span>
                                 </div>
                             </div>
                         </td>
