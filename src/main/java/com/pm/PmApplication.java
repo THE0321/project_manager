@@ -7,9 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 
-@SpringBootApplication
-//@EnableJpaAuditing
-//@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@EnableJpaAuditing
 public class PmApplication {
 
     public static void main(String[] args) {

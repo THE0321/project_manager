@@ -22,7 +22,7 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
     @Query("SELECT A " +
             "FROM Role A " +
             "LEFT JOIN FETCH A.registerMember " +
-            "WHERE A.name LIKE CONCAT('%', :name, '%') " +
+            "WHERE UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%') " +
             "ORDER BY A.idx DESC ")
     List<Role> findByNameContainingOrderByIdxDesc(String name);
 }

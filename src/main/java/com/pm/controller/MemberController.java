@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+
 /**
  * 
  * Member Controller
@@ -65,6 +67,7 @@ public class MemberController {
 
         if(idx == null) {
             model.addAttribute("detail", new MemberDto());
+            model.addAttribute("team_list", new ArrayList<>());
         } else {
             model.addAttribute("detail", memberService.getOne(idx));
         }

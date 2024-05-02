@@ -118,7 +118,7 @@ public class Member {
         this.account = account;
         this.password = password;
         this.note = note;
-        this.disableYn = disableYn == null ? 'Y' : disableYn;
+        this.disableYn = disableYn == null ? 'N' : disableYn;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.register = register;
         this.registerMember = registerMember;

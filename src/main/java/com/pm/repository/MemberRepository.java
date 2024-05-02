@@ -22,8 +22,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT A " +
             "FROM Member A " +
             "LEFT JOIN FETCH A.registerMember " +
-            "WHERE (:name IS NULL OR A.name LIKE CONCAT('%', :name, '%')) " +
-            "AND (:account IS NULL OR A.account LIKE CONCAT('%', :account, '%')) " +
+            "WHERE (:name IS NULL OR UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%')) " +
+            "AND (:account IS NULL OR UPPER(A.account) LIKE CONCAT('%', UPPER(:account), '%')) " +
             "AND (:positionIdx IS NULL OR A.positionIdx = :positionIdx) " +
             "AND (:roleIdx IS NULL OR A.roleIdx = :roleIdx) " +
             "AND A.deleteYn = 'Y' " +
@@ -32,8 +32,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("SELECT COUNT(A.idx) " +
             "FROM Member A " +
-            "WHERE (:name IS NULL OR A.name LIKE CONCAT('%', :name, '%')) " +
-            "AND (:account IS NULL OR A.account LIKE CONCAT('%', :account, '%')) " +
+            "WHERE (:name IS NULL OR UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%')) " +
+            "AND (:account IS NULL OR UPPER(A.account) LIKE CONCAT('%', UPPER(:account), '%')) " +
             "AND (:positionIdx IS NULL OR A.positionIdx = :positionIdx) " +
             "AND (:roleIdx IS NULL OR A.roleIdx = :roleIdx) " +
             "AND A.deleteYn = 'Y'")
@@ -41,7 +41,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("SELECT A " +
             "FROM Member A " +
-            "WHERE (:name IS NULL OR A.name LIKE CONCAT('%', :name, '%') OR A.account LIKE CONCAT('%', :name, '%')) " +
+            "WHERE (:name IS NULL OR UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%') OR UPPER(A.account) LIKE CONCAT('%', UPPER(:name), '%')) " +
             "ORDER BY A.name")
     List<Member> findByNameOrderByName(String name);
 }

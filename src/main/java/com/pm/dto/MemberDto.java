@@ -25,6 +25,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class MemberDto {
     private Long idx;
+    private Long profileIdx;
     private String positionName;
     private Long positionIdx;
     private String roleName;
@@ -81,8 +82,9 @@ public class MemberDto {
     }
 
     @Builder
-    public MemberDto(Long idx, String positionName, Long positionIdx, String roleName, Long roleIdx, String name, String account, String password, String note, Character disableYn, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, String modifierName, Character deleteYn) {
+    public MemberDto(Long idx, Long profileIdx, String positionName, Long positionIdx, String roleName, Long roleIdx, String name, String account, String password, String note, Character disableYn, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, String modifierName, Character deleteYn) {
         this.idx = idx;
+        this.profileIdx = profileIdx;
         this.positionName = positionName;
         this.positionIdx = positionIdx;
         this.roleName = roleName;

@@ -4,6 +4,8 @@ import com.pm.dto.MemberDto;
 import com.pm.entity.Member;
 import com.pm.repository.MemberRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,8 +25,10 @@ import java.util.List;
  **/
 @Service
 public class MemberService {
+    private final PasswordEncoder encoder;
     private final MemberRepository memberRepository;
     public MemberService(MemberRepository memberRepository) {
+        this.encoder = new BCryptPasswordEncoder();
         this.memberRepository = memberRepository;
     }
 
@@ -54,6 +58,10 @@ public class MemberService {
     // 생성/수정
     @Transactional
     public Long saveItem(MemberDto memberDto) {
+        if(memberDto.getPassword() != null && memberDto.getPassword().isEmpty()) {
+            memberDto.setPassword(encoder.encode(memberDto.getPassword()));
+        }
+
         return memberRepository.save(memberDto.toEntity()).getIdx();
     }
 }

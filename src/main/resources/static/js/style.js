@@ -55,6 +55,12 @@ $("input").on("keyup keydown input", function() {
     }
 });
 
+// number input
+$("input[type=number]").on("keyup keydown input", function() {
+    const value = $(this).val();
+    $(this).val(value.replace(/[^0-9]/gi, ''));
+});
+
 // alert
 function alertMsg(msg, clicked = function() {}) {
     $("#alert_message").text(msg);

@@ -22,7 +22,7 @@ public interface PositionRepository extends JpaRepository<Position, Long> {
     @Query("SELECT A " +
             "FROM Position A " +
             "LEFT JOIN FETCH A.registerMember " +
-            "WHERE A.name LIKE CONCAT('%', :name, '%') " +
+            "WHERE UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%') " +
             "ORDER BY A.orderNumber, A.idx DESC")
     List<Position> findByNameContainingOrderByOrderNumberAsc(String name);
 }

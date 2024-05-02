@@ -1,10 +1,12 @@
 package com.pm.controller;
 
+import com.pm.dto.PositionDto;
 import com.pm.service.PositionService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -35,5 +37,17 @@ public class PositionController {
         model.addAttribute("list", positionService.getList(name));
 
         return "position/list";
+    }
+
+    @GetMapping(value = {"/detail", "/detail/{idx}"})
+    public String detail(@PathVariable(required = false) Long idx,
+                         HttpServletRequest request, Model model) {
+        if(idx == null) {
+            model.addAttribute("detail", new PositionDto());
+        } else {
+            model.addAttribute("detail", positionService.getOne(idx));
+        }
+
+        return "position/detail";
     }
 }

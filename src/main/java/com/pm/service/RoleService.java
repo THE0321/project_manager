@@ -31,8 +31,10 @@ public class RoleService {
     // 목록 조회
     @Transactional
     public List<RoleDto> getList(String name) {
+        name = name == null ? "" : name;
+
         List<RoleDto> resultList = new ArrayList<>();
-        roleRepository.findAll().forEach(role -> {
+        roleRepository.findByNameContainingOrderByIdxDesc(name).forEach(role -> {
             resultList.add(role.toDto());
         });
 

@@ -31,6 +31,8 @@ public class PositionService {
     // 목록 조회
     @Transactional
     public List<PositionDto> getList(String name) {
+        name = name == null ? "" : name;
+
         List<PositionDto> resultList = new ArrayList<>();
         positionRepository.findByNameContainingOrderByOrderNumberAsc(name).forEach(position -> {
             resultList.add(position.toDto());
