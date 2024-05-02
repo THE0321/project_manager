@@ -22,7 +22,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("SELECT A " +
             "FROM Project A " +
             "LEFT JOIN FETCH A.projectStatus " +
-            "WHERE (:title IS NULL OR A.title LIKE CONCAT('%', :title, '%')) " +
+            "WHERE (:title IS NULL OR UPPER(A.title) LIKE CONCAT('%', UPPER(:title), '%')) " +
             "AND (:statusIdx IS NULL OR A.statusIdx = :statusIdx) " +
             "AND (:startDate IS NULL OR A.startDate >= :startDate) " +
             "AND (:endDate IS NULL OR A.endDate <= :endDate) " +
@@ -32,7 +32,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query("SELECT COUNT(A.idx) " +
             "FROM Project A " +
-            "WHERE (:title IS NULL OR A.title LIKE CONCAT('%', :title, '%')) " +
+            "WHERE (:title IS NULL OR UPPER(A.title) LIKE CONCAT('%', UPPER(:title), '%')) " +
             "AND (:statusIdx IS NULL OR A.statusIdx = :statusIdx) " +
             "AND (:startDate IS NULL OR A.startDate >= :startDate) " +
             "AND (:endDate IS NULL OR A.endDate <= :endDate)")

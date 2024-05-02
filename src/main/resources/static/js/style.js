@@ -1,3 +1,5 @@
+let alert_param = null;
+
 // 로고 클릭
 $(".logo").click(function() {
     location.href = "/";
@@ -6,11 +8,6 @@ $(".logo").click(function() {
 // 팝업 이벤트 버블링 방지
 $(".popup").on("scroll click", function(e) {
     e.stopPropagation();
-});
-
-// 팝업 닫기
-$(".pop_close").click(function() {
-    $(".popup, .popup section").hide();
 });
 
 // 팝업 열기
@@ -58,10 +55,18 @@ $("input").on("keyup keydown input", function() {
     }
 });
 
+// number input
+$("input[type=number]").on("keyup keydown input", function() {
+    const value = $(this).val();
+    $(this).val(value.replace(/[^0-9]/gi, ''));
+});
+
 // alert
-function alertMsg(msg, title = "") {
-    $("#pop_title").text(title);
+function alertMsg(msg, clicked = function() {}) {
     $("#alert_message").text(msg);
+    $(".pop_close").off("click").on("click", clicked).on("click", function() {
+        $(".popup, .popup section").hide();
+    });
     onPopup("alert_pop");
 }
 

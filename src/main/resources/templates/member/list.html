@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-bs-theme="auto">
+<head th:insert="common/head.html"></head>
+<body>
+<main>
+    <div class="header-dom" th:insert="common/header.html"></div>
+    <input type="hidden" id="page" th:value="${page.page}">
+    <div class="body">
+        <p class="title">MEMBER</p>
+        <div class="title-btn">
+            <a id="regist_btn" class="btn light person">등록하기</a>
+        </div>
+
+        <!-- BEGIN::SEARCH FORM -->
+        <div class="search-form">
+            <table>
+                <colgroup>
+                    <col style="width: 10%;">
+                    <col style="width: 30%;">
+                    <col style="width: 10%;">
+                    <col style="width: 30%;">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th><label for="name">이름</label></th>
+                    <td><input type="text" id="name" placeholder="이름" th:value="${param_name}" /></td>
+                    <th><label for="account">계정</label></th>
+                    <td><input type="text" id="account" placeholder="계정" th:value="${param_account}" /></td>
+                </tr>
+                <tr>
+                    <th><label for="position_idx">직급</label></th>
+                    <td>
+                        <select id="position_idx">
+                            <option value="" disabled selected>선택</option>
+                            <option th:each="position : ${position_list}" th:value="${position.idx}" th:selected="${position.idx == param_position_idx}" th:text="${position.name}"></option>
+                        </select>
+                    </td>
+                    <th><label for="role_idx">역할</label></th>
+                    <td>
+                        <select id="role_idx">
+                            <option value="" disabled selected>선택</option>
+                            <option th:each="role : ${role_list}" th:value="${role.idx}" th:selected="${role.idx == param_role_idx}" th:text="${role.name}"></option>
+                        </select>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <a id="refresh_btn" class="btn light">초기화</a>
+                        <a id="search_btn" class="btn">검색</a>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- END::SEARCH FORM -->
+
+        <!-- BEGIN::LIST -->
+        <div>
+            <table class="table">
+                <colgroup>
+                    <col style="min-width: 300px;">
+                    <col style="min-width: 300px;">
+                    <col style="width: 150px;">
+                    <col style="width: 150px;">
+                    <col style="width: 100px;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>이름</th>
+                        <th>계정</th>
+                        <th>직급</th>
+                        <th>역할</th>
+                        <th>활성화 여부</th>
+                    </tr>
+                </thead>
+                <tbody id="item_list">
+                    <tr th:each="item : ${list}" th:data-idx="${item.idx}">
+                        <td th:text="${item.name}"></td>
+                        <td th:text="${item.account}"></td>
+                        <td>
+                            <select class="position_select center_t">
+                                <option value="" disabled selected>선택</option>
+                                <option th:each="position : ${position_list}" th:value="${position.idx}" th:selected="${position.idx == item.positionIdx}" th:text="${position.name}"></option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="role_select center_t">
+                                <option value="" disabled selected>선택</option>
+                                <option th:each="role : ${role_list}" th:value="${role.idx}" th:selected="${role.idx == item.roleIdx}" th:text="${role.name}"></option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="disable_select center_t">
+                                <option value="N" th:selected="${#strings.equals(item.disableYn, 'N')}">활성</option>
+                                <option value="Y" th:selected="${#strings.equals(item.disableYn, 'Y')}">비활성</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- END::LIST -->
+
+        <!-- BEGIN::PAGINATION -->
+        <div>
+            <ul class="pagination">
+                <li th:if="${page.before_over != null}" class="before-over" th:data-page="${page.before_over}"></li>
+                <li th:if="${page.before != null}" class="before" th:data-page="${page.before}"></li>
+                <li th:each="item : ${page.pageList}" th:class="${item == page.page ? 'on' : ''}" th:text="${item}"></li>
+                <li th:if="${page.next != null}" class="next" th:data-page="${page.next}"></li>
+                <li th:if="${page.next_over != null}" class="next-over" th:data-page="${page.next_over}"></li>
+            </ul>
+        </div>
+        <!-- END::PAGINATION -->
+    </div>
+    <div class="popup">
+        <div class="background pop_close"></div>
+        <section id="alert_pop" th:insert="popup/alert_pop.html"></section>
+    </div>
+</main>
+</body>
+<script th:src="@{/js/member/list.js}"></script>
+</html>

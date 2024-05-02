@@ -37,7 +37,7 @@ public class Paging {
         Long first = block * PER_PAGE + 1;
         Long last = first + PER_PAGE > totalPage ? totalPage : first + PER_PAGE;
 
-        for(Long i = first; i < last; i++) {
+        for(Long i = first; i <= last; i++) {
             this.pageList.add(i);
         }
 

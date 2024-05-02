@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-bs-theme="auto">
+<head th:insert="common/head.html"></head>
+<body>
+<main>
+    <div class="header-dom" th:insert="common/header.html"></div>
+    <input type="hidden" id="idx" th:value="${detail.idx}" />
+    <div class="body">
+        <p class="title">MEMBER</p>
+        <div class="detail-form">
+            <table>
+                <colgroup>
+                    <col style="width: 10%;">
+                    <col style="width: 90%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th><label for="name">이름</label></th>
+                        <td><input type="text" id="name" data-max="100" placeholder="이름" th:value="${detail.name}" /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="position_idx">직급</label></th>
+                        <td>
+                            <select id="position_idx">
+                                <option value="" disabled selected>선택</option>
+                                <option>1</option>
+                                <option>1</option>
+                                <option>1</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="role_idx">역할</label></th>
+                        <td>
+                            <select id="role_idx">
+                                <option value="" disabled selected>선택</option>
+                                <option>1</option>
+                                <option>1</option>
+                                <option>1</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="account">계정</label></th>
+                        <td><input type="text" id="account" data-max="100" placeholder="계정" th:value="${detail.name}" /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="password">비밀번호</label></th>
+                        <td><input type="password" id="password" data-max="100" placeholder="비밀번호" /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="password">비밀번호 확인</label></th>
+                        <td><input type="password" id="password_check" data-max="100" placeholder="비밀번호 확인" /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="note">특이사항</label></th>
+                        <td><textarea id="note" data-max="500" placeholder="특이사항">[[${detail.note}]]</textarea></td>
+                    </tr>
+                    <tr>
+                        <th><label for="team_search">팀</label></th>
+                        <!-- TODO: 팀 검색 -->
+                        <td><input type="text" id="team_search" placeholder="팀을 선택해주세요." /></td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <!-- TODO: 팀 추가 필요 -->
+                            <div id="team_list" class="manager-dom">
+                                <div class="team"data-idx="">
+                                    팀명<i class="delete_item"></i>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>활성화 여부</th>
+                        <td>
+                            <div>
+                                <div class="inline-flex">
+                                    <input type="radio" id="disable_y" name="disable_yn" value="Y" th:checked="${#strings.equals(detail.disableYn, 'N') || detail.disableYn == null}">
+                                    <label for="disable_y"></label>
+                                    <span onclick="disable_y.click()">활성</span>
+                                </div>
+                                <div class="inline-flex">
+                                    <input type="radio" id="disable_n" name="disable_yn" value="N" th:checked="${#strings.equals(detail.disableYn, 'Y')}">
+                                    <label for="disable_n"></label>
+                                    <span onclick="disable_n.click()">비활성</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <a id="history_back" class="btn light">목록으로</a>
+                            <a id="save_btn" class="btn">등록하기</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="popup">
+        <div class="background pop_close"></div>
+        <section id="alert_pop" th:insert="popup/alert_pop.html"></section>
+    </div>
+</main>
+</body>
+<script th:src="@{/js/member/detail.js}"></script>
+</html>

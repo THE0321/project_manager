@@ -25,8 +25,7 @@ $("#search_btn").click(function() {
     const start_date = $("#start_date").val();
     const end_date = $("#end_date").val();
 
-    let search_param = {page: $("#page").val()};
-
+    let search_param = {};
     title ? search_param["title"] = title : null;
     status_idx ? search_param["status_idx"] = status_idx : null;
     start_date ? search_param["start_date"] = start_date : null;
@@ -65,10 +64,7 @@ function saveStatus(form_data, retry = false) {
         processData: false,
         success: function (data) {
             const msg = data.msg ?? null;
-
-            if(msg ?? null) {
-                alert(msg);
-            }
+            if(msg ?? null) alertMsg(msg);
         }, error: function () {
             if(!retry) saveStatus(form_data, true);
         }
