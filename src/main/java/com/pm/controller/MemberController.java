@@ -39,6 +39,7 @@ public class MemberController {
         this.roleService = roleService;
     }
 
+    // 유저 목록
     @GetMapping(value = {"/", ""})
     public String list(@RequestParam(required = false, value = "name") String name,
                        @RequestParam(required = false, value = "account") String account,
@@ -59,6 +60,7 @@ public class MemberController {
         return "/member/list";
     }
 
+    // 유저 상세
     @GetMapping(value = {"/detail", "/detail/{idx}"})
     public String detail(@PathVariable(required = false) Long idx,
                        HttpServletRequest request, Model model) {

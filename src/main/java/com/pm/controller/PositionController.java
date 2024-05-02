@@ -30,6 +30,7 @@ public class PositionController {
         this.positionService = positionService;
     }
 
+    // 직급 목록
     @GetMapping(value = {"/", ""})
     public String list(@RequestParam(required = false, value = "name") String name,
                        HttpServletRequest request, Model model) {
@@ -39,6 +40,7 @@ public class PositionController {
         return "position/list";
     }
 
+    // 직급 상세
     @GetMapping(value = {"/detail", "/detail/{idx}"})
     public String detail(@PathVariable(required = false) Long idx,
                          HttpServletRequest request, Model model) {

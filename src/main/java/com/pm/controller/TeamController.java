@@ -1,7 +1,7 @@
 package com.pm.controller;
 
-import com.pm.dto.MemberDto;
-import com.pm.service.RoleService;
+import com.pm.dto.TeamDto;
+import com.pm.service.TeamService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,44 +12,44 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
- * Role Controller
+ * Team Controller
  *
  * @author HTH
  * @version 1.0.0
- * @date 2024-05-01
+ * @date 2024-05-02
  * ========================================================
  *  DATE                AUTHOR          NOTE
  * ========================================================
- *  2024-05-01          HTH             최초 등록
+ *  2024-05-02          HTH             최초 등록
  **/
 @Controller
-@RequestMapping("/role")
-public class RoleController {
-    private final RoleService roleService;
-    public RoleController(RoleService roleService) {
-        this.roleService = roleService;
+@RequestMapping("/team")
+public class TeamController {
+    private final TeamService teamService;
+    public TeamController(TeamService teamService) {
+        this.teamService = teamService;
     }
 
-    // 역할 목록
+    // 팀 목록
     @GetMapping(value = {"/", ""})
     public String list(@RequestParam(required = false, value = "name") String name,
                        HttpServletRequest request, Model model) {
         model.addAttribute("param_name", name);
-        model.addAttribute("list", roleService.getList(name));
+        model.addAttribute("list", teamService.getList(name));
 
-        return "role/list";
+        return "/team/list";
     }
 
-    // 역할 상세
+    // 팀 상세
     @GetMapping(value = {"/detail", "/detail/{idx}"})
     public String detail(@PathVariable(required = false) Long idx,
                          HttpServletRequest request, Model model) {
         if(idx == null) {
-            model.addAttribute("detail", new MemberDto());
+            model.addAttribute("detail", new TeamDto());
         } else {
-            model.addAttribute("detail", roleService.getOne(idx));
+            model.addAttribute("detail", teamService.getOne(idx));
         }
 
-        return "role/detail";
+        return "/team/detail";
     }
 }
