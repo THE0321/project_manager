@@ -44,32 +44,35 @@
                     </tr>
                     <tr>
                         <th><label for="team_search">팀</label></th>
-                        <!-- TODO: 팀 검색 -->
-                        <td><input type="text" id="team_search" placeholder="팀을 선택해주세요." /></td>
+                        <td>
+                            <input type="text" id="team_search" placeholder="팀을 선택해주세요." />
+                            <ul class="select-ul" id="team_search_list"></ul>
+                        </td>
                     </tr>
-                    <tr>
+                    <tr class="h_auto">
                         <th></th>
                         <td>
-                            <!-- TODO: 팀명 추가 필요 -->
                             <div id="team_list" class="manager-dom">
-                                <div th:each="member : ${member_list}" th:if="${member.teamIdx != null}" class="team" th:data-idx="${member.idx}">
-                                    팀명<i class="delete_item"></i>
+                                <div th:each="member : ${member_list}" th:if="${member.teamIdx != null}" class="team" th:data-idx="${member.idx}" th:data-team="${member.teamIdx}">
+                                    [[${member.teamName}]]<i class="delete_item"></i>
                                 </div>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th><label for="member_search">담당자</label></th>
-                        <!-- TODO: 멤버 검색 -->
-                        <td><input type="text" id="member_search" placeholder="유저를 선택해주세요." /></td>
+                        <td>
+                            <input type="text" id="member_search" placeholder="유저를 선택해주세요." />
+                            <ul class="select-ul" id="member_search_list"></ul>
+                        </td>
                     </tr>
-                    <tr>
+                    <tr class="h_auto">
                         <th></th>
                         <td>
                             <div id="member_list" class="manager-dom">
-                                <!-- TODO: 멤버명 추가 필요 -->
-                                <div th:each="member : ${member_list}" th:if="${member.memberIdx != null}" class="member" th:data-idx="${member.idx}">
-                                    <div class="profile"></div>멤버명<i class="delete_item"></i>
+                                <div th:each="member : ${member_list}" th:if="${member.memberIdx != null}" class="member" th:data-idx="${member.idx}" th:data-member="${member.memberIdx}">
+                                    <div class="profile" th:if="${member.memberProfileIdx != null}" th:style="|background_image: url('/view/image/${member.memberProfileIdx}');|"></div>
+                                    [[${member.memberName}]]<i class="delete_item"></i>
                                 </div>
                             </div>
                         </td>
@@ -93,4 +96,5 @@
 </main>
 </body>
 <script th:src="@{/js/project/detail.js}"></script>
+<script th:src="@{/js/search.js}"></script>
 </html>

@@ -1,14 +1,17 @@
 package com.pm.service;
 
 import com.pm.dto.MemberDto;
+import com.pm.dto.TeamMemberDto;
 import com.pm.entity.Member;
 import com.pm.repository.MemberRepository;
+import com.pm.repository.TeamMemberRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -27,9 +30,12 @@ import java.util.List;
 public class MemberService {
     private final PasswordEncoder encoder;
     private final MemberRepository memberRepository;
-    public MemberService(MemberRepository memberRepository) {
+    private final TeamMemberRepository teamMemberRepository;
+
+    public MemberService(MemberRepository memberRepository, TeamMemberRepository teamMemberRepository) {
         this.encoder = new BCryptPasswordEncoder();
         this.memberRepository = memberRepository;
+        this.teamMemberRepository = teamMemberRepository;
     }
 
     // 갯수 조회
@@ -38,15 +44,35 @@ public class MemberService {
         return memberRepository.countByNameAndAccountAndPositionIdxAndRoleIdx(name, account, positionIdx, roleIdx);
     }
 
-    // 목록 조회
+    // 목록 조회(전체)
     @Transactional
-    public List<MemberDto> getList(String name, String account, Long positionIdx, Long roleIdx, Long page) {
+    public List<MemberDto> getListAll(String name) {
         List<MemberDto> resultList = new ArrayList<>();
-        memberRepository.findByNameAndAccountAndPositionIdxAndRoleIdxOrderByIdxDesc(name, account, positionIdx, roleIdx).forEach(member -> {
-            resultList.add(member.toDto());
+        memberRepository.findByAll(name).forEach(member -> {
+            resultList.add(member.toDtoWithout());
         });
 
         return resultList;
+    }
+
+    // 목록 조회
+    @Transactional
+    public List<MemberDto> getList(String name, String account, Long positionIdx, Long roleIdx, Long page) {
+        name = name == null ? "" : name;
+        account = account == null ? "" : account;
+
+        List<MemberDto> resultList = new ArrayList<>();
+        memberRepository.findByNameAndAccountAndPositionIdxAndRoleIdxOrderByIdxDesc(name, account, positionIdx, roleIdx).forEach(member -> {
+            resultList.add(member.toDtoWithout());
+        });
+
+        return resultList;
+    }
+
+    // 단건 조회
+    @Transactional
+    public MemberDto getOneWithout(Long idx) {
+        return memberRepository.findById(idx).map(Member::toDtoWithout).orElse(null);
     }
 
     // 단건 조회
@@ -63,5 +89,31 @@ public class MemberService {
         }
 
         return memberRepository.save(memberDto.toEntity()).getIdx();
+    }
+
+    // 내 팀 조회
+    @Transactional
+    public List<TeamMemberDto> getMyTeam(Long memberIdx) {
+        List<TeamMemberDto> resultList = new ArrayList<>();
+        teamMemberRepository.findByMemberIdx(memberIdx).forEach(teamMember -> {
+            resultList.add(teamMember.toDto());
+        });
+
+        return resultList;
+    }
+
+    // 팀 추가
+    @Transactional
+    public void saveTeam(Long memberIdx, Long[] idxArray, Long register) {
+        List<Long> idxList = Arrays.asList(idxArray);
+        idxList.forEach(teamIdx -> {
+            teamMemberRepository.save(TeamMemberDto.builder().teamIdx(teamIdx).memberIdx(memberIdx).register(register).build().toEntity());
+        });
+    }
+
+    // 팀 제거
+    @Transactional
+    public void deleteTeam(Long[] idxArray) {
+        Arrays.asList(idxArray).forEach(teamMemberRepository::deleteById);
     }
 }

@@ -1,5 +1,6 @@
 package com.pm.dto;
 
+import com.pm.entity.Member;
 import com.pm.entity.Project;
 import com.pm.entity.ProjectStatus;
 import lombok.*;
@@ -34,16 +35,16 @@ public class ProjectDto {
     private Timestamp statusDate;
     private Timestamp registDate;
     private Long register;
+    private String registerName;
     private Timestamp modifyDate;
     private Long modifier;
+    private String modifierName;
 
     // Entity 변환
     public Project toEntity() {
-        ProjectStatus projectStatus = null;
-
-        if(statusIdx != null) {
-            projectStatus = ProjectStatus.builder().idx(statusIdx).build();
-        }
+        ProjectStatus projectStatus = statusIdx == null ? null : ProjectStatus.builder().idx(statusIdx).build();
+        Member registMember = register == null ? null : Member.builder().idx(register).build();
+        Member modifierMember = modifier == null ? null : Member.builder().idx(modifier).build();
 
         return Project.builder()
                 .idx(idx)
@@ -56,13 +57,15 @@ public class ProjectDto {
                 .statusDate(statusDate)
                 .registDate(registDate)
                 .register(register)
+                .registerMember(registMember)
                 .modifyDate(modifyDate)
                 .modifier(modifier)
+                .modifierMember(modifierMember)
                 .build();
     }
 
     @Builder
-    public ProjectDto(Long idx, String title, String description, Date startDate, Date endDate, Long statusIdx, String statusName, Timestamp statusDate, Timestamp registDate, Long register, Timestamp modifyDate, Long modifier) {
+    public ProjectDto(Long idx, String title, String description, Date startDate, Date endDate, Long statusIdx, String statusName, Timestamp statusDate, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, String modifierName) {
         this.idx = idx;
         this.title = title;
         this.description = description;
@@ -73,7 +76,9 @@ public class ProjectDto {
         this.statusDate = statusDate;
         this.registDate = registDate;
         this.register = register;
+        this.registerName = registerName;
         this.modifyDate = modifyDate;
         this.modifier = modifier;
+        this.modifierName = modifierName;
     }
 }

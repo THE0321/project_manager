@@ -25,6 +25,7 @@ import java.sql.Timestamp;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "team")
 public class Team {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;

@@ -34,7 +34,7 @@ public class TeamService {
         name = name == null ? "" : name;
 
         List<TeamDto> resultList = new ArrayList<>();
-        teamRepository.findByNameContainingOrderByIdxDesc(name).forEach(team -> {
+        teamRepository.findByNameContainingOrderByName(name).forEach(team -> {
             resultList.add(team.toDto());
         });
 

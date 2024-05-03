@@ -48,7 +48,6 @@ public class ProjectController {
         model.addAttribute("param_end_date", endDate);
 
         model.addAttribute("status_list", projectService.getStatus());
-        // TODO: 담당자, 등록자 추가 필요
         model.addAttribute("list", projectService.getList(title, statusIdx, startDate, endDate, page));
         model.addAttribute("page", new Paging(page, projectService.getCount(title, statusIdx, startDate, endDate)));
 

@@ -6,11 +6,11 @@ import com.pm.service.ProjectService;
 import com.pm.util.DateFormat;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -40,15 +40,16 @@ public class ProjectRestController {
                              @RequestParam(required = false, value = "status_idx") Long statusIdx,
                              @RequestParam(required = false, value = "start_date") String startDate,
                              @RequestParam(required = false, value = "end_date") String endDate,
-                             @RequestParam(required = false, value = "member_list") ProjectMemberDto[] memberList,
+                             @RequestParam(required = false, value = "member_list") Long[] memberList,
+                             @RequestParam(required = false, value = "team_list") Long[] teamList,
                              @RequestParam(required = false, value = "delete_list") Long[] deleteMemberList,
-                             HttpServletRequest request, Model model) {
+                             HttpServletRequest request) {
         if(title == null || title.isEmpty()) {
             return new ResponseData(false, "프로젝트명을 입력해주세요.", null);
         }
 
         DateFormat dateFormat = new DateFormat();
-        ProjectDto projectDto = null;
+        ProjectDto projectDto;
         if(idx == null) {
             projectDto = ProjectDto.builder()
                     .title(title)
@@ -62,11 +63,17 @@ public class ProjectRestController {
             projectDto = projectService.getOne(idx);
             projectDto.setTitle(title);
             projectDto.setDescription(description);
+            projectDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
             projectDto.setModifier(1L);
             projectDto.setStartDate(startDate == null || startDate.isEmpty() ? null : dateFormat.parseDate(startDate));
             projectDto.setEndDate(endDate == null || endDate.isEmpty() ? null : dateFormat.parseDate(endDate));
 
-            if(!projectDto.getStatusIdx().equals(statusIdx)) {
+            if(projectDto.getStatusIdx() == null) {
+                if(statusIdx != null) {
+                    projectDto.setStatusIdx(statusIdx);
+                    projectDto.setStatusDate(new Timestamp(System.currentTimeMillis()));
+                }
+            } else if(!projectDto.getStatusIdx().equals(statusIdx)) {
                 projectDto.setStatusIdx(statusIdx);
                 projectDto.setStatusDate(new Timestamp(System.currentTimeMillis()));
             }
@@ -77,11 +84,15 @@ public class ProjectRestController {
         
         // 프로젝트 담당자 저장
         if(deleteMemberList != null && deleteMemberList.length > 0) {
-            projectService.deleteMember(Arrays.asList(deleteMemberList));
+            projectService.deleteMember(deleteMemberList);
+        }
+
+        if(teamList != null && teamList.length > 0) {
+            projectService.saveTeam(result, teamList, 1L);
         }
 
         if(memberList != null && memberList.length > 0) {
-            projectService.saveMember(result, Arrays.asList(memberList));
+            projectService.saveMember(result, memberList, 1L);
         }
 
         return new ResponseData(true, "저장되었습니다.", result);
@@ -91,8 +102,9 @@ public class ProjectRestController {
     @PostMapping("/change_status")
     public ResponseData changeStatus(@RequestParam(required = false) Long idx,
                                      @RequestParam(required = false, value = "status_idx") Long statusIdx,
-                                     HttpServletRequest request, Model model) {
+                                     HttpServletRequest request) {
         ProjectDto projectDto = projectService.getOne(idx);
+        projectDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
         projectDto.setModifier(1L);
 
         if(!projectDto.getStatusIdx().equals(statusIdx)) {

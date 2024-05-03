@@ -1,5 +1,6 @@
 // 저장
 $("#save_btn").click(function() {
+    const idx = $("#idx").val();
     const name = $("#name").val();
     const account = $("#account").val();
     const password = $("#password").val();
@@ -20,7 +21,7 @@ $("#save_btn").click(function() {
         return;
     }
 
-    if(!password) {
+    if(!idx && !password) {
         alertMsg("비밀번호를 입력해주세요.");
         return;
     }
@@ -31,7 +32,7 @@ $("#save_btn").click(function() {
     }
 
     const form_data = new FormData();
-    form_data.append("idx", $("#idx").val());
+    form_data.append("idx", idx);
     form_data.append("name", name);
     form_data.append("account", account);
     form_data.append("password", password);
@@ -39,6 +40,8 @@ $("#save_btn").click(function() {
     form_data.append("role_idx", role_idx ? role_idx : "");
     form_data.append("disable_yn", disable_yn.length ? disable_yn.val() : "N");
     form_data.append("note", $("#note").val());
+    form_data.append("team_list", selectedTeamList());
+    form_data.append("delete_list", delete_member_list);
 
     save(form_data);
 });

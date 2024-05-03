@@ -60,7 +60,7 @@
                 <colgroup>
                     <col style="width: 100px;">
                     <col style="min-width: 300px;">
-                    <col style="width: 150px;">
+                    <col style="width: 100px;">
                     <col style="width: 100px;">
                     <col style="width: 100px;">
                     <col style="width: 100px;">
@@ -69,10 +69,10 @@
                     <tr>
                         <th>상태</th>
                         <th>프로젝트명</th>
-                        <th>담당자</th>
                         <th>시작일자</th>
                         <th>종료일자</th>
                         <th>등록자</th>
+                        <th>등록일자</th>
                     </tr>
                 </thead>
                 <tbody id="item_list">
@@ -83,10 +83,10 @@
                             </select>
                         </td>
                         <td th:text="${item.title}"></td>
-                        <td>담당자</td>
+                        <td class="center_t" th:text="${#dates.format(item.startDate, 'yyyy-MM-dd')}"></td>
+                        <td class="center_t" th:text="${#dates.format(item.endDate, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${item.registerName}"></td>
                         <td class="center_t" th:text="${#dates.format(item.registDate, 'yyyy-MM-dd')}"></td>
-                        <td class="center_t" th:text="${#dates.format(item.registDate, 'yyyy-MM-dd')}"></td>
-                        <td>등록자</td>
                     </tr>
                 </tbody>
             </table>

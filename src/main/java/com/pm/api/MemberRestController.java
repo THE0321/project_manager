@@ -1,14 +1,15 @@
 package com.pm.api;
 
 import com.pm.dto.MemberDto;
+import com.pm.dto.TeamMemberDto;
 import com.pm.service.MemberService;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -39,8 +40,10 @@ public class MemberRestController {
                              @RequestParam(required = false, value = "position_idx") Long positionIdx,
                              @RequestParam(required = false, value = "role_idx") Long roleIdx,
                              @RequestParam(required = false, value = "disable_yn") Character disableYn,
+                             @RequestParam(required = false, value = "team_list") Long[] teamList,
+                             @RequestParam(required = false, value = "delete_list") Long[] deleteTeamList,
                              @RequestParam(required = false, value = "note") String note,
-                             HttpServletRequest request, Model model) {
+                             HttpServletRequest request) {
         if(name == null || name.isEmpty()) {
             return new ResponseData(false, "이름을 입력해주세요.", null);
         }
@@ -49,11 +52,11 @@ public class MemberRestController {
             return new ResponseData(false, "계정을 입력해주세요.", null);
         }
 
-        if(password == null || password.isEmpty()) {
+        if(idx == null && (password == null || password.isEmpty())) {
             return new ResponseData(false, "비밀번호를 입력해주세요.", null);
         }
 
-        MemberDto memberDto = null;
+        MemberDto memberDto;
         if(idx == null) {
             memberDto = MemberDto.builder()
                     .name(name)
@@ -74,19 +77,32 @@ public class MemberRestController {
             memberDto.setRoleIdx(roleIdx);
             memberDto.setDisableYn(disableYn);
             memberDto.setNote(note);
+            memberDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
             memberDto.setModifier(1L);
         }
 
-        return new ResponseData(true, "저장되었습니다.", memberService.saveItem(memberDto));
+        Long result = memberService.saveItem(memberDto);
+        
+        // 팀 멤버 저장
+        if(deleteTeamList != null && deleteTeamList.length > 0) {
+            memberService.deleteTeam(deleteTeamList);
+        }
+        
+        if(teamList != null && teamList.length > 0) {
+            memberService.saveTeam(result, teamList, 1L);
+        }
+
+        return new ResponseData(true, "저장되었습니다.", result);
     }
 
     // 직급 저장
     @PostMapping("/change_position")
     public ResponseData changePosition(@RequestParam(required = false, value = "idx") Long idx,
                                        @RequestParam(required = false, value = "position_idx") Long positionIdx,
-                                       HttpServletRequest request, Model model) {
+                                       HttpServletRequest request) {
         MemberDto memberDto = memberService.getOne(idx);
         memberDto.setPositionIdx(positionIdx);
+        memberDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
         memberDto.setModifier(1L);
 
         return new ResponseData(true, "저장되었습니다.", memberService.saveItem(memberDto));
@@ -96,9 +112,10 @@ public class MemberRestController {
     @PostMapping("/change_role")
     public ResponseData changeRole(@RequestParam(required = false, value = "idx") Long idx,
                                    @RequestParam(required = false, value = "role_idx") Long roleIdx,
-                                   HttpServletRequest request, Model model) {
+                                   HttpServletRequest request) {
         MemberDto memberDto = memberService.getOne(idx);
         memberDto.setRoleIdx(roleIdx);
+        memberDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
         memberDto.setModifier(1L);
 
         return new ResponseData(true, "저장되었습니다.", memberService.saveItem(memberDto));
@@ -108,11 +125,19 @@ public class MemberRestController {
     @PostMapping("/change_disable_yn")
     public ResponseData changeDisableYn(@RequestParam(required = false, value = "idx") Long idx,
                                         @RequestParam(required = false, value = "disable_yn") Character disableYn,
-                                        HttpServletRequest request, Model model) {
+                                        HttpServletRequest request) {
         MemberDto memberDto = memberService.getOne(idx);
         memberDto.setDisableYn(disableYn);
+        memberDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
         memberDto.setModifier(1L);
 
         return new ResponseData(true, "저장되었습니다.", memberService.saveItem(memberDto));
+    }
+
+    // 멤버 목록 조회
+    @GetMapping("/get_list")
+    public ResponseData getList(@RequestParam(required = false, value = "name") String name,
+                                HttpServletRequest request) {
+        return new ResponseData(true, "조회했습니다.", memberService.getListAll(name));
     }
 }

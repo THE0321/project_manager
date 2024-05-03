@@ -63,6 +63,7 @@ public class MemberDto {
 
         return Member.builder()
                 .idx(idx)
+                .profileIdx(profileIdx)
                 .positionIdx(positionIdx)
                 .position(position)
                 .roleIdx(roleIdx)

@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "project_status")
 public class ProjectStatus {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
