@@ -1,5 +1,3 @@
-const delete_member_list = [];
-
 $(function(){
     // DATE PICKER
     setDatepicker("start_date")
@@ -9,9 +7,6 @@ $(function(){
 // 저장
 $("#save_btn").click(function() {
     const title = $("#title").val();
-
-    const team_list = $("#team_list .team");
-    const member_list = $("#member_list .member");
 
     if(!title) {
         alertMsg("프로젝트명을 입력해주세요.");
@@ -24,6 +19,9 @@ $("#save_btn").click(function() {
     form_data.append("description", $('#description').val());
     form_data.append("start_date", $('#start_date').val());
     form_data.append("end_date", $('#end_date').val());
+    form_data.append("team_list", selectedTeamList());
+    form_data.append("member_list", selectedMemberList());
+    form_data.append("delete_list", delete_member_list);
 
     const selected_status = $("[name=status_idx]:checked");
     if(selected_status.length) {

@@ -23,6 +23,6 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
             "FROM Team A " +
             "LEFT JOIN FETCH A.registerMember " +
             "WHERE UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%') " +
-            "ORDER BY A.idx DESC ")
-    List<Team> findByNameContainingOrderByIdxDesc(String name);
+            "ORDER BY A.name ")
+    List<Team> findByNameContainingOrderByName(String name);
 }

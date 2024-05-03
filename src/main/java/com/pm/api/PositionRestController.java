@@ -4,7 +4,6 @@ import com.pm.dto.PositionDto;
 import com.pm.service.PositionService;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,12 +34,12 @@ public class PositionRestController {
     public ResponseData save(@RequestParam(required = false, value = "idx") Long idx,
                              @RequestParam(required = false, value = "name") String name,
                              @RequestParam(required = false, value = "order_number") Integer orderNumber,
-                             HttpServletRequest request, Model model) {
+                             HttpServletRequest request) {
         if(name == null || name.isEmpty()) {
             return new ResponseData(false, "직급명을 입력해주세요.", null);
         }
 
-        PositionDto positionDto = null;
+        PositionDto positionDto;
         if(idx == null) {
             positionDto = PositionDto.builder()
                     .name(name)

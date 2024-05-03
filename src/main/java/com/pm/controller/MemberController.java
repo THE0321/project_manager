@@ -1,9 +1,11 @@
 package com.pm.controller;
 
 import com.pm.dto.MemberDto;
+import com.pm.dto.TeamMemberDto;
 import com.pm.service.MemberService;
 import com.pm.service.PositionService;
 import com.pm.service.RoleService;
+import com.pm.service.TeamService;
 import com.pm.util.Paging;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -69,9 +71,10 @@ public class MemberController {
 
         if(idx == null) {
             model.addAttribute("detail", new MemberDto());
-            model.addAttribute("team_list", new ArrayList<>());
+            model.addAttribute("team_list", new ArrayList<TeamMemberDto>());
         } else {
-            model.addAttribute("detail", memberService.getOne(idx));
+            model.addAttribute("detail", memberService.getOneWithout(idx));
+            model.addAttribute("team_list", memberService.getMyTeam(idx));
         }
 
         return "/member/detail";

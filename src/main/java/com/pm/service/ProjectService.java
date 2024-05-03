@@ -4,7 +4,6 @@ import com.pm.dto.ProjectDto;
 import com.pm.dto.ProjectMemberDto;
 import com.pm.dto.ProjectStatusDto;
 import com.pm.entity.Project;
-import com.pm.entity.ProjectStatus;
 import com.pm.repository.ProjectMemberRepository;
 import com.pm.repository.ProjectRepository;
 import com.pm.repository.ProjectStatusRepository;
@@ -12,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,21 +85,30 @@ public class ProjectService {
         return resultList;
     }
 
-    // 담당자 추가
+    // 팀 추가
     @Transactional
-    public void saveMember(Long projectIdx, List<ProjectMemberDto> projectMemberDtoList) {
-        projectMemberDtoList.forEach(projectMemberDto -> {
-            projectMemberDto.setProjectIdx(projectIdx);
-            projectMemberRepository.save(projectMemberDto.toEntity());
+    public void saveTeam(Long projectIdx, Long[] idxArray, Long register) {
+        List<Long> idxList = Arrays.asList(idxArray);
+        idxList.forEach(idx -> {
+            projectMemberRepository.save(ProjectMemberDto.builder().projectIdx(projectIdx).teamIdx(idx).register(register).build().toEntity());
         });
     }
 
-    // 담당자 삭제
+    // 담당자 추가
     @Transactional
-    public void deleteMember(List<Long> idxList) {
-        for (Long idx : idxList) {
-            projectMemberRepository.deleteById(idx);
-        }
+    public void saveMember(Long projectIdx, Long[] idxArray, Long register) {
+        List<Long> idxList = Arrays.asList(idxArray);
+        idxList.forEach(idx -> {
+            projectMemberRepository.save(ProjectMemberDto.builder().projectIdx(projectIdx).memberIdx(idx).register(register).build().toEntity());
+        });
+    }
+
+
+    // 팀/담당자 삭제
+    @Transactional
+    public void deleteMember(Long[] idxArray) {
+        List<Long> idxList = Arrays.asList(idxArray);
+        idxList.forEach(projectMemberRepository::deleteById);
     }
 
     // 내 프로젝트 조회

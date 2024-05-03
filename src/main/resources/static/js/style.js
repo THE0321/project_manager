@@ -61,6 +61,11 @@ $("input[type=number]").on("keyup keydown input", function() {
     $(this).val(value.replace(/[^0-9]/gi, ''));
 });
 
+// select 선택시 글자 색 변경
+$("select").change(function() {
+    $(this).addClass("field_t");
+});
+
 // alert
 function alertMsg(msg, clicked = function() {}) {
     $("#alert_message").text(msg);

@@ -21,27 +21,35 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT A " +
             "FROM Member A " +
+            "WHERE A.deleteYn = 'N' " +
+            "AND UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%') " +
+            "ORDER BY A.name")
+    List<Member> findByAll(String name);
+
+    @Query("SELECT A " +
+            "FROM Member A " +
             "LEFT JOIN FETCH A.registerMember " +
-            "WHERE (:name IS NULL OR UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%')) " +
-            "AND (:account IS NULL OR UPPER(A.account) LIKE CONCAT('%', UPPER(:account), '%')) " +
+            "WHERE UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%') " +
+            "AND UPPER(A.account) LIKE CONCAT('%', UPPER(:account), '%') " +
             "AND (:positionIdx IS NULL OR A.positionIdx = :positionIdx) " +
             "AND (:roleIdx IS NULL OR A.roleIdx = :roleIdx) " +
-            "AND A.deleteYn = 'Y' " +
+            "AND A.deleteYn = 'N' " +
             "ORDER BY A.idx DESC")
     List<Member> findByNameAndAccountAndPositionIdxAndRoleIdxOrderByIdxDesc(String name, String account, Long positionIdx, Long roleIdx);
 
     @Query("SELECT COUNT(A.idx) " +
             "FROM Member A " +
-            "WHERE (:name IS NULL OR UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%')) " +
-            "AND (:account IS NULL OR UPPER(A.account) LIKE CONCAT('%', UPPER(:account), '%')) " +
+            "WHERE UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%') " +
+            "AND UPPER(A.account) LIKE CONCAT('%', UPPER(:account), '%') " +
             "AND (:positionIdx IS NULL OR A.positionIdx = :positionIdx) " +
             "AND (:roleIdx IS NULL OR A.roleIdx = :roleIdx) " +
-            "AND A.deleteYn = 'Y'")
+            "AND A.deleteYn = 'N'")
     Long countByNameAndAccountAndPositionIdxAndRoleIdx(String name, String account, Long positionIdx, Long roleIdx);
 
     @Query("SELECT A " +
             "FROM Member A " +
-            "WHERE (:name IS NULL OR UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%') OR UPPER(A.account) LIKE CONCAT('%', UPPER(:name), '%')) " +
+            "WHERE UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%') " +
+            "OR UPPER(A.account) LIKE CONCAT('%', UPPER(:name), '%') " +
             "ORDER BY A.name")
     List<Member> findByNameOrderByName(String name);
 }

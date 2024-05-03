@@ -58,16 +58,17 @@
                     </tr>
                     <tr>
                         <th><label for="team_search">팀</label></th>
-                        <!-- TODO: 팀 검색 -->
-                        <td><input type="text" id="team_search" placeholder="팀을 선택해주세요." /></td>
+                        <td>
+                            <input type="text" id="team_search" placeholder="팀을 선택해주세요." />
+                            <ul class="select-ul" id="team_search_list"></ul>
+                        </td>
                     </tr>
-                    <tr>
+                    <tr class="h_auto">
                         <th></th>
                         <td>
-                            <!-- TODO: 팀 추가 필요 -->
                             <div id="team_list" class="manager-dom">
-                                <div class="team"data-idx="">
-                                    팀명<i class="delete_item"></i>
+                                <div th:each="team : ${team_list}" class="team" th:data-idx="${team.teamIdx}" th:data-team="${team.teamIdx}">
+                                    [[${team.teamName}]]<i class="delete_item"></i>
                                 </div>
                             </div>
                         </td>
@@ -77,12 +78,12 @@
                         <td>
                             <div>
                                 <div class="inline-flex">
-                                    <input type="radio" id="disable_y" name="disable_yn" value="Y" th:checked="${#strings.equals(detail.disableYn, 'N') || detail.disableYn == null}">
+                                    <input type="radio" id="disable_y" name="disable_yn" value="N" th:checked="${#strings.equals(detail.disableYn, 'N') || detail.disableYn == null}">
                                     <label for="disable_y"></label>
                                     <span onclick="disable_y.click()">활성</span>
                                 </div>
                                 <div class="inline-flex">
-                                    <input type="radio" id="disable_n" name="disable_yn" value="N" th:checked="${#strings.equals(detail.disableYn, 'Y')}">
+                                    <input type="radio" id="disable_n" name="disable_yn" value="Y" th:checked="${#strings.equals(detail.disableYn, 'Y')}">
                                     <label for="disable_n"></label>
                                     <span onclick="disable_n.click()">비활성</span>
                                 </div>
@@ -108,4 +109,5 @@
 </main>
 </body>
 <script th:src="@{/js/member/detail.js}"></script>
+<script th:src="@{/js/team/search.js}"></script>
 </html>

@@ -2,6 +2,7 @@ package com.pm.repository;
 
 import com.pm.entity.ProjectMember;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -18,5 +19,11 @@ import java.util.List;
  *  2024-04-30          HTH             최초 등록
  **/
 public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Long> {
+    @Query("SELECT A " +
+            "FROM ProjectMember A " +
+            "LEFT JOIN FETCH A.team " +
+            "LEFT JOIN FETCH A.member " +
+            "WHERE A.projectIdx = :projectIdx " +
+            "ORDER BY A.idx DESC")
     List<ProjectMember> findByProjectIdxOrderByIdxDesc(Long projectIdx);
 }

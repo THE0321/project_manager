@@ -22,6 +22,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("SELECT A " +
             "FROM Project A " +
             "LEFT JOIN FETCH A.projectStatus " +
+            "LEFT JOIN FETCH A.registerMember " +
             "WHERE (:title IS NULL OR UPPER(A.title) LIKE CONCAT('%', UPPER(:title), '%')) " +
             "AND (:statusIdx IS NULL OR A.statusIdx = :statusIdx) " +
             "AND (:startDate IS NULL OR A.startDate >= :startDate) " +

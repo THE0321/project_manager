@@ -18,6 +18,23 @@
                         <th><label for="name">팀명</label></th>
                         <td><input type="text" id="name" data-max="30" placeholder="팀명" th:value="${detail.name}" /></td>
                     </tr>
+                    <tr>
+                        <th><label for="member_search">담당자</label></th>
+                        <td>
+                            <input type="text" id="member_search" placeholder="유저를 선택해주세요." />
+                            <ul class="select-ul" id="member_search_list"></ul>
+                        </td>
+                    </tr>
+                    <tr class="h_auto">
+                        <th></th>
+                        <td>
+                            <div id="member_list" class="manager-dom">
+                                <div th:each="member : ${member_list}" class="member" th:data-idx="${member.idx}" th:data-member="${member.memberIdx}">
+                                    [[${member.memberName}]]<i class="delete_item"></i>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
                 <tfoot>
                     <tr>
@@ -37,4 +54,5 @@
 </main>
 </body>
 <script th:src="@{/js/team/detail.js}"></script>
+<script th:src="@{/js/member/search.js}"></script>
 </html>

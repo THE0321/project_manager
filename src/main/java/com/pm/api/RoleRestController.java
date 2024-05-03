@@ -4,7 +4,6 @@ import com.pm.dto.RoleDto;
 import com.pm.service.RoleService;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,12 +33,12 @@ public class RoleRestController {
     @PostMapping("/save")
     public ResponseData save(@RequestParam(required = false, value = "idx") Long idx,
                              @RequestParam(required = false, value = "name") String name,
-                             HttpServletRequest request, Model model) {
+                             HttpServletRequest request) {
         if(name == null || name.isEmpty()) {
             return new ResponseData(false, "역할명을 입력해주세요.", null);
         }
 
-        RoleDto roleDto = null;
+        RoleDto roleDto;
         if(idx == null) {
             roleDto = RoleDto.builder()
                     .name(name)

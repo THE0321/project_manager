@@ -57,15 +57,23 @@ public class Project {
     @Column(updatable = false)
     private Timestamp registDate;
 
-    @Column(updatable = false)
+    @Column(name = "register", insertable = false, updatable=false)
     private Long register;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "register", referencedColumnName = "idx")
+    private Member registerMember;
 
     @LastModifiedDate
     @Column(insertable = false)
     private Timestamp modifyDate;
 
-    @Column(insertable = false)
+    @Column(name = "modifier", insertable = false, updatable=false)
     private Long modifier;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "modifier", referencedColumnName = "idx")
+    private Member modifierMember;
 
     // DTO 변환
     public ProjectDto toDto() {
@@ -79,14 +87,14 @@ public class Project {
                 .statusName(projectStatus == null ? null : projectStatus.getName())
                 .statusDate(statusDate)
                 .registDate(registDate)
-                .register(register)
+                .register(registerMember == null ? null : registerMember.getIdx())
                 .modifyDate(modifyDate)
-                .modifier(modifier)
+                .modifier(modifierMember == null ? null : modifierMember.getIdx())
                 .build();
     }
 
     @Builder
-    public Project(Long idx, String title, String description, Date startDate, Date endDate, Long statusIdx, ProjectStatus projectStatus, Timestamp statusDate, Timestamp registDate, Long register, Timestamp modifyDate, Long modifier) {
+    public Project(Long idx, String title, String description, Date startDate, Date endDate, Long statusIdx, ProjectStatus projectStatus, Timestamp statusDate, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember) {
         this.idx = idx;
         this.title = title;
         this.description = description;
@@ -97,7 +105,9 @@ public class Project {
         this.statusDate = statusDate;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.register = register;
+        this.registerMember = registerMember;
         this.modifyDate = modifyDate;
         this.modifier = modifier;
+        this.modifierMember = modifierMember;
     }
 }

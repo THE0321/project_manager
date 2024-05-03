@@ -23,5 +23,5 @@ $("#regist_btn").click(function() {
 // 수정/상세
 $("#item_list tr").click(function() {
     const idx = $(this).data("idx");
-    location.href = `/project/detail/${idx}`;
+    location.href = `/position/detail/${idx}`;
 });

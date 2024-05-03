@@ -26,9 +26,13 @@ import java.sql.Timestamp;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "member")
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
+
+    @Column
+    private Long profileIdx;
 
     @Column(name = "position_idx", insertable = false, updatable=false)
     private Long positionIdx;
@@ -107,9 +111,33 @@ public class Member {
                 .build();
     }
 
+    // DTO 변환(Password 제외)
+    public MemberDto toDtoWithout() {
+        return MemberDto.builder()
+                .idx(idx)
+                .profileIdx(profileIdx)
+                .positionIdx(position == null ? null : position.getIdx())
+                .positionName(position == null ? null : position.getName())
+                .roleIdx(role == null ? null : role.getIdx())
+                .roleName(role == null ? null : role.getName())
+                .name(name)
+                .account(account)
+                .note(note)
+                .disableYn(disableYn)
+                .registDate(registDate)
+                .register(registerMember == null ? null : registerMember.getIdx())
+                .registerName(registerMember == null ? null : registerMember.getName())
+                .modifyDate(modifyDate)
+                .modifier(modifierMember == null ? null : modifierMember.getIdx())
+                .modifierName(modifierMember == null ? null : modifierMember.getName())
+                .deleteYn(deleteYn)
+                .build();
+    }
+
     @Builder
-    public Member(Long idx, Long positionIdx, Position position, Long roleIdx, Role role, String name, String account, String password, String note, Character disableYn, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember, Character deleteYn) {
+    public Member(Long idx, Long profileIdx, Long positionIdx, Position position, Long roleIdx, Role role, String name, String account, String password, String note, Character disableYn, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember, Character deleteYn) {
         this.idx = idx;
+        this.profileIdx = profileIdx;
         this.positionIdx = positionIdx;
         this.position = position;
         this.roleIdx = roleIdx;
@@ -125,6 +153,6 @@ public class Member {
         this.modifyDate = modifyDate;
         this.modifier = modifier;
         this.modifierMember = modifierMember;
-        this.deleteYn = deleteYn == null ? 'Y' : deleteYn;
+        this.deleteYn = deleteYn == null ? 'N' : deleteYn;
     }
 }
