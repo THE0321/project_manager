@@ -30,6 +30,8 @@ public class TeamRestController {
     @PostMapping("/save")
     public ResponseData save(@RequestParam(required = false, value = "idx") Long idx,
                              @RequestParam(required = false, value = "name") String name,
+                             @RequestParam(required = false, value = "member_list") Long[] memberList,
+                             @RequestParam(required = false, value = "delete_list") Long[] deleteTeamList,
                              HttpServletRequest request) {
         if(name == null || name.isEmpty()) {
             return new ResponseData(false, "팀명을 입력해주세요.", null);
@@ -46,7 +48,18 @@ public class TeamRestController {
             teamDto.setName(name);
         }
 
-        return new ResponseData(true, "저장되었습니다.", teamService.saveItem(teamDto));
+        Long result = teamService.saveItem(teamDto);
+
+        // 팀 멤버 저장
+        if(deleteTeamList != null && deleteTeamList.length > 0) {
+            teamService.deleteTeamMember(deleteTeamList);
+        }
+
+        if(memberList != null && memberList.length > 0) {
+            teamService.saveMember(result, memberList, 1L);
+        }
+
+        return new ResponseData(true, "저장되었습니다.", result);
     }
     
     // 팀 목록 조회

@@ -21,7 +21,7 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT A " +
             "FROM Member A " +
-            "WHERE A.deleteYn = 'Y' " +
+            "WHERE A.deleteYn = 'N' " +
             "AND UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%') " +
             "ORDER BY A.name")
     List<Member> findByAll(String name);
@@ -33,7 +33,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "AND UPPER(A.account) LIKE CONCAT('%', UPPER(:account), '%') " +
             "AND (:positionIdx IS NULL OR A.positionIdx = :positionIdx) " +
             "AND (:roleIdx IS NULL OR A.roleIdx = :roleIdx) " +
-            "AND A.deleteYn = 'Y' " +
+            "AND A.deleteYn = 'N' " +
             "ORDER BY A.idx DESC")
     List<Member> findByNameAndAccountAndPositionIdxAndRoleIdxOrderByIdxDesc(String name, String account, Long positionIdx, Long roleIdx);
 
@@ -43,7 +43,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "AND UPPER(A.account) LIKE CONCAT('%', UPPER(:account), '%') " +
             "AND (:positionIdx IS NULL OR A.positionIdx = :positionIdx) " +
             "AND (:roleIdx IS NULL OR A.roleIdx = :roleIdx) " +
-            "AND A.deleteYn = 'Y'")
+            "AND A.deleteYn = 'N'")
     Long countByNameAndAccountAndPositionIdxAndRoleIdx(String name, String account, Long positionIdx, Long roleIdx);
 
     @Query("SELECT A " +

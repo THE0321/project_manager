@@ -24,4 +24,10 @@ public interface TeamMemberRepository extends JpaRepository<TeamMember, Long> {
             "LEFT JOIN FETCH A.team " +
             "WHERE A.memberIdx = :memberIdx")
     List<TeamMember> findByMemberIdx(Long memberIdx);
+
+    @Query("SELECT A " +
+            "FROM TeamMember A " +
+            "LEFT JOIN FETCH A.member " +
+            "WHERE A.teamIdx = :teamIdx")
+    List<TeamMember> findByTeamIdx(Long teamIdx);
 }

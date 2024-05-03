@@ -10,6 +10,8 @@ $("#save_btn").click(function() {
     const form_data = new FormData();
     form_data.append("idx", $("#idx").val());
     form_data.append("name", name);
+    form_data.append("member_list", selectedMemberList());
+    form_data.append("delete_list", delete_member_list);
 
     save(form_data);
 });

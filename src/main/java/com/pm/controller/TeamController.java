@@ -1,6 +1,7 @@
 package com.pm.controller;
 
 import com.pm.dto.TeamDto;
+import com.pm.dto.TeamMemberDto;
 import com.pm.service.TeamService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -46,8 +49,10 @@ public class TeamController {
                          HttpServletRequest request, Model model) {
         if(idx == null) {
             model.addAttribute("detail", new TeamDto());
+            model.addAttribute("member_list", new ArrayList<TeamMemberDto>());
         } else {
             model.addAttribute("detail", teamService.getOne(idx));
+            model.addAttribute("member_list", teamService.getTeamMember(idx));
         }
 
         return "/team/detail";

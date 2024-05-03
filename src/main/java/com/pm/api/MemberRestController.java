@@ -3,6 +3,7 @@ package com.pm.api;
 import com.pm.dto.MemberDto;
 import com.pm.dto.TeamMemberDto;
 import com.pm.service.MemberService;
+import com.pm.service.TeamService;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +28,10 @@ import java.util.List;
 @RequestMapping("/api/member")
 public class MemberRestController {
     private final MemberService memberService;
-    public MemberRestController(MemberService memberService) {
+    private final TeamService teamService;
+    public MemberRestController(MemberService memberService, TeamService teamService) {
         this.memberService = memberService;
+        this.teamService = teamService;
     }
     
     // 유저 저장
@@ -85,11 +88,11 @@ public class MemberRestController {
         
         // 팀 멤버 저장
         if(deleteTeamList != null && deleteTeamList.length > 0) {
-            memberService.deleteTeam(deleteTeamList);
+            teamService.deleteTeamMember(deleteTeamList);
         }
         
         if(teamList != null && teamList.length > 0) {
-            memberService.saveTeam(result, teamList, 1L);
+            teamService.saveTeam(result, teamList, 1L);
         }
 
         return new ResponseData(true, "저장되었습니다.", result);

@@ -101,19 +101,4 @@ public class MemberService {
 
         return resultList;
     }
-
-    // 팀 추가
-    @Transactional
-    public void saveTeam(Long memberIdx, Long[] idxArray, Long register) {
-        List<Long> idxList = Arrays.asList(idxArray);
-        idxList.forEach(teamIdx -> {
-            teamMemberRepository.save(TeamMemberDto.builder().teamIdx(teamIdx).memberIdx(memberIdx).register(register).build().toEntity());
-        });
-    }
-
-    // 팀 제거
-    @Transactional
-    public void deleteTeam(Long[] idxArray) {
-        Arrays.asList(idxArray).forEach(teamMemberRepository::deleteById);
-    }
 }
