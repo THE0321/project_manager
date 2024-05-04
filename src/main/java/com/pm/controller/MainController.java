@@ -1,12 +1,17 @@
 package com.pm.controller;
 
+import com.pm.service.ProjectService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class MainController {
+public class MainController extends com.pm.util.Controller {
     @GetMapping(value = {"/", ""})
-    public String index() {
+    public String index(HttpServletRequest request, Model model) {
+        model = super.setModel(request, model);
+
         return "index";
     }
 }

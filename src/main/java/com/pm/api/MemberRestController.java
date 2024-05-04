@@ -43,6 +43,7 @@ public class MemberRestController {
                              @RequestParam(required = false, value = "position_idx") Long positionIdx,
                              @RequestParam(required = false, value = "role_idx") Long roleIdx,
                              @RequestParam(required = false, value = "disable_yn") Character disableYn,
+                             @RequestParam(required = false, value = "admin_yn") Character adminYn,
                              @RequestParam(required = false, value = "team_list") Long[] teamList,
                              @RequestParam(required = false, value = "delete_list") Long[] deleteTeamList,
                              @RequestParam(required = false, value = "note") String note,
@@ -68,6 +69,7 @@ public class MemberRestController {
                     .positionIdx(positionIdx)
                     .roleIdx(roleIdx)
                     .disableYn(disableYn)
+                    .adminYn(adminYn)
                     .note(note)
                     .register(1L)
                     .build();
@@ -79,6 +81,7 @@ public class MemberRestController {
             memberDto.setPositionIdx(positionIdx);
             memberDto.setRoleIdx(roleIdx);
             memberDto.setDisableYn(disableYn);
+            memberDto.setAdminYn(adminYn);
             memberDto.setNote(note);
             memberDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
             memberDto.setModifier(1L);

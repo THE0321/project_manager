@@ -28,7 +28,7 @@ import java.util.ArrayList;
  **/
 @Controller
 @RequestMapping("/project")
-public class ProjectController {
+public class ProjectController extends com.pm.util.Controller {
     private final ProjectService projectService;
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
@@ -42,6 +42,8 @@ public class ProjectController {
                        @RequestParam(required = false, value = "end_date") String endDate,
                        @RequestParam(required = false, value = "page") Long page,
                        HttpServletRequest request, Model model) {
+        model = super.setModel(request, model);
+
         model.addAttribute("param_title", title);
         model.addAttribute("param_status_idx", statusIdx);
         model.addAttribute("param_start_date", startDate);
@@ -58,6 +60,8 @@ public class ProjectController {
     @GetMapping(value = {"/detail", "/detail/{idx}"})
     public String detail(@PathVariable(required = false) Long idx,
                          HttpServletRequest request, Model model) {
+        model = super.setModel(request, model);
+
         model.addAttribute("status_list", projectService.getStatus());
 
         if(idx == null) {

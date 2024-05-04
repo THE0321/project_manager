@@ -27,7 +27,7 @@ import java.util.ArrayList;
  **/
 @Controller
 @RequestMapping("/team")
-public class TeamController {
+public class TeamController extends com.pm.util.Controller {
     private final TeamService teamService;
     public TeamController(TeamService teamService) {
         this.teamService = teamService;
@@ -37,6 +37,8 @@ public class TeamController {
     @GetMapping(value = {"/", ""})
     public String list(@RequestParam(required = false, value = "name") String name,
                        HttpServletRequest request, Model model) {
+        model = super.setModel(request, model);
+
         model.addAttribute("param_name", name);
         model.addAttribute("list", teamService.getList(name));
 
@@ -47,6 +49,8 @@ public class TeamController {
     @GetMapping(value = {"/detail", "/detail/{idx}"})
     public String detail(@PathVariable(required = false) Long idx,
                          HttpServletRequest request, Model model) {
+        model = super.setModel(request, model);
+
         if(idx == null) {
             model.addAttribute("detail", new TeamDto());
             model.addAttribute("member_list", new ArrayList<TeamMemberDto>());
