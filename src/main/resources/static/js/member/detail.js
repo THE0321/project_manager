@@ -8,8 +8,7 @@ $("#save_btn").click(function() {
     const position_idx = $("#position_idx").val();
     const role_idx = $("#role_idx").val();
     const disable_yn = $("[name=disable_yn]:checked");
-
-    const team_list = $("#team_list .team");
+    const admin_yn = $("[name=admin_yn]:checked");
 
     if(!name) {
         alertMsg("이름을 입력해주세요.");
@@ -39,6 +38,7 @@ $("#save_btn").click(function() {
     form_data.append("position_idx", position_idx ? position_idx : "");
     form_data.append("role_idx", role_idx ? role_idx : "");
     form_data.append("disable_yn", disable_yn.length ? disable_yn.val() : "N");
+    form_data.append("admin_yn", admin_yn.length ? admin_yn.val() : "N");
     form_data.append("note", $("#note").val());
     form_data.append("team_list", selectedTeamList());
     form_data.append("delete_list", delete_member_list);

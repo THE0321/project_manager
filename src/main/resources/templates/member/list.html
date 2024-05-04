@@ -60,6 +60,7 @@
         <div>
             <table class="table">
                 <colgroup>
+                    <col style="width: 100px;">
                     <col style="min-width: 300px;">
                     <col style="min-width: 300px;">
                     <col style="width: 150px;">
@@ -68,6 +69,7 @@
                 </colgroup>
                 <thead>
                     <tr>
+                        <th>관리자</th>
                         <th>이름</th>
                         <th>계정</th>
                         <th>직급</th>
@@ -77,6 +79,7 @@
                 </thead>
                 <tbody id="item_list">
                     <tr th:each="item : ${list}" th:data-idx="${item.idx}">
+                        <td class="center_t" th:text="${#strings.equals(item.adminYn, 'Y') ? '관리자' : '일반'}"></td>
                         <td th:text="${item.name}"></td>
                         <td th:text="${item.account}"></td>
                         <td>

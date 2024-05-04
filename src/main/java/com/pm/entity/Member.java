@@ -63,6 +63,9 @@ public class Member {
     @Column
     private Character disableYn;
 
+    @Column
+    private Character adminYn;
+
     @CreatedDate
     @Column(updatable = false)
     private Timestamp registDate;
@@ -101,6 +104,7 @@ public class Member {
                 .password(password)
                 .note(note)
                 .disableYn(disableYn)
+                .adminYn(adminYn)
                 .registDate(registDate)
                 .register(registerMember == null ? null : registerMember.getIdx())
                 .registerName(registerMember == null ? null : registerMember.getName())
@@ -124,6 +128,7 @@ public class Member {
                 .account(account)
                 .note(note)
                 .disableYn(disableYn)
+                .adminYn(adminYn)
                 .registDate(registDate)
                 .register(registerMember == null ? null : registerMember.getIdx())
                 .registerName(registerMember == null ? null : registerMember.getName())
@@ -135,7 +140,7 @@ public class Member {
     }
 
     @Builder
-    public Member(Long idx, Long profileIdx, Long positionIdx, Position position, Long roleIdx, Role role, String name, String account, String password, String note, Character disableYn, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember, Character deleteYn) {
+    public Member(Long idx, Long profileIdx, Long positionIdx, Position position, Long roleIdx, Role role, String name, String account, String password, String note, Character disableYn, Character adminYn, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember, Character deleteYn) {
         this.idx = idx;
         this.profileIdx = profileIdx;
         this.positionIdx = positionIdx;
@@ -147,6 +152,7 @@ public class Member {
         this.password = password;
         this.note = note;
         this.disableYn = disableYn == null ? 'N' : disableYn;
+        this.adminYn = adminYn == null ? 'N' : adminYn;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.register = register;
         this.registerMember = registerMember;

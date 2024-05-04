@@ -5,7 +5,6 @@ import com.pm.dto.TeamMemberDto;
 import com.pm.service.MemberService;
 import com.pm.service.PositionService;
 import com.pm.service.RoleService;
-import com.pm.service.TeamService;
 import com.pm.util.Paging;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -31,7 +30,7 @@ import java.util.ArrayList;
  **/
 @Controller
 @RequestMapping("/member")
-public class MemberController {
+public class MemberController extends com.pm.util.Controller {
     private final MemberService memberService;
     private final PositionService positionService;
     private final RoleService roleService;
@@ -49,6 +48,8 @@ public class MemberController {
                        @RequestParam(required = false, value = "role_idx") Long roleIdx,
                        @RequestParam(required = false, value = "page") Long page,
                        HttpServletRequest request, Model model) {
+        model = super.setModel(request, model);
+
         model.addAttribute("param_name", name);
         model.addAttribute("param_account", account);
         model.addAttribute("param_position_idx", positionIdx);
@@ -66,6 +67,8 @@ public class MemberController {
     @GetMapping(value = {"/detail", "/detail/{idx}"})
     public String detail(@PathVariable(required = false) Long idx,
                        HttpServletRequest request, Model model) {
+        model = super.setModel(request, model);
+
         model.addAttribute("position_list", positionService.getList(null));
         model.addAttribute("role_list", roleService.getList(null));
 

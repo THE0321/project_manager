@@ -35,6 +35,7 @@ public class MemberDto {
     private String password;
     private String note;
     private Character disableYn;
+    private Character adminYn;
     private Timestamp registDate;
     private Long register;
     private String registerName;
@@ -73,6 +74,7 @@ public class MemberDto {
                 .password(password)
                 .note(note)
                 .disableYn(disableYn)
+                .adminYn(adminYn)
                 .registDate(registDate)
                 .register(register)
                 .registerMember(registerMember)
@@ -83,7 +85,7 @@ public class MemberDto {
     }
 
     @Builder
-    public MemberDto(Long idx, Long profileIdx, String positionName, Long positionIdx, String roleName, Long roleIdx, String name, String account, String password, String note, Character disableYn, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, String modifierName, Character deleteYn) {
+    public MemberDto(Long idx, Long profileIdx, String positionName, Long positionIdx, String roleName, Long roleIdx, String name, String account, String password, String note, Character disableYn, Character adminYn, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, String modifierName, Character deleteYn) {
         this.idx = idx;
         this.profileIdx = profileIdx;
         this.positionName = positionName;
@@ -95,6 +97,7 @@ public class MemberDto {
         this.password = password;
         this.note = note;
         this.disableYn = disableYn;
+        this.adminYn = adminYn;
         this.registDate = registDate;
         this.register = register;
         this.registerName = registerName;

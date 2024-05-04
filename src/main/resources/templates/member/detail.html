@@ -15,6 +15,23 @@
                 </colgroup>
                 <tbody>
                     <tr>
+                        <th>관리자 여부</th>
+                        <td>
+                            <div>
+                                <div class="inline-flex">
+                                    <input type="radio" id="admin_y" name="admin_yn" value="Y" th:checked="${#strings.equals(detail.adminYn, 'Y')}">
+                                    <label for="admin_y"></label>
+                                    <span onclick="admin_y.click()">관리자</span>
+                                </div>
+                                <div class="inline-flex">
+                                    <input type="radio" id="admin_n" name="admin_yn" value="N" th:checked="${#strings.equals(detail.adminYn, 'N') || detail.adminYn == null}">
+                                    <label for="admin_n"></label>
+                                    <span onclick="admin_n.click()">일반</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
                         <th><label for="name">이름</label></th>
                         <td><input type="text" id="name" data-max="100" placeholder="이름" th:value="${detail.name}" /></td>
                     </tr>
@@ -23,9 +40,7 @@
                         <td>
                             <select id="position_idx">
                                 <option value="" disabled selected>선택</option>
-                                <option>1</option>
-                                <option>1</option>
-                                <option>1</option>
+                                <option th:each="position : ${position_list}" th:value="${position.idx}" th:selected="${position.idx == detail.positionIdx}" th:text="${position.name}"></option>
                             </select>
                         </td>
                     </tr>
@@ -34,9 +49,7 @@
                         <td>
                             <select id="role_idx">
                                 <option value="" disabled selected>선택</option>
-                                <option>1</option>
-                                <option>1</option>
-                                <option>1</option>
+                                <option th:each="role : ${role_list}" th:value="${role.idx}" th:selected="${role.idx == detail.roleIdx}" th:text="${role.name}"></option>
                             </select>
                         </td>
                     </tr>

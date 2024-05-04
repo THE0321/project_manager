@@ -3,10 +3,8 @@
         <ul class="nav">
             <div class="logo"><span class="bold_t">PROJECT MANAGER</span></div>
             <select class="ml_20">
-                <option>1</option>
-                <option>1</option>
-                <option>1</option>
-                <option>1</option>
+                <option th:if="${#strings.equals(session_info.adminYn, 'Y')}" th:data-idx="admin">관리자 페이지</option>
+                <option th:each="project : ${session_project_list}" th:data-idx="${project.idx}" th:text="${project.title}"></option>
             </select>
         </ul>
         <ul class="nav">
@@ -18,12 +16,21 @@
         </ul>
     </div>
 </nav>
-<div class="header-gnb">
+<div th:if="${false}" class="header-gnb">
+    <ul class="nav" th:data-value="${current_page}">
+        <li class="nav-item"><a href="/project" th:class='|nav-link ${#strings.equals(current_page, "project") ? "active" : ""}|'>PROJECT</a></li>
+        <li class="nav-item"><a href="/member" th:class='|nav-link ${#strings.equals(current_page, "member") ? "active" : ""}|'>MEMBER</a></li>
+        <li class="nav-item"><a href="/team" th:class='|nav-link ${#strings.equals(current_page, "team") ? "active" : ""}|'>TEAM</a></li>
+        <li class="nav-item"><a href="/position" th:class='|nav-link ${#strings.equals(current_page, "position") ? "active" : ""}|'>POSITION</a></li>
+        <li class="nav-item"><a href="/role" th:class='|nav-link ${#strings.equals(current_page, "role") ? "active" : ""}|'>ROLE</a></li>
+    </ul>
+</div>
+<div th:unless="${false}" class="header-gnb">
     <ul class="nav">
-        <li class="nav-item"><a href="/project" class="nav-link active">PROJECT</a></li>
-        <li class="nav-item"><a href="/member" class="nav-link">MEMBER</a></li>
-        <li class="nav-item"><a href="/team" class="nav-link">TEAM</a></li>
-        <li class="nav-item"><a href="/position" class="nav-link">POSITION</a></li>
-        <li class="nav-item"><a href="/role" class="nav-link">ROLE</a></li>
+        <li class="nav-item"><a href="/action" th:class='|nav-link ${#strings.equals(current_page, "action") ? "active" : ""}|'>ACTION-ITEM</a></li>
+        <li class="nav-item"><a href="/testcase" th:class='|nav-link ${#strings.equals(current_page, "testcase") ? "active" : ""}|'>TEST-CASE</a></li>
+        <li class="nav-item"><a href="/risk" th:class='|nav-link ${#strings.equals(current_page, "risk") ? "active" : ""}|'>RISK</a></li>
+        <li class="nav-item"><a href="/issue" th:class='|nav-link ${#strings.equals(current_page, "issue") ? "active" : ""}|'>ISSUE</a></li>
+        <li class="nav-item"><a href="/drive" th:class='|nav-link ${#strings.equals(current_page, "drive") ? "active" : ""}|'>DRIVE</a></li>
     </ul>
 </div>

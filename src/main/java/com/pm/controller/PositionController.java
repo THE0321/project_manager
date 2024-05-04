@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  **/
 @Controller
 @RequestMapping("/position")
-public class PositionController {
+public class PositionController extends com.pm.util.Controller {
     private final PositionService positionService;
     public PositionController(PositionService positionService) {
         this.positionService = positionService;
@@ -34,6 +34,8 @@ public class PositionController {
     @GetMapping(value = {"/", ""})
     public String list(@RequestParam(required = false, value = "name") String name,
                        HttpServletRequest request, Model model) {
+        model = super.setModel(request, model);
+
         model.addAttribute("param_name", name);
         model.addAttribute("list", positionService.getList(name));
 
@@ -44,6 +46,8 @@ public class PositionController {
     @GetMapping(value = {"/detail", "/detail/{idx}"})
     public String detail(@PathVariable(required = false) Long idx,
                          HttpServletRequest request, Model model) {
+        model = super.setModel(request, model);
+
         if(idx == null) {
             model.addAttribute("detail", new PositionDto());
         } else {
