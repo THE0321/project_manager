@@ -144,6 +144,6 @@ public class MemberRestController {
     @GetMapping("/get_list")
     public ResponseData getList(@RequestParam(required = false, value = "name") String name,
                                 HttpServletRequest request) {
-        return new ResponseData(true, "조회했습니다.", memberService.getListAll(name));
+        return new ResponseData(true, "조회했습니다.", memberService.getListAll(3L, name));
     }
 }

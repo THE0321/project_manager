@@ -4,9 +4,21 @@
 <body>
 <main>
     <div class="header-dom" th:insert="common/header.html"></div>
-    <input type="hidden" id="page" th:value="${page.page}"/>
+    <input type="hidden" id="directory_idx" th:value="${param_directory_idx}" />
+    <input type="hidden" id="page" th:value="${page.page}" />
+    <div class="side-dom">
+        <div class="side-menu">
+            <ul>
+                <li th:each="directory : ${directory_list}" class="active" th:data-idx="${directory.idx}" th:text="${directory.title}"></li>
+            </ul>
+        </div>
+        <div id="regist_directory" class="side-btn">
+            <span>등록하기</span>
+        </div>
+    </div>
+
     <div class="body">
-        <p class="title">PROJECT</p>
+        <p class="title">ACTION ITEM</p>
         <div class="title-btn">
             <a id="regist_btn" class="btn light clipboard">등록하기</a>
         </div>
@@ -22,8 +34,8 @@
                 </colgroup>
                 <tbody>
                     <tr>
-                        <th><label for="title">프로젝트명</label></th>
-                        <td><input type="text" id="title" placeholder="프로젝트명" th:value="${param_title}" /></td>
+                        <th><label for="title">액션 아이템 제목</label></th>
+                        <td><input type="text" id="title" placeholder="액션 아이템 제목" th:value="${param_title}" /></td>
                         <th>상태</th>
                         <td>
                             <div>
@@ -66,28 +78,28 @@
                     <col style="width: 100px;">
                 </colgroup>
                 <thead>
-                    <tr>
-                        <th>상태</th>
-                        <th>프로젝트명</th>
-                        <th>시작일자</th>
-                        <th>종료일자</th>
-                        <th>등록자</th>
-                        <th>등록일</th>
-                    </tr>
+                <tr>
+                    <th>상태</th>
+                    <th>액션 아이템 제목</th>
+                    <th>시작일자</th>
+                    <th>종료일자</th>
+                    <th>등록자</th>
+                    <th>등록일</th>
+                </tr>
                 </thead>
                 <tbody id="item_list">
-                    <tr th:each="item : ${list}" th:data-idx="${item.idx}">
-                        <td>
-                            <select class="center_t w_full status_select">
-                                <option th:each="status : ${status_list}" th:value="${status.idx}" th:text="${status.name}" th:selected="${status.idx == item.statusIdx}"></option>
-                            </select>
-                        </td>
-                        <td th:text="${item.title}"></td>
-                        <td class="center_t" th:text="${#dates.format(item.startDate, 'yyyy-MM-dd')}"></td>
-                        <td class="center_t" th:text="${#dates.format(item.endDate, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${item.registerName}"></td>
-                        <td class="center_t" th:text="${#dates.format(item.registDate, 'yyyy-MM-dd')}"></td>
-                    </tr>
+                <tr th:each="item : ${list}" th:data-idx="${item.idx}">
+                    <td>
+                        <select class="center_t w_full status_select">
+                            <option th:each="status : ${status_list}" th:value="${status.idx}" th:text="${status.name}" th:selected="${status.idx == item.statusIdx}"></option>
+                        </select>
+                    </td>
+                    <td th:text="${item.title}"></td>
+                    <td class="center_t" th:text="${#dates.format(item.startDate, 'yyyy-MM-dd')}"></td>
+                    <td class="center_t" th:text="${#dates.format(item.endDate, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${item.registerName}"></td>
+                    <td class="center_t" th:text="${#dates.format(item.registDate, 'yyyy-MM-dd')}"></td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -111,5 +123,6 @@
     </div>
 </main>
 </body>
-<script th:src="@{/js/project/list.js}" defer></script>
+<script th:src="@{/js/directory/list.js}"></script>
+<script th:src="@{/js/action_item/list.js}"></script>
 </html>

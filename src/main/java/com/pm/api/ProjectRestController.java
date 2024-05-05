@@ -1,7 +1,6 @@
 package com.pm.api;
 
 import com.pm.dto.ProjectDto;
-import com.pm.dto.ProjectMemberDto;
 import com.pm.service.ProjectService;
 import com.pm.util.DateFormat;
 import com.pm.values.ResponseData;
@@ -9,8 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  *
@@ -107,7 +104,12 @@ public class ProjectRestController {
         projectDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
         projectDto.setModifier(1L);
 
-        if(!projectDto.getStatusIdx().equals(statusIdx)) {
+        if(projectDto.getStatusIdx() == null) {
+            if(statusIdx != null) {
+                projectDto.setStatusIdx(statusIdx);
+                projectDto.setStatusDate(new Timestamp(System.currentTimeMillis()));
+            }
+        } else if(!projectDto.getStatusIdx().equals(statusIdx)) {
             projectDto.setStatusIdx(statusIdx);
             projectDto.setStatusDate(new Timestamp(System.currentTimeMillis()));
         }

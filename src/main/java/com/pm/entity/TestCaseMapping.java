@@ -1,6 +1,6 @@
 package com.pm.entity;
 
-import com.pm.dto.ActionItemMemberDto;
+import com.pm.dto.TestCaseMappingDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -12,21 +12,21 @@ import java.sql.Timestamp;
 
 /**
  *
- * action_item_member JPA Repository
+ * test_case_mapping Entity
  *
  * @author HTH
  * @version 1.0.0
- * @date 2024-05-04
+ * @date 2024-05-05
  * ========================================================
  *  DATE                AUTHOR          NOTE
  * ========================================================
- *  2024-05-04          HTH             최초 등록
+ *  2024-05-05          HTH             최초 등록
  **/
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "action_item_member")
-public class ActionItemMember {
+@Table(name = "test_case_mapping")
+public class TestCaseMapping {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
@@ -37,12 +37,12 @@ public class ActionItemMember {
     @JoinColumn(name = "action_item_idx", referencedColumnName = "idx")
     private ActionItem actionItem;
 
-    @Column(name = "member_idx", insertable = false, updatable=false)
-    private Long memberIdx;
+    @Column(name = "test_case_idx", insertable = false, updatable=false)
+    private Long testCaseIdx;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_idx", referencedColumnName = "idx")
-    private Member member;
+    @JoinColumn(name = "test_case_idx", referencedColumnName = "idx")
+    private TestCase testCase;
 
     @CreatedDate
     @Column(updatable = false)
@@ -52,26 +52,25 @@ public class ActionItemMember {
     private Long register;
 
     // DTO 변환
-    public ActionItemMemberDto toDto() {
-        return ActionItemMemberDto.builder()
+    public TestCaseMappingDto toDto() {
+        return TestCaseMappingDto.builder()
                 .idx(idx)
                 .actionItemIdx(actionItem == null ? null : actionItem.getIdx())
                 .actionItemTitle(actionItem == null ? null : actionItem.getTitle())
-                .memberIdx(member == null ? null : member.getIdx())
-                .memberProfileIdx(member == null ? null : member.getProfileIdx())
-                .memberName(member == null ? null : member.getName())
+                .testCaseIdx(testCase == null ? null : testCase.getIdx())
+                .testCaseTitle(testCase == null ? null : testCase.getTitle())
                 .registDate(registDate)
                 .register(register)
                 .build();
     }
 
     @Builder
-    public ActionItemMember(Long idx, Long actionItemIdx, ActionItem actionItem, Long memberIdx, Member member, Timestamp registDate, Long register) {
+    public TestCaseMapping(Long idx, Long actionItemIdx, ActionItem actionItem, Long testCaseIdx, TestCase testCase, Timestamp registDate, Long register) {
         this.idx = idx;
         this.actionItemIdx = actionItemIdx;
         this.actionItem = actionItem;
-        this.memberIdx = memberIdx;
-        this.member = member;
+        this.testCaseIdx = testCaseIdx;
+        this.testCase = testCase;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.register = register;
     }

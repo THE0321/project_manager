@@ -1,6 +1,5 @@
 package com.pm.entity;
 
-import com.pm.dto.ProjectDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,23 +12,30 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
- *
- * project Entity
- *
+ * 
+ * test_case Entity
+ * 
  * @author HTH
  * @version 1.0.0
- * @date 2024-04-30
+ * @date 2024-05-05
  * ========================================================
- *  DATE                AUTHOR          NOTE
+ *  DATE                AUTHOR          NOTE 
  * ========================================================
- *  2024-04-30          HTH             최초 등록
+ *  2024-05-05          HTH             최초 등록
  **/
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Project {
+@Table(name = "test_case")
+public class TestCase {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
+
+    @Column
+    private Long projectIdx;
+
+    @Column
+    private Long directoryIdx;
 
     @Column(length = 100)
     private String title;
@@ -48,7 +54,7 @@ public class Project {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_idx", referencedColumnName = "idx")
-    private ProjectStatus projectStatus;
+    private TestCaseStatus testCaseStatus;
 
     @Column
     private Timestamp statusDate;
@@ -75,35 +81,20 @@ public class Project {
     @JoinColumn(name = "modifier", referencedColumnName = "idx")
     private Member modifierMember;
 
-    // DTO 변환
-    public ProjectDto toDto() {
-        return ProjectDto.builder()
-                .idx(idx)
-                .title(title)
-                .description(description)
-                .startDate(startDate)
-                .endDate(endDate)
-                .statusIdx(statusIdx)
-                .statusName(projectStatus == null ? null : projectStatus.getName())
-                .statusDate(statusDate)
-                .registDate(registDate)
-                .register(registerMember == null ? null : registerMember.getIdx())
-                .registerName(registerMember == null ? null : registerMember.getName())
-                .modifyDate(modifyDate)
-                .modifier(modifierMember == null ? null : modifierMember.getIdx())
-                .modifierName(modifierMember == null ? null : modifierMember.getName())
-                .build();
-    }
+    @Column
+    private Character deleteYn;
 
     @Builder
-    public Project(Long idx, String title, String description, Date startDate, Date endDate, Long statusIdx, ProjectStatus projectStatus, Timestamp statusDate, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember) {
+    public TestCase(Long idx, Long projectIdx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, TestCaseStatus testCaseStatus, Timestamp statusDate, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember, Character deleteYn) {
         this.idx = idx;
+        this.projectIdx = projectIdx;
+        this.directoryIdx = directoryIdx;
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
         this.statusIdx = statusIdx;
-        this.projectStatus = projectStatus;
+        this.testCaseStatus = testCaseStatus;
         this.statusDate = statusDate;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.register = register;
@@ -111,5 +102,6 @@ public class Project {
         this.modifyDate = modifyDate;
         this.modifier = modifier;
         this.modifierMember = modifierMember;
+        this.deleteYn = deleteYn == null ? 'N' : deleteYn;
     }
 }

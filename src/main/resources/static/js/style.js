@@ -45,7 +45,7 @@ function setDatepicker(id = "") {
 }
 
 // max length
-$("input").on("keyup keydown input", function() {
+$("input, textarea").on("keyup keydown input", function() {
     const max = $(this).data("max");
     if(max) {
         const value = $(this).val();

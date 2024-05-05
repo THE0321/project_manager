@@ -1,22 +1,19 @@
 package com.pm.repository;
 
-import com.pm.entity.Directory;
+import com.pm.entity.TestCaseStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 
 /**
  *
- * directory JPA  Repository
+ * test_case_status JPA Repository
  *
  * @author HTH
  * @version 1.0.0
- * @date 2024-05-04
+ * @date 2024-05-05
  * ========================================================
  *  DATE                AUTHOR          NOTE
  * ========================================================
- *  2024-05-04          HTH             최초 등록
+ *  2024-05-05          HTH             최초 등록
  **/
-public interface DirectoryRepository extends JpaRepository<Directory, Long> {
-    List<Directory> findByProjectIdxOrderByTitle(Long projectIdx);
+public interface TestCaseStatusRepository extends JpaRepository<TestCaseStatus, Long> {
 }

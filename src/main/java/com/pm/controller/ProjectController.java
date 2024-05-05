@@ -3,6 +3,7 @@ package com.pm.controller;
 import com.pm.dto.ProjectDto;
 import com.pm.dto.ProjectMemberDto;
 import com.pm.service.ProjectService;
+import com.pm.util.DateFormat;
 import com.pm.util.Paging;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 /**
@@ -43,15 +45,19 @@ public class ProjectController extends com.pm.util.Controller {
                        @RequestParam(required = false, value = "page") Long page,
                        HttpServletRequest request, Model model) {
         model = super.setModel(request, model);
+        DateFormat dateFormat = new DateFormat();
 
         model.addAttribute("param_title", title);
         model.addAttribute("param_status_idx", statusIdx);
         model.addAttribute("param_start_date", startDate);
         model.addAttribute("param_end_date", endDate);
 
+        Date sqlStartDate = startDate == null ? null : dateFormat.parseDate(startDate);
+        Date sqlEndDate = endDate == null ? null : dateFormat.parseDate(endDate);
+
         model.addAttribute("status_list", projectService.getStatus());
-        model.addAttribute("list", projectService.getList(title, statusIdx, startDate, endDate, page));
-        model.addAttribute("page", new Paging(page, projectService.getCount(title, statusIdx, startDate, endDate)));
+        model.addAttribute("list", projectService.getList(title, statusIdx, sqlStartDate, sqlEndDate, page));
+        model.addAttribute("page", new Paging(page, projectService.getCount(title, statusIdx, sqlStartDate, sqlEndDate)));
 
         return "/project/list";
     }
