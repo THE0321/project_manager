@@ -4,6 +4,7 @@ import com.pm.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -23,21 +24,20 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             "FROM Project A " +
             "LEFT JOIN FETCH A.projectStatus " +
             "LEFT JOIN FETCH A.registerMember " +
-            "WHERE (:title IS NULL OR UPPER(A.title) LIKE CONCAT('%', UPPER(:title), '%')) " +
+            "WHERE UPPER(A.title) LIKE CONCAT('%', UPPER(:title), '%') " +
             "AND (:statusIdx IS NULL OR A.statusIdx = :statusIdx) " +
             "AND (:startDate IS NULL OR A.startDate >= :startDate) " +
             "AND (:endDate IS NULL OR A.endDate <= :endDate) " +
             "ORDER BY A.idx DESC")
-    List<Project> findByTitleAndStatusIdxAndStartDateAndEndDateOrderByIdxDesc(String title, Long statusIdx, String startDate, String endDate);
-
+    List<Project> findByTitleAndStatusIdxAndStartDateAndEndDateOrderByIdxDesc(String title, Long statusIdx, Date startDate, Date endDate);
 
     @Query("SELECT COUNT(A.idx) " +
             "FROM Project A " +
-            "WHERE (:title IS NULL OR UPPER(A.title) LIKE CONCAT('%', UPPER(:title), '%')) " +
+            "WHERE UPPER(A.title) LIKE CONCAT('%', UPPER(:title), '%') " +
             "AND (:statusIdx IS NULL OR A.statusIdx = :statusIdx) " +
             "AND (:startDate IS NULL OR A.startDate >= :startDate) " +
             "AND (:endDate IS NULL OR A.endDate <= :endDate)")
-    Long countByTitleAndStatusIdxAndStartDateAndEndDate(String title, Long statusIdx, String startDate, String endDate);
+    Long countByTitleAndStatusIdxAndStartDateAndEndDate(String title, Long statusIdx, Date startDate, Date endDate);
 
     @Query("SELECT A " +
             "FROM Project A " +

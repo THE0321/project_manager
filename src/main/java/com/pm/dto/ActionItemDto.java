@@ -26,6 +26,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class ActionItemDto {
     private Long idx;
+    private Long projectIdx;
     private Long directoryIdx;
     private String title;
     private String description;
@@ -50,6 +51,7 @@ public class ActionItemDto {
 
         return ActionItem.builder()
                 .idx(idx)
+                .projectIdx(projectIdx)
                 .directoryIdx(directoryIdx)
                 .title(title)
                 .description(description)
@@ -69,8 +71,9 @@ public class ActionItemDto {
     }
 
     @Builder
-    public ActionItemDto(Long idx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, String statusName, Timestamp statusDate, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, String modifierName, Character deleteYn) {
+    public ActionItemDto(Long idx, Long projectIdx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, String statusName, Timestamp statusDate, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, String modifierName, Character deleteYn) {
         this.idx = idx;
+        this.projectIdx = projectIdx;
         this.directoryIdx = directoryIdx;
         this.title = title;
         this.description = description;

@@ -4,12 +4,14 @@ import com.pm.dto.ProjectDto;
 import com.pm.dto.ProjectMemberDto;
 import com.pm.dto.ProjectStatusDto;
 import com.pm.entity.Project;
+import com.pm.entity.ProjectMember;
 import com.pm.repository.ProjectMemberRepository;
 import com.pm.repository.ProjectRepository;
 import com.pm.repository.ProjectStatusRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,15 +41,18 @@ public class ProjectService {
 
     // 갯수 조회
     @Transactional
-    public Long getCount(String title, Long statusIdx, String startDate, String endDate) {
+    public Long getCount(String title, Long statusIdx, Date startDate, Date endDate) {
+        title = title == null ? "" : title;
+
         return projectRepository.countByTitleAndStatusIdxAndStartDateAndEndDate(title, statusIdx, startDate, endDate);
     }
 
     // 목록 조회
     @Transactional
-    public List<ProjectDto> getList(String title, Long statusIdx, String startDate, String endDate, Long page) {
-        List<ProjectDto> resultList = new ArrayList<>();
+    public List<ProjectDto> getList(String title, Long statusIdx, Date startDate, Date endDate, Long page) {
+        title = title == null ? "" : title;
 
+        List<ProjectDto> resultList = new ArrayList<>();
         projectRepository.findByTitleAndStatusIdxAndStartDateAndEndDateOrderByIdxDesc(title, statusIdx, startDate, endDate).forEach(project -> {
             resultList.add(project.toDto());
         });

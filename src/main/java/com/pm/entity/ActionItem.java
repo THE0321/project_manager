@@ -33,6 +33,9 @@ public class ActionItem {
     private Long idx;
 
     @Column
+    private Long projectIdx;
+
+    @Column
     private Long directoryIdx;
 
     @Column(length = 100)
@@ -83,9 +86,10 @@ public class ActionItem {
     private Character deleteYn;
 
     // DTO 변환
-    private ActionItemDto toDto() {
+    public ActionItemDto toDto() {
         return ActionItemDto.builder()
                 .idx(idx)
+                .projectIdx(projectIdx)
                 .directoryIdx(directoryIdx)
                 .title(title)
                 .description(description)
@@ -104,8 +108,9 @@ public class ActionItem {
     }
 
     @Builder
-    public ActionItem(Long idx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, ActionItemStatus actionItemStatus, Timestamp statusDate, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember, Character deleteYn) {
+    public ActionItem(Long idx, Long projectIdx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, ActionItemStatus actionItemStatus, Timestamp statusDate, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember, Character deleteYn) {
         this.idx = idx;
+        this.projectIdx = projectIdx;
         this.directoryIdx = directoryIdx;
         this.title = title;
         this.description = description;

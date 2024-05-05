@@ -3,6 +3,8 @@ package com.pm.repository;
 import com.pm.entity.Directory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  *
  * directory JPA  Repository
@@ -16,4 +18,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *  2024-05-04          HTH             최초 등록
  **/
 public interface DirectoryRepository extends JpaRepository<Directory, Long> {
+    List<Directory> findByProjectIdxOrderByTitle(Long projectIdx);
 }

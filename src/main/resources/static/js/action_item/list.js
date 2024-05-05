@@ -15,35 +15,40 @@ $("#refresh_btn").click(function() {
 // 검색
 $("#title").keydown(function(e) {
     if(e.keyCode === 13) {
-        $("#search_btn").click();
+        search();
     }
 });
 
 $("#search_btn").click(function() {
+    search();
+});
+
+function search(directory = $("#directory").val()) {
     const title = $("#title").val();
     const status_idx = $("[name=status_idx]:checked")?.val();
     const start_date = $("#start_date").val();
     const end_date = $("#end_date").val();
 
     let search_param = {};
+    directory ? search_param["directory_idx"] = directory : null;
     title ? search_param["title"] = title : null;
     status_idx ? search_param["status_idx"] = status_idx : null;
     start_date ? search_param["start_date"] = start_date : null;
     end_date ? search_param["end_date"] = end_date : null;
 
     const query_string = new URLSearchParams(search_param).toString();
-    location.replace(`/project?${query_string}`);
-});
+    location.replace(`/action?${query_string}`);
+}
 
 // 등록
 $("#regist_btn").click(function() {
-    location.href = `/project/detail`;
+    location.href = `/action/detail`;
 });
 
 // 수정/상세
 $("#item_list tr").click(function() {
     const idx = $(this).data("idx");
-    location.href = `/project/detail/${idx}`;
+    location.href = `/action/detail/${idx}`;
 });
 
 $("#item_list tr .status_select").click(function(e) {
@@ -62,7 +67,7 @@ $("#item_list tr .status_select").change(function() {
 
 function saveStatus(form_data, retry = false) {
     $.ajax({
-        url: '/api/project/change_status',
+        url: '/api/action/change_status',
         method: 'post',
         data : form_data,
         contentType: false,

@@ -23,8 +23,13 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "FROM Member A " +
             "WHERE A.deleteYn = 'N' " +
             "AND UPPER(A.name) LIKE CONCAT('%', UPPER(:name), '%') " +
+            "AND (:projectIdx IS NULL OR A.idx IN " +
+            "(  SELECT DISTINCT IFNULL(B.memberIdx, C.memberIdx) " +
+            "   FROM ProjectMember B " +
+            "   LEFT JOIN TeamMember AS C ON B.teamIdx = C.teamIdx " +
+            "   WHERE B.projectIdx = :projectIdx)) " +
             "ORDER BY A.name")
-    List<Member> findByAll(String name);
+    List<Member> findByAll(Long projectIdx, String name);
 
     @Query("SELECT A " +
             "FROM Member A " +

@@ -58,6 +58,7 @@ public class ActionItemMember {
                 .actionItemIdx(actionItem == null ? null : actionItem.getIdx())
                 .actionItemTitle(actionItem == null ? null : actionItem.getTitle())
                 .memberIdx(member == null ? null : member.getIdx())
+                .memberProfileIdx(member == null ? null : member.getProfileIdx())
                 .memberName(member == null ? null : member.getName())
                 .registDate(registDate)
                 .register(register)

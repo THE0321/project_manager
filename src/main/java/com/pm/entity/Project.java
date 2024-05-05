@@ -88,8 +88,10 @@ public class Project {
                 .statusDate(statusDate)
                 .registDate(registDate)
                 .register(registerMember == null ? null : registerMember.getIdx())
+                .registerName(registerMember == null ? null : registerMember.getName())
                 .modifyDate(modifyDate)
                 .modifier(modifierMember == null ? null : modifierMember.getIdx())
+                .modifierName(modifierMember == null ? null : modifierMember.getName())
                 .build();
     }
 

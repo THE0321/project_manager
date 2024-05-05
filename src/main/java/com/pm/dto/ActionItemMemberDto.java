@@ -28,6 +28,7 @@ public class ActionItemMemberDto {
     private Long actionItemIdx;
     private String actionItemTitle;
     private Long memberIdx;
+    private Long memberProfileIdx;
     private String memberName;
     private Timestamp registDate;
     private Long register;
@@ -49,11 +50,12 @@ public class ActionItemMemberDto {
     }
 
     @Builder
-    public ActionItemMemberDto(Long idx, Long actionItemIdx, String actionItemTitle, Long memberIdx, String memberName, Timestamp registDate, Long register) {
+    public ActionItemMemberDto(Long idx, Long actionItemIdx, String actionItemTitle, Long memberIdx, Long memberProfileIdx, String memberName, Timestamp registDate, Long register) {
         this.idx = idx;
         this.actionItemIdx = actionItemIdx;
         this.actionItemTitle = actionItemTitle;
         this.memberIdx = memberIdx;
+        this.memberProfileIdx = memberProfileIdx;
         this.memberName = memberName;
         this.registDate = registDate;
         this.register = register;

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-bs-theme="auto">
+<head th:insert="common/head.html"></head>
+<body>
+<main>
+    <div class="header-dom" th:insert="common/header.html"></div>
+    <input type="hidden" id="idx" th:value="${detail.idx}" />
+    <div class="body">
+        <p class="title">DIRECTORY</p>
+        <div class="detail-form">
+            <table>
+                <colgroup>
+                    <col style="width: 10%;">
+                    <col style="width: 90%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th><label for="title">디렉토리명</label></th>
+                        <td><input type="text" id="title" data-max="100" placeholder="디렉토리명" th:value="${detail.title}" /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="description">디렉토리 설명</label></th>
+                        <td><textarea id="description" data-max="500" placeholder="디렉토리 설명">[[${detail.description}]]</textarea></td>
+                    </tr>
+                    <tr>
+                        <th>상태</th>
+                        <td>
+                            <div>
+                                <div th:each="status : ${status_list}" class="inline-flex">
+                                    <input type="radio" th:id="|status${status.idx}|" name="status_idx" th:value="${status.idx}" th:checked="${status.idx == detail.statusIdx}">
+                                    <label th:for="|status${status.idx}|"></label>
+                                    <span th:onclick="|status${status.idx}.click()|" th:text="${status.name}"></span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <a id="history_back" class="btn light">목록으로</a>
+                            <a id="save_btn" class="btn">등록하기</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="popup">
+        <div class="background pop_close"></div>
+        <section id="alert_pop" th:insert="popup/alert_pop.html"></section>
+    </div>
+</main>
+</body>
+<script th:src="@{/js/directory/detail.js}"></script>
+</html>

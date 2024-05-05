@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,14 +40,17 @@ public class MemberService {
     // 갯수 조회
     @Transactional
     public Long getCount(String name, String account, Long positionIdx, Long roleIdx) {
+        name = name == null ? "" : name;
+        account = account == null ? "" : account;
+
         return memberRepository.countByNameAndAccountAndPositionIdxAndRoleIdx(name, account, positionIdx, roleIdx);
     }
 
     // 목록 조회(전체)
     @Transactional
-    public List<MemberDto> getListAll(String name) {
+    public List<MemberDto> getListAll(Long projectIdx, String name) {
         List<MemberDto> resultList = new ArrayList<>();
-        memberRepository.findByAll(name).forEach(member -> {
+        memberRepository.findByAll(projectIdx, name).forEach(member -> {
             resultList.add(member.toDtoWithout());
         });
 
