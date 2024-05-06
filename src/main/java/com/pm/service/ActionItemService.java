@@ -4,7 +4,6 @@ import com.pm.dto.ActionItemDto;
 import com.pm.dto.ActionItemMemberDto;
 import com.pm.dto.ActionItemStatusDto;
 import com.pm.entity.ActionItem;
-import com.pm.entity.ActionItemMember;
 import com.pm.repository.ActionItemMemberRepository;
 import com.pm.repository.ActionItemRepository;
 import com.pm.repository.ActionItemStatusRepository;
@@ -45,6 +44,19 @@ public class ActionItemService {
         title = title == null ? "" : title;
 
         return actionItemRepository.countByTitleContainAndStatusIdxAndStartDateAfterAndEndDateOrderByIdxDesc(projectIdx, directoryIdx, title, statusIdx, startDate, endDate);
+    }
+
+    // 목록 조회(전체)
+    @Transactional
+    public List<ActionItemDto> getListAll(Long projectIdx, String title) {
+        title = title == null ? "" : title;
+
+        List<ActionItemDto> resultList = new ArrayList<>();
+        actionItemRepository.findByProjectIdxAndTitleContainsOrderByTitle(projectIdx, title).forEach(actionItem -> {
+            resultList.add(actionItem.toDto());
+        });
+
+        return resultList;
     }
 
     // 목록 조회

@@ -2,6 +2,9 @@ package com.pm.repository;
 
 import com.pm.entity.TestCaseMapping;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 /**
  *
@@ -16,4 +19,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *  2024-05-05          HTH             최초 등록
  **/
 public interface TestCaseMappingRepository extends JpaRepository<TestCaseMapping, Long> {
+    @Query("SELECT A " +
+            "FROM TestCaseMapping A " +
+            "LEFT JOIN FETCH A.testCase " +
+            "WHERE A.testCaseIdx = :testCaseIdx")
+    List<TestCaseMapping> findByTestCaseIdx(Long testCaseIdx);
 }

@@ -7,7 +7,7 @@
 
     <input type="hidden" id="idx" th:value="${detail.idx}" />
     <div class="body">
-        <p class="title">ACTION ITEM</p>
+        <p class="title">TEST CASE</p>
         <div class="detail-form">
             <table>
                 <colgroup>
@@ -24,12 +24,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><label for="title">액션 아이템 이름</label></th>
-                        <td><input type="text" id="title" data-max="100" placeholder="액션 아이템 이름" th:value="${detail.title}" /></td>
+                        <th><label for="title">테스트 케이스 이름</label></th>
+                        <td><input type="text" id="title" data-max="100" placeholder="테스트 케이스 이름" th:value="${detail.title}" /></td>
                     </tr>
                     <tr>
-                        <th><label for="description">액션 아이템 설명</label></th>
-                        <td><textarea id="description" data-max="500" placeholder="액션 아이템 설명">[[${detail.description}]]</textarea></td>
+                        <th><label for="description">테스트 케이스 설명</label></th>
+                        <td><textarea id="description" data-max="500" placeholder="테스트 케이스 설명">[[${detail.description}]]</textarea></td>
                     </tr>
                     <tr>
                         <th>상태</th>
@@ -69,6 +69,23 @@
                             </div>
                         </td>
                     </tr>
+                    <tr>
+                        <th><label for="member_search">액션 아이템</label></th>
+                        <td>
+                            <input type="text" id="action_item_search" placeholder="유저를 선택해주세요." />
+                            <ul class="select-ul" id="action_item_search_list"></ul>
+                        </td>
+                    </tr>
+                    <tr class="h_auto">
+                        <th></th>
+                        <td>
+                            <div id="action_item_list" class="manager-dom">
+                                <div th:each="action_item : ${mapping_list}" class="action_item" th:data-idx="${action_item.idx}" th:data-action_item="${action_item.actionItemIdx}">
+                                    [[${action_item.actionItemTitle}]]<i class="delete_item"></i>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
                 <tfoot>
                     <tr>
@@ -87,6 +104,7 @@
     </div>
 </main>
 </body>
-<script th:src="@{/js/action_item/detail.js}"></script>
+<script th:src="@{/js/test_case/detail.js}"></script>
 <script th:src="@{/js/member/search.js}"></script>
+<script th:src="@{/js/action_item/search.js}"></script>
 </html>

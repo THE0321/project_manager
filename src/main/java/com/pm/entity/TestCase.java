@@ -1,5 +1,6 @@
 package com.pm.entity;
 
+import com.pm.dto.TestCaseDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -83,6 +84,29 @@ public class TestCase {
 
     @Column
     private Character deleteYn;
+
+    // DTO 변환
+    public TestCaseDto toDto() {
+        return TestCaseDto.builder()
+                .idx(idx)
+                .projectIdx(projectIdx)
+                .directoryIdx(directoryIdx)
+                .title(title)
+                .description(description)
+                .startDate(startDate)
+                .endDate(endDate)
+                .statusIdx(testCaseStatus == null ? null : testCaseStatus.getIdx())
+                .statusName(testCaseStatus == null ? null : testCaseStatus.getName())
+                .statusDate(statusDate)
+                .registDate(registDate)
+                .register(registerMember == null ? null : registerMember.getIdx())
+                .registerName(registerMember == null ? null : registerMember.getName())
+                .modifyDate(modifyDate)
+                .modifier(modifierMember == null ? null : modifierMember.getIdx())
+                .modifierName(modifierMember == null ? null : modifierMember.getName())
+                .deleteYn(deleteYn)
+                .build();
+    }
 
     @Builder
     public TestCase(Long idx, Long projectIdx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, TestCaseStatus testCaseStatus, Timestamp statusDate, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember, Character deleteYn) {

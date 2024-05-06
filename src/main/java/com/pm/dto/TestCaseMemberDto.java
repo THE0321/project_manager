@@ -26,8 +26,9 @@ import java.sql.Timestamp;
 public class TestCaseMemberDto {
     private Long idx;
     private Long testCaseIdx;
-    private String testCaseName;
+    private String testCaseTitle;
     private Long memberIdx;
+    private Long memberProfileIdx;
     private String memberName;
     private Timestamp registDate;
     private Long register;
@@ -49,11 +50,12 @@ public class TestCaseMemberDto {
     }
 
     @Builder
-    public TestCaseMemberDto(Long idx, Long testCaseIdx, String testCaseName, Long memberIdx, String memberName, Timestamp registDate, Long register) {
+    public TestCaseMemberDto(Long idx, Long testCaseIdx, String testCaseTitle, Long memberIdx, Long memberProfileIdx, String memberName, Timestamp registDate, Long register) {
         this.idx = idx;
         this.testCaseIdx = testCaseIdx;
-        this.testCaseName = testCaseName;
+        this.testCaseTitle = testCaseTitle;
         this.memberIdx = memberIdx;
+        this.memberProfileIdx = memberProfileIdx;
         this.memberName = memberName;
         this.registDate = registDate;
         this.register = register;

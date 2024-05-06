@@ -49,6 +49,8 @@ public class MemberService {
     // 목록 조회(전체)
     @Transactional
     public List<MemberDto> getListAll(Long projectIdx, String name) {
+        name = name == null ? "" : name;
+
         List<MemberDto> resultList = new ArrayList<>();
         memberRepository.findByAll(projectIdx, name).forEach(member -> {
             resultList.add(member.toDtoWithout());
