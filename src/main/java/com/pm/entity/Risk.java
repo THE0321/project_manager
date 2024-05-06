@@ -1,6 +1,7 @@
 package com.pm.entity;
 
-import com.pm.dto.TestCaseDto;
+import com.pm.dto.IssueDto;
+import com.pm.dto.RiskDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,34 +10,30 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
  * 
- * test_case Entity
+ * risk Entity
  * 
  * @author HTH
  * @version 1.0.0
- * @date 2024-05-05
+ * @date 2024-05-06
  * ========================================================
  *  DATE                AUTHOR          NOTE 
  * ========================================================
- *  2024-05-05          HTH             최초 등록
+ *  2024-05-06          HTH             최초 등록
  **/
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "test_case")
-public class TestCase {
+@Table(name = "risk")
+public class Risk {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column
     private Long projectIdx;
-
-    @Column
-    private Long directoryIdx;
 
     @Column(length = 100)
     private String title;
@@ -44,18 +41,12 @@ public class TestCase {
     @Column(length = 500)
     private String description;
 
-    @Column
-    private Date startDate;
-
-    @Column
-    private Date endDate;
-
     @Column(name = "status_idx", insertable = false, updatable=false)
     private Long statusIdx;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_idx", referencedColumnName = "idx")
-    private TestCaseStatus testCaseStatus;
+    private IssueStatus issueStatus;
 
     @Column
     private Timestamp statusDate;
@@ -83,17 +74,14 @@ public class TestCase {
     private Member modifierMember;
 
     // DTO 변환
-    public TestCaseDto toDto() {
-        return TestCaseDto.builder()
+    public RiskDto toDto() {
+        return RiskDto.builder()
                 .idx(idx)
                 .projectIdx(projectIdx)
-                .directoryIdx(directoryIdx)
                 .title(title)
                 .description(description)
-                .startDate(startDate)
-                .endDate(endDate)
-                .statusIdx(testCaseStatus == null ? null : testCaseStatus.getIdx())
-                .statusName(testCaseStatus == null ? null : testCaseStatus.getName())
+                .statusIdx(issueStatus == null ? null : issueStatus.getIdx())
+                .statusName(issueStatus == null ? null : issueStatus.getName())
                 .statusDate(statusDate)
                 .registDate(registDate)
                 .register(registerMember == null ? null : registerMember.getIdx())
@@ -105,16 +93,13 @@ public class TestCase {
     }
 
     @Builder
-    public TestCase(Long idx, Long projectIdx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, TestCaseStatus testCaseStatus, Timestamp statusDate, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember) {
+    public Risk(Long idx, Long projectIdx, String title, String description, Long statusIdx, IssueStatus issueStatus, Timestamp statusDate, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember) {
         this.idx = idx;
         this.projectIdx = projectIdx;
-        this.directoryIdx = directoryIdx;
         this.title = title;
         this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
         this.statusIdx = statusIdx;
-        this.testCaseStatus = testCaseStatus;
+        this.issueStatus = issueStatus;
         this.statusDate = statusDate;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.register = register;

@@ -1,37 +1,33 @@
 package com.pm.dto;
 
-import com.pm.entity.ActionItem;
-import com.pm.entity.ActionItemStatus;
+import com.pm.entity.IssueStatus;
 import com.pm.entity.Member;
+import com.pm.entity.Risk;
 import lombok.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
  *
- * action_item DTO
+ * risk DTO
  *
  * @author HTH
  * @version 1.0.0
- * @date 2024-05-04
+ * @date 2024-05-06
  * ========================================================
  *  DATE                AUTHOR          NOTE
  * ========================================================
- *  2024-05-04          HTH             최초 등록
+ *  2024-05-06          HTH             최초 등록
  **/
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class ActionItemDto {
+public class RiskDto {
     private Long idx;
     private Long projectIdx;
-    private Long directoryIdx;
     private String title;
     private String description;
-    private Date startDate;
-    private Date endDate;
     private Long statusIdx;
     private String statusName;
     private Timestamp statusDate;
@@ -43,21 +39,18 @@ public class ActionItemDto {
     private String modifierName;
 
     // Entity 변환
-    public ActionItem toEntity() {
-        ActionItemStatus actionItemStatus = statusIdx == null ? null : ActionItemStatus.builder().idx(statusIdx).build();
+    public Risk toEntity() {
+        IssueStatus issueStatus = statusIdx == null ? null : IssueStatus.builder().idx(statusIdx).build();
         Member registerMember = register == null ? null : Member.builder().idx(register).build();
         Member modifierMember = modifier == null ? null : Member.builder().idx(modifier).build();
 
-        return ActionItem.builder()
+        return Risk.builder()
                 .idx(idx)
                 .projectIdx(projectIdx)
-                .directoryIdx(directoryIdx)
                 .title(title)
                 .description(description)
-                .startDate(startDate)
-                .endDate(endDate)
                 .statusIdx(statusIdx)
-                .actionItemStatus(actionItemStatus)
+                .issueStatus(issueStatus)
                 .statusDate(statusDate)
                 .registDate(registDate)
                 .register(register)
@@ -69,14 +62,11 @@ public class ActionItemDto {
     }
 
     @Builder
-    public ActionItemDto(Long idx, Long projectIdx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, String statusName, Timestamp statusDate, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, String modifierName) {
+    public RiskDto(Long idx, Long projectIdx, String title, String description, Long statusIdx, String statusName, Timestamp statusDate, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, String modifierName) {
         this.idx = idx;
         this.projectIdx = projectIdx;
-        this.directoryIdx = directoryIdx;
         this.title = title;
         this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
         this.statusIdx = statusIdx;
         this.statusName = statusName;
         this.statusDate = statusDate;
