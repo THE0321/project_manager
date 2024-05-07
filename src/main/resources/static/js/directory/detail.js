@@ -13,9 +13,7 @@ $("#save_btn").click(function() {
     form_data.append("description", $('#description').val());
 
     const selected_status = $("[name=status_idx]:checked");
-    if(selected_status.length) {
-        form_data.append("status_idx", selected_status.val());
-    }
+    if(selected_status.length) form_data.append("status_idx", selected_status.val());
 
     save(form_data);
 });

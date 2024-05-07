@@ -46,11 +46,6 @@ $("#item_list tr").click(function() {
     location.href = `/project/detail/${idx}`;
 });
 
-$("#item_list tr .status_select").click(function(e) {
-    e.stopPropagation();
-    return false;
-});
-
 // 상태 변경
 $("#item_list tr .status_select").change(function() {
     const form_data = new FormData();
@@ -58,6 +53,9 @@ $("#item_list tr .status_select").change(function() {
     form_data.append("status_idx", $(this).val());
 
     saveStatus(form_data);
+}).click(function(e) {
+    e.stopPropagation();
+    return false;
 });
 
 function saveStatus(form_data, retry = false) {

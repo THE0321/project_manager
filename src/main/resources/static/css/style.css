@@ -25,6 +25,7 @@
     --icon-bookmark: url('/icons/bookmark.svg');
     --icon-clipboard: url('/icons/clipboard.svg');
     --icon-person: url('/icons/person.svg');
+    --icon-exclamation: url('/icons/exclamation.svg');
 }
 /* COMMON */
 *::-webkit-scrollbar {width: 8px; background-color: #00000088;}
@@ -109,6 +110,7 @@ select option:checked, select option:focus {background-color: var(--primary); co
 .btn.bookmark:before {vertical-align: middle; margin-right: 5px; content: var(--icon-bookmark);}
 .btn.clipboard:before {vertical-align: middle; margin-right: 5px; content: var(--icon-clipboard);}
 .btn.person:before {vertical-align: middle; margin-right: 5px; content: var(--icon-person);}
+.btn.exclamation:before {vertical-align: middle; margin-right: 5px; content: var(--icon-exclamation);}
 
 /* TABLE */
 table {width: 100%;}

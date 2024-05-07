@@ -5,10 +5,7 @@ import com.pm.service.ActionItemService;
 import com.pm.util.DateFormat;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 
@@ -28,7 +25,6 @@ import java.sql.Timestamp;
 @RequestMapping("/api/action")
 public class ActionItemRestController {
     private final ActionItemService actionItemService;
-
     public ActionItemRestController(ActionItemService actionItemService) {
         this.actionItemService = actionItemService;
     }
@@ -81,7 +77,8 @@ public class ActionItemRestController {
                     actionItemDto.setStatusIdx(statusIdx);
                     actionItemDto.setStatusDate(new Timestamp(System.currentTimeMillis()));
                 }
-            } else if(!actionItemDto.getStatusIdx().equals(statusIdx)) {actionItemDto.setStatusIdx(statusIdx);
+            } else if(!actionItemDto.getStatusIdx().equals(statusIdx)) {
+                actionItemDto.setStatusIdx(statusIdx);
                 actionItemDto.setStatusDate(new Timestamp(System.currentTimeMillis()));
             }
         }
@@ -101,6 +98,7 @@ public class ActionItemRestController {
         return new ResponseData(true, "저장되었습니다.", result);
     }
 
+    // 액션 아이템 상태 변경
     @PostMapping("/change_status")
     public ResponseData changeStatus(@RequestParam(required = false) Long idx,
                                      @RequestParam(required = false, value = "status_idx") Long statusIdx,
@@ -114,12 +112,20 @@ public class ActionItemRestController {
                 actionItemDto.setStatusIdx(statusIdx);
                 actionItemDto.setStatusDate(new Timestamp(System.currentTimeMillis()));
             }
-        } else if(!actionItemDto.getStatusIdx().equals(statusIdx)) {actionItemDto.setStatusIdx(statusIdx);
+        } else if(!actionItemDto.getStatusIdx().equals(statusIdx)) {
+            actionItemDto.setStatusIdx(statusIdx);
             actionItemDto.setStatusDate(new Timestamp(System.currentTimeMillis()));
         }
 
         actionItemService.saveItem(actionItemDto);
 
         return new ResponseData(true, "저장되었습니다.", null);
+    }
+
+    // 액션 아이템 목록 조회
+    @GetMapping("/get_list")
+    public ResponseData getList(@RequestParam(required = false, value = "name") String name,
+                                HttpServletRequest request) {
+        return new ResponseData(true, "조회했습니다.", actionItemService.getListAll(3L, name));
     }
 }

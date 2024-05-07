@@ -24,9 +24,7 @@ $("#save_btn").click(function() {
     form_data.append("delete_list", delete_member_list);
 
     const selected_status = $("[name=status_idx]:checked");
-    if(selected_status.length) {
-        form_data.append("status_idx", selected_status.val());
-    }
+    if(selected_status.length) form_data.append("status_idx", selected_status.val());
 
     save(form_data);
 });

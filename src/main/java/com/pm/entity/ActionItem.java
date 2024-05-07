@@ -82,9 +82,6 @@ public class ActionItem {
     @JoinColumn(name = "modifier", referencedColumnName = "idx")
     private Member modifierMember;
 
-    @Column
-    private Character deleteYn;
-
     // DTO 변환
     public ActionItemDto toDto() {
         return ActionItemDto.builder()
@@ -103,12 +100,11 @@ public class ActionItem {
                 .modifyDate(modifyDate)
                 .modifier(modifierMember == null ? null : modifierMember.getIdx())
                 .modifierName(modifierMember == null ? null : modifierMember.getName())
-                .deleteYn(deleteYn)
                 .build();
     }
 
     @Builder
-    public ActionItem(Long idx, Long projectIdx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, ActionItemStatus actionItemStatus, Timestamp statusDate, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember, Character deleteYn) {
+    public ActionItem(Long idx, Long projectIdx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, ActionItemStatus actionItemStatus, Timestamp statusDate, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember) {
         this.idx = idx;
         this.projectIdx = projectIdx;
         this.directoryIdx = directoryIdx;
@@ -125,6 +121,5 @@ public class ActionItem {
         this.modifier = modifier;
         this.modifyDate = modifyDate;
         this.modifierMember = modifierMember;
-        this.deleteYn = deleteYn == null ? 'N' : deleteYn;
     }
 }

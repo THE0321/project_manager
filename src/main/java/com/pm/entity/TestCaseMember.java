@@ -1,5 +1,6 @@
 package com.pm.entity;
 
+import com.pm.dto.TestCaseMemberDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -49,6 +50,20 @@ public class TestCaseMember {
 
     @Column
     private Long register;
+
+    // DTO 변환
+    public TestCaseMemberDto toDto() {
+        return TestCaseMemberDto.builder()
+                .idx(idx)
+                .testCaseIdx(testCase == null ? null : testCase.getIdx())
+                .testCaseTitle(testCase == null ? null : testCase.getTitle())
+                .memberIdx(member == null ? null : member.getIdx())
+                .memberProfileIdx(member == null ? null : member.getProfileIdx())
+                .memberName(member == null ? null : member.getName())
+                .registDate(registDate)
+                .register(register)
+                .build();
+    }
 
     @Builder
     public TestCaseMember(Long idx, Long testCaseIdx, TestCase testCase, Long memberIdx, Member member, Timestamp registDate, Long register) {

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-bs-theme="auto">
+<head th:insert="common/head.html"></head>
+<body>
+<main>
+    <div class="header-dom" th:insert="common/header.html"></div>
+
+    <input type="hidden" id="idx" th:value="${detail.idx}" />
+    <div class="body">
+        <p class="title">TEST CASE</p>
+        <div class="detail-form">
+            <table>
+                <colgroup>
+                    <col style="width: 15%;">
+                    <col style="width: 85%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th><label for="directory_idx">디렉토리</label></th>
+                        <td>
+                            <select id="directory_idx">
+                                <option th:each="directory : ${directory_list}" th:value="${directory.idx}" th:text="${directory.title}" th:selected="${directory.idx == detail.idx}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="title">테스트 케이스 제목</label></th>
+                        <td><input type="text" id="title" data-max="100" placeholder="테스트 케이스 제목" th:value="${detail.title}" /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="description">테스트 케이스 설명</label></th>
+                        <td><textarea id="description" data-max="500" placeholder="테스트 케이스 설명">[[${detail.description}]]</textarea></td>
+                    </tr>
+                    <tr>
+                        <th>상태</th>
+                        <td>
+                            <div>
+                                <div th:each="status : ${status_list}" class="inline-flex">
+                                    <input type="radio" th:id="|status${status.idx}|" name="status_idx" th:value="${status.idx}" th:checked="${status.idx == detail.statusIdx}">
+                                    <label th:for="|status${status.idx}|"></label>
+                                    <span th:onclick="|status${status.idx}.click()|" th:text="${status.name}"></span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="start_date">시작일자</label></th>
+                        <td><input type="text" id="start_date" placeholder="시작일자" th:value="${detail.startDate}" /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="end_date">종료일자</label></th>
+                        <td><input type="text" id="end_date" placeholder="종료일자" th:value="${detail.endDate}" /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="member_search">담당자</label></th>
+                        <td>
+                            <input type="text" id="member_search" placeholder="유저를 선택해주세요." />
+                            <ul class="select-ul" id="member_search_list"></ul>
+                        </td>
+                    </tr>
+                    <tr class="h_auto">
+                        <th></th>
+                        <td>
+                            <div id="member_list" class="manager-dom">
+                                <div th:each="member : ${member_list}" class="member" th:data-idx="${member.idx}" th:data-member="${member.memberIdx}">
+                                    <div class="profile" th:if="${member.memberProfileIdx != null}" th:style="|background_image: url('/view/image/${member.memberProfileIdx}');|"></div>
+                                    [[${member.memberName}]]<i class="delete_item"></i>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="action_item_search">액션 아이템</label></th>
+                        <td>
+                            <input type="text" id="action_item_search" placeholder="액션 아이템을 선택해주세요." />
+                            <ul class="select-ul" id="action_item_search_list"></ul>
+                        </td>
+                    </tr>
+                    <tr class="h_auto">
+                        <th></th>
+                        <td>
+                            <div id="action_item_list" class="manager-dom">
+                                <div th:each="action_item : ${mapping_list}" class="action_item" th:data-idx="${action_item.idx}" th:data-action_item="${action_item.actionItemIdx}">
+                                    [[${action_item.actionItemTitle}]]<i class="delete_item"></i>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <a id="history_back" class="btn light">목록으로</a>
+                            <a id="save_btn" class="btn">등록하기</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="popup">
+        <div class="background pop_close"></div>
+        <section id="alert_pop" th:insert="popup/alert_pop.html"></section>
+    </div>
+</main>
+</body>
+<script th:src="@{/js/test_case/detail.js}"></script>
+<script th:src="@{/js/member/search.js}"></script>
+<script th:src="@{/js/action_item/search.js}"></script>
+</html>

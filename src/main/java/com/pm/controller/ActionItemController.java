@@ -34,7 +34,6 @@ import java.util.ArrayList;
 public class ActionItemController extends com.pm.util.Controller {
     private final DirectoryService directoryService;
     private final ActionItemService actionItemService;
-
     public ActionItemController(DirectoryService directoryService, ActionItemService actionItemService) {
         this.directoryService = directoryService;
         this.actionItemService = actionItemService;

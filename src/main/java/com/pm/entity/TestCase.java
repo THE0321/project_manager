@@ -1,5 +1,6 @@
 package com.pm.entity;
 
+import com.pm.dto.TestCaseDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -81,11 +82,30 @@ public class TestCase {
     @JoinColumn(name = "modifier", referencedColumnName = "idx")
     private Member modifierMember;
 
-    @Column
-    private Character deleteYn;
+    // DTO 변환
+    public TestCaseDto toDto() {
+        return TestCaseDto.builder()
+                .idx(idx)
+                .projectIdx(projectIdx)
+                .directoryIdx(directoryIdx)
+                .title(title)
+                .description(description)
+                .startDate(startDate)
+                .endDate(endDate)
+                .statusIdx(testCaseStatus == null ? null : testCaseStatus.getIdx())
+                .statusName(testCaseStatus == null ? null : testCaseStatus.getName())
+                .statusDate(statusDate)
+                .registDate(registDate)
+                .register(registerMember == null ? null : registerMember.getIdx())
+                .registerName(registerMember == null ? null : registerMember.getName())
+                .modifyDate(modifyDate)
+                .modifier(modifierMember == null ? null : modifierMember.getIdx())
+                .modifierName(modifierMember == null ? null : modifierMember.getName())
+                .build();
+    }
 
     @Builder
-    public TestCase(Long idx, Long projectIdx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, TestCaseStatus testCaseStatus, Timestamp statusDate, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember, Character deleteYn) {
+    public TestCase(Long idx, Long projectIdx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, TestCaseStatus testCaseStatus, Timestamp statusDate, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember) {
         this.idx = idx;
         this.projectIdx = projectIdx;
         this.directoryIdx = directoryIdx;
@@ -102,6 +122,5 @@ public class TestCase {
         this.modifyDate = modifyDate;
         this.modifier = modifier;
         this.modifierMember = modifierMember;
-        this.deleteYn = deleteYn == null ? 'N' : deleteYn;
     }
 }

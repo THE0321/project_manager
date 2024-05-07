@@ -50,7 +50,7 @@ if($("#member_search_list").length) {
         const profileIdx = $(this).data("profile");
         const name = $(this).text();
 
-        $("#team_search").val("");
+        $("#member_search").val("");
         searchMember(null);
 
         let profile = "";
@@ -72,7 +72,7 @@ if($("#member_search_list").length) {
             delete_member_list.push(_dom.data("idx"));
         }
 
-        member_list.splice(member_list.indexOf(_dom.data("team")), 1);
+        member_list.splice(member_list.indexOf(_dom.data("member")), 1);
         _dom.remove();
     });
 

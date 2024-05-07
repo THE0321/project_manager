@@ -41,7 +41,6 @@ public class ActionItemDto {
     private Timestamp modifyDate;
     private Long modifier;
     private String modifierName;
-    private Character deleteYn;
 
     // Entity 변환
     public ActionItem toEntity() {
@@ -66,12 +65,11 @@ public class ActionItemDto {
                 .modifyDate(modifyDate)
                 .modifier(modifier)
                 .modifierMember(modifierMember)
-                .deleteYn(deleteYn)
                 .build();
     }
 
     @Builder
-    public ActionItemDto(Long idx, Long projectIdx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, String statusName, Timestamp statusDate, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, String modifierName, Character deleteYn) {
+    public ActionItemDto(Long idx, Long projectIdx, Long directoryIdx, String title, String description, Date startDate, Date endDate, Long statusIdx, String statusName, Timestamp statusDate, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, String modifierName) {
         this.idx = idx;
         this.projectIdx = projectIdx;
         this.directoryIdx = directoryIdx;
@@ -88,6 +86,5 @@ public class ActionItemDto {
         this.modifyDate = modifyDate;
         this.modifier = modifier;
         this.modifierName = modifierName;
-        this.deleteYn = deleteYn;
     }
 }
