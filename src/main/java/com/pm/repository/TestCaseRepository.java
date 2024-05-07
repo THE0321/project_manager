@@ -42,4 +42,11 @@ public interface TestCaseRepository extends JpaRepository<TestCase, Long> {
             "AND (:startDate IS NULL OR A.startDate >= :startDate)" +
             "AND (:endDate IS NULL OR A.endDate <= :endDate) ")
     Long countByTitleContainAndStatusIdxAndStartDateAfterAndEndDateOrderByIdxDesc(Long projectIdx, Long directoryIdx, String title, Long statusIdx, Date startDate, Date endDate);
+
+    @Query("SELECT A " +
+            "FROM TestCase A " +
+            "WHERE A.projectIdx = :projectIdx " +
+            "AND UPPER(A.title) LIKE CONCAT('%', :title, '%') " +
+            "ORDER BY A.title")
+    List<TestCase> findByProjectIdxAndTitleContainsOrderByTitle(Long projectIdx, String title);
 }

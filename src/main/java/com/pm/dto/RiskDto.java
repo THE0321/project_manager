@@ -30,7 +30,6 @@ public class RiskDto {
     private String description;
     private Long statusIdx;
     private String statusName;
-    private Timestamp statusDate;
     private Timestamp registDate;
     private Long register;
     private String registerName;
@@ -51,7 +50,6 @@ public class RiskDto {
                 .description(description)
                 .statusIdx(statusIdx)
                 .issueStatus(issueStatus)
-                .statusDate(statusDate)
                 .registDate(registDate)
                 .register(register)
                 .registerMember(registerMember)
@@ -62,14 +60,13 @@ public class RiskDto {
     }
 
     @Builder
-    public RiskDto(Long idx, Long projectIdx, String title, String description, Long statusIdx, String statusName, Timestamp statusDate, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, String modifierName) {
+    public RiskDto(Long idx, Long projectIdx, String title, String description, Long statusIdx, String statusName, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, String modifierName) {
         this.idx = idx;
         this.projectIdx = projectIdx;
         this.title = title;
         this.description = description;
         this.statusIdx = statusIdx;
         this.statusName = statusName;
-        this.statusDate = statusDate;
         this.registDate = registDate;
         this.register = register;
         this.registerName = registerName;

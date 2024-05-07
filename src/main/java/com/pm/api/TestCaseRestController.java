@@ -5,10 +5,7 @@ import com.pm.service.TestCaseService;
 import com.pm.util.DateFormat;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 
@@ -51,7 +48,7 @@ public class TestCaseRestController {
         }
 
         if(title == null || title.isEmpty()) {
-            return new ResponseData(false, "액션 아이템 이름을 입력해주세요.", null);
+            return new ResponseData(false, "테스트 케이스 제목을 입력해주세요.", null);
         }
 
         DateFormat dateFormat = new DateFormat();
@@ -134,5 +131,12 @@ public class TestCaseRestController {
         testCaseService.saveItem(testCaseDto);
 
         return new ResponseData(true, "저장되었습니다.", null);
+    }
+
+    // 테스트 케이스 목록 조회
+    @GetMapping("/get_list")
+    public ResponseData getList(@RequestParam(required = false, value = "name") String name,
+                                HttpServletRequest request) {
+        return new ResponseData(true, "조회했습니다.", testCaseService.getListAll(3L, name));
     }
 }

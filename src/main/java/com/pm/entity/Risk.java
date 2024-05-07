@@ -48,9 +48,6 @@ public class Risk {
     @JoinColumn(name = "status_idx", referencedColumnName = "idx")
     private IssueStatus issueStatus;
 
-    @Column
-    private Timestamp statusDate;
-
     @CreatedDate
     @Column(updatable = false)
     private Timestamp registDate;
@@ -82,7 +79,6 @@ public class Risk {
                 .description(description)
                 .statusIdx(issueStatus == null ? null : issueStatus.getIdx())
                 .statusName(issueStatus == null ? null : issueStatus.getName())
-                .statusDate(statusDate)
                 .registDate(registDate)
                 .register(registerMember == null ? null : registerMember.getIdx())
                 .registerName(registerMember == null ? null : registerMember.getName())
@@ -93,14 +89,13 @@ public class Risk {
     }
 
     @Builder
-    public Risk(Long idx, Long projectIdx, String title, String description, Long statusIdx, IssueStatus issueStatus, Timestamp statusDate, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember) {
+    public Risk(Long idx, Long projectIdx, String title, String description, Long statusIdx, IssueStatus issueStatus, Timestamp registDate, Long register, Member registerMember, Timestamp modifyDate, Long modifier, Member modifierMember) {
         this.idx = idx;
         this.projectIdx = projectIdx;
         this.title = title;
         this.description = description;
         this.statusIdx = statusIdx;
         this.issueStatus = issueStatus;
-        this.statusDate = statusDate;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.register = register;
         this.registerMember = registerMember;

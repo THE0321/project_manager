@@ -44,7 +44,7 @@ if($("#action_item_search_list").length) {
         action_item_search_list.hide();
     });
 
-    // 유저 선택
+    // 액션 아이템 선택
     action_item_search_list.on("click", "li", function() {
         const idx = $(this).data("idx");
         const title = $(this).text();

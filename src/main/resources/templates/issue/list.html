@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-bs-theme="auto">
+<head th:insert="common/head.html"></head>
+<body>
+<main>
+    <div class="header-dom" th:insert="common/header.html"></div>
+    <input type="hidden" id="page" th:value="${page.page}" />
+    <div class="body">
+        <p class="title">ISSUE</p>
+        <div class="title-btn">
+            <a id="regist_btn" class="btn light exclamation">등록하기</a>
+        </div>
+
+        <!-- BEGIN::SEARCH FORM -->
+        <div class="search-form">
+            <table>
+                <colgroup>
+                    <col style="width: 10%;">
+                    <col style="width: 30%;">
+                    <col style="width: 10%;">
+                    <col style="width: 30%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th><label for="title">이슈 제목</label></th>
+                        <td><input type="text" id="title" placeholder="이슈 제목" /></td>
+                        <th>상태</th>
+                        <td>
+                            <div>
+                                <div th:each="status : ${status_list}" class="inline-flex">
+                                    <input type="radio" th:id="|status${status.idx}|" name="status_idx" th:value="${status.idx}" th:checked="${status.idx == param_status_idx}">
+                                    <label th:for="|status${status.idx}|"></label>
+                                    <span th:onclick="|status${status.idx}.click()|" th:text="${status.name}"></span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <a id="refresh_btn" class="btn light">초기화</a>
+                            <a id="search_btn" class="btn">검색</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- END::SEARCH FORM -->
+
+        <!-- BEGIN::LIST -->
+        <div>
+            <table class="table">
+                <colgroup>
+                    <col style="width: 100px;">
+                    <col style="min-width: 300px;">
+                    <col style="width: 100px;">
+                    <col style="width: 100px;">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>상태</th>
+                    <th>이슈 제목</th>
+                    <th>등록자</th>
+                    <th>등록일</th>
+                </tr>
+                </thead>
+                <tbody id="item_list">
+                <tr th:each="item : ${list}" th:data-idx="${item.idx}">
+                    <td>
+                        <select class="status_select center_t">
+                            <option value="" disabled selected>선택</option>
+                            <option th:each="status : ${status_list}" th:value="${status.idx}" th:selected="${status.idx == item.statusIdx}" th:text="${status.name}"></option>
+                        </select>
+                    </td>
+                    <td th:text="${item.title}"></td>
+                    <td th:text="${item.registerName}"></td>
+                    <td class="center_t" th:text="${#dates.format(item.registDate, 'yyyy-MM-dd')}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- END::LIST -->
+
+        <!-- BEGIN::PAGINATION -->
+        <div>
+            <ul class="pagination">
+                <li th:if="${page.before_over != null}" class="before-over" th:data-page="${page.before_over}"></li>
+                <li th:if="${page.before != null}" class="before" th:data-page="${page.before}"></li>
+                <li th:each="item : ${page.pageList}" th:class="${item == page.page ? 'on' : ''}" th:text="${item}"></li>
+                <li th:if="${page.next != null}" class="next" th:data-page="${page.next}"></li>
+                <li th:if="${page.next_over != null}" class="next-over" th:data-page="${page.next_over}"></li>
+            </ul>
+        </div>
+        <!-- END::PAGINATION -->
+    </div>
+    <div class="popup">
+        <div class="background pop_close"></div>
+        <section id="alert_pop" th:insert="popup/alert_pop.html"></section>
+    </div>
+</main>
+</body>
+<script th:src="@{/js/issue/list.js}"></script>
+</html>

@@ -62,6 +62,19 @@ public class TestCaseService {
 
         return resultList;
     }
+
+    // 목록 조회(전체)
+    @Transactional
+    public List<TestCaseDto> getListAll(Long projectIdx, String title) {
+        title = title == null ? "" : title;
+
+        List<TestCaseDto> resultList = new ArrayList<>();
+        testCaseRepository.findByProjectIdxAndTitleContainsOrderByTitle(projectIdx, title).forEach(testCase -> {
+            resultList.add(testCase.toDto());
+        });
+
+        return resultList;
+    }
     
     // 단건 조회
     @Transactional
