@@ -1,5 +1,5 @@
 # SUMMARY
-프로젝트 별 액션 아이템 및 테스트 상황을 관리하는 프로젝트입니다.
+프로젝트 별 액션 아이템 및 테스트 상황을 관리하는 프로젝트입니다.   
 개발 환경 : Java, JPA, Thymeleaf, Spring Boot 3, IntelliJ IDEA, MySql 8.0.36
 
 ## ERD
