@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-bs-theme="auto">
+<head th:insert="common/head.html"></head>
+<body>
+<main>
+    <div class="header-dom" th:insert="common/header.html"></div>
+    <input type="hidden" id="year" th:value="${#dates.format(curr_date, 'yyyy')}"/>
+    <input type="hidden" id="month" th:value="${#dates.format(curr_date, 'MM')}"/>
+    <input type="hidden" id="day" th:value="${#dates.format(curr_date, 'dd')}"/>
+    <div class="body">
+        <p class="title">SCHEDULE</p>
+        <div class="title-btn">
+            <a id="regist_btn" class="btn light clipboard">등록하기</a>
+        </div>
+
+        <table id="full_calendar" class="calendar">
+            <thead>
+                <tr>
+                    <td id="calendar_prev_btn" class="calendar_btn">&#60;&#60;</td>
+                    <td colspan="5">
+                        <span id="calendar_year"></span>년
+                        <span id="calendar_month"></span>월
+                    </td>
+                    <td id="calendar_next_btn" class="calendar_btn">&#62;&#62;</td>
+                </tr>
+                <tr>
+                    <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- BEGIN::LIST -->
+        <div>
+            <table class="table">
+                <colgroup>
+                    <col style="min-width: 300px;">
+                    <col style="width: 100px;">
+                    <col style="width: 100px;">
+                    <col style="width: 100px;">
+                    <col style="width: 100px;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>일정명</th>
+                        <th>날짜</th>
+                        <th>시간</th>
+                        <th>등록자</th>
+                        <th>등록일</th>
+                    </tr>
+                </thead>
+                <tbody id="item_list"></tbody>
+            </table>
+        </div>
+        <!-- END::LIST -->
+    </div>
+    <div class="popup">
+        <div class="background pop_close"></div>
+        <section id="alert_pop" th:insert="popup/alert_pop.html"></section>
+        <section id="schedule_pop" th:insert="popup/schedule_pop.html"></section>
+    </div>
+</main>
+</body>
+<script th:src="@{/js/member/search.js}"></script>
+<script th:src="@{/js/schedule/calendar.js}"></script>
+<script th:src="@{/js/schedule/detail.js}"></script>
+</html>

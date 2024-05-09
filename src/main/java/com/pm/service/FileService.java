@@ -54,20 +54,19 @@ public class FileService {
 
     // 업로드
     @Transactional
-    public Long saveItem(MultipartFile uploadFile) throws IOException {
+    public Long saveItem(MultipartFile uploadFile, Long register) throws IOException {
         StringBuilder builder = new StringBuilder();
-        builder.append(UUID.randomUUID().toString().replaceAll("-", ""));
 
         // 디렉토리 없으면 생성
         String savePath = builder.toString();
         java.io.File uploadPathFolder = new java.io.File(uploadPath, builder.toString());
 
         if(!uploadPathFolder.exists()) {
-            if(uploadPathFolder.mkdirs()) return null;
+            uploadPathFolder.mkdirs();
         }
 
-        builder.append("/");
-        builder.append(uploadFile.getOriginalFilename());
+        builder.append(uploadPathFolder.getPath());
+        builder.append("/" + UUID.randomUUID().toString().replaceAll("-", ""));
         savePath = builder.toString();
 
         Path path = Paths.get(uploadPath + savePath);
@@ -77,6 +76,8 @@ public class FileService {
         FileDto fileDto = FileDto.builder()
                 .savePath(savePath)
                 .originName(uploadFile.getOriginalFilename())
+                .extension(uploadFile.getContentType())
+                .register(register)
                 .build();
 
         return fileRepository.save(fileDto.toEntity()).getIdx();

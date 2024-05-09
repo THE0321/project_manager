@@ -1,6 +1,8 @@
 package com.pm.api;
 
+import com.pm.dto.DriveDto;
 import com.pm.dto.FileDto;
+import com.pm.service.DriveService;
 import com.pm.service.FileService;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,14 +30,24 @@ import java.io.OutputStream;
 @RequestMapping("/api/upload")
 public class UploadRestController {
     private final FileService fileService;
-    public UploadRestController(FileService fileService) {
+    private final DriveService driveService;
+    public UploadRestController(FileService fileService, DriveService driveService) {
         this.fileService = fileService;
+        this.driveService = driveService;
+    }
+
+    // 파일 업로드(드라이브)
+    @PostMapping("/drive")
+    public ResponseData driveUpload(@RequestParam("file") MultipartFile uploadFile) throws IOException {
+        Long fileIdx = fileService.saveItem(uploadFile, 1L);
+
+        return new ResponseData(true, "저장되었습니다.", driveService.saveItem(DriveDto.builder().projectIdx(3L).fileIdx(fileIdx).build()));
     }
 
     // 파일 업로드
     @PostMapping(value = {"/", ""})
     public ResponseData upload(@RequestParam("file") MultipartFile uploadFile) throws IOException {
-        Long result = fileService.saveItem(uploadFile);
+        Long result = fileService.saveItem(uploadFile, 1L);
 
         return new ResponseData(true, "저장되었습니다.", result);
     }

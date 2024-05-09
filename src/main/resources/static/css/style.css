@@ -88,7 +88,7 @@ select option:checked, select option:focus {background-color: var(--primary); co
 .side-dom + .body {left: 20vw; width: 80vw; padding: 0 5vh;}
 
 /* POPUP */
-.popup {position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 999; display: none;}
+.popup {position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2; display: none;}
 .popup .background {width: 100%; height: 100%; background: #00000099;}
 .popup section {position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); min-width: 300px; min-height: 200px; padding: 20px; background-color: var(--white); border-radius: 20px; text-align: center; display: none;}
 .pop-title {width: 100%; display: flex; justify-content: space-between; font-weight: bold;}
@@ -99,6 +99,7 @@ select option:checked, select option:focus {background-color: var(--primary); co
 
 /* BUTTON */
 .btn {display: inline-block; width: 120px; height: 40px; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; line-height: 38px; text-align: center; border: solid 2px var(--dark); background-color: var(--deep-dark); color: var(--white); font-weight: bold; border-radius: 10px; box-sizing: border-box; cursor: pointer;}
+.btn.small {width: 90px;}
 .btn.primary {border: solid 2px var(--primary-dark); background-color: var(--primary);}
 .btn.secondary {border: solid 2px var(--secondary-dark); background-color: var(--secondary);}
 .btn.success {border: solid 2px var(--success-dark); background-color: var(--success);}
@@ -122,6 +123,18 @@ tfoot {text-align: center; height: 60px; vertical-align: bottom;}
 .table thead th:first-of-type {border-left: solid 2px var(--light-grey);}
 .table thead th:last-of-type {border-right: solid 2px var(--light-grey);}
 .table select {border: none;}
+
+/* CALENDAR */
+.calendar {width: 100%; text-align: center; padding-bottom: 20px; cursor: default;}
+.calendar > thead > tr > th {width: 50px; height: 50px;}
+.calendar > thead > tr:first-child > td {font-weight: bold;}
+.calendar > thead > tr:last-child > td {background-color: var(--dark); border-radius: 10px; font-weight: bold; box-sizing: border-box; color: var(--white);}
+.calendar > tbody > tr > td {width: 50px; height: 50px;}
+.calendar .date span {padding: 5px;}
+.calendar .date.on span {background: var(--dark); position: relative; border-radius: 100%; box-sizing: border-box; font-weight: bold; color: var(--white);}
+.calendar .date.event:after {content: '🔴'; font-size: 8px; position: absolute;}
+.calendar_btn {cursor: pointer;}
+.ui-timepicker-container {z-index: 3 !important;}
 
 /* MANAGER DOM */
 .manager-dom div {display: inline-flex; height: 33px; background-color: var(--dark); padding: 5px 10px; margin-right: 5px; margin-bottom: 5px; border: 2px solid var(--deep-dark); color: var(--white); border-radius: 10px; font-weight: bold;}
@@ -160,6 +173,9 @@ div:first-of-type > input[type="checkbox"] + label, div:first-of-type > input[ty
 .detail-form tr.h_auto {height:auto !important; max-height: 40px;}
 .detail-form th {text-align: right; padding-right: 10px}
 
+/* FILE UPLOAD */
+.file {display: none;}
+
 /* SELECT UL */
 .select-ul {display: none; position: absolute; width: 200px; max-height: 100px; margin-left: 10px; font-size: 18px; background-color: var(--white); border: 2px solid var(--dark); box-sizing: border-box; white-space: nowrap; text-overflow: ellipsis; overflow-x: hidden; overflow-y: auto; z-index: 999;}
 .select-ul li:hover {background-color: var(--dark); font-weight: bold; color: var(--white);}
@@ -176,6 +192,9 @@ div:first-of-type > input[type="checkbox"] + label, div:first-of-type > input[ty
 .right_t {text-align: right !important;}
 .bold_t {font-weight: bold !important;}
 .field_t {color: fieldtext !important;}
+
+.select_none {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}
+.border_none, .border_none table {border: none !important;}
 
 /* WIDTH */
 .w_10 {width: 10% !important;}
