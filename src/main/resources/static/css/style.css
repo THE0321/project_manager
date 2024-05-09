@@ -99,6 +99,7 @@ select option:checked, select option:focus {background-color: var(--primary); co
 
 /* BUTTON */
 .btn {display: inline-block; width: 120px; height: 40px; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; line-height: 38px; text-align: center; border: solid 2px var(--dark); background-color: var(--deep-dark); color: var(--white); font-weight: bold; border-radius: 10px; box-sizing: border-box; cursor: pointer;}
+.btn.small {width: 90px;}
 .btn.primary {border: solid 2px var(--primary-dark); background-color: var(--primary);}
 .btn.secondary {border: solid 2px var(--secondary-dark); background-color: var(--secondary);}
 .btn.success {border: solid 2px var(--success-dark); background-color: var(--success);}
@@ -160,6 +161,9 @@ div:first-of-type > input[type="checkbox"] + label, div:first-of-type > input[ty
 .detail-form tr.h_auto {height:auto !important; max-height: 40px;}
 .detail-form th {text-align: right; padding-right: 10px}
 
+/* FILE UPLOAD */
+.file {display: none;}
+
 /* SELECT UL */
 .select-ul {display: none; position: absolute; width: 200px; max-height: 100px; margin-left: 10px; font-size: 18px; background-color: var(--white); border: 2px solid var(--dark); box-sizing: border-box; white-space: nowrap; text-overflow: ellipsis; overflow-x: hidden; overflow-y: auto; z-index: 999;}
 .select-ul li:hover {background-color: var(--dark); font-weight: bold; color: var(--white);}
@@ -176,6 +180,8 @@ div:first-of-type > input[type="checkbox"] + label, div:first-of-type > input[ty
 .right_t {text-align: right !important;}
 .bold_t {font-weight: bold !important;}
 .field_t {color: fieldtext !important;}
+
+.s_none {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}
 
 /* WIDTH */
 .w_10 {width: 10% !important;}

@@ -1,0 +1,19 @@
+<div class="pop-title">
+    <span>이미지 첨부</span>
+    <div class="close-btn pop_close"></div>
+</div>
+<div class="pop-content">
+    <input type="file" class="file" id="upload_file" accept="*"/>
+    <div id="upload" class="s_none">
+        <p id="file_name" class="bold_t">파일을 업로드해주세요.</p>
+    </div>
+</div>
+<div class="pop-footer">
+    <a id="upload_btn" class="btn light pop_close">확인</a>
+</div>
+
+<script>
+    $("#upload").click(function() {
+        $("#upload_file").click();
+    });
+</script>

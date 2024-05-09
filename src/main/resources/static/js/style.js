@@ -67,6 +67,10 @@ $("select").change(function() {
 });
 
 // alert
+$(".pop_close").click(function() {
+    $(".popup, .popup section").hide();
+});
+
 function alertMsg(msg, clicked = function() {}) {
     $("#alert_message").text(msg);
     $(".pop_close").off("click").on("click", clicked).on("click", function() {
