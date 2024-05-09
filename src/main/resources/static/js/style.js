@@ -44,6 +44,28 @@ function setDatepicker(id = "") {
     }
 }
 
+// timepicker
+function setTimepicker(id = "") {
+    if(id) {
+        $(`#${id}`).timepicker({
+            timeFormat: 'HH:mm',
+            interval: 10,
+            minTime: '00:00',
+            maxTime: '23:50',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        }).prop("readonly", true).on("click", function (e) {
+            e.preventDefault();
+            return false;
+        });
+
+        $(`body *:not(#${id})`).on("click", function () {
+            $(".ui-timepicker-container").hide();
+        });
+    }
+}
+
 // max length
 $("input, textarea").on("keyup keydown input", function() {
     const max = $(this).data("max");
