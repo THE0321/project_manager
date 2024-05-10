@@ -9,6 +9,8 @@ import lombok.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  *
@@ -36,13 +38,16 @@ public class ScheduleDto {
     private String title;
     private Date scheduleDate;
     private Time scheduleTime;
+    private String scheduleTimeStr;
     private String place;
     private Timestamp registDate;
+    private String registDateStr;
     private Long register;
     private String registerName;
     private Timestamp modifyDate;
     private Long modifier;
     private Character deleteYn;
+    private List<ScheduleMemberDto> memberList;
 
     // Entity 변환
     public Schedule toEntity() {
@@ -72,6 +77,9 @@ public class ScheduleDto {
 
     @Builder
     public ScheduleDto(Long idx, Long projectIdx, Long actionItemIdx, String actionItemTitle, Long testCaseIdx, String testCaseTitle, String title, Date scheduleDate, Time scheduleTime, String place, Timestamp registDate, Long register, String registerName, Timestamp modifyDate, Long modifier, Character deleteYn) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
         this.idx = idx;
         this.projectIdx = projectIdx;
         this.actionItemIdx = actionItemIdx;
@@ -81,8 +89,10 @@ public class ScheduleDto {
         this.title = title;
         this.scheduleDate = scheduleDate;
         this.scheduleTime = scheduleTime;
+        this.scheduleTimeStr = scheduleTime == null ? null : timeFormat.format(scheduleTime);
         this.place = place;
         this.registDate = registDate;
+        this.registDateStr = registDate == null ? null : dateFormat.format(new java.util.Date(registDate.getTime()));
         this.register = register;
         this.registerName = registerName;
         this.modifyDate = modifyDate;

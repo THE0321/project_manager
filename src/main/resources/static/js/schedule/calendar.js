@@ -170,10 +170,12 @@ function addEvent(year, month, day) {
 
 function getCalendarDate() {
     const selected_date = $(".calendar tbody .date.on");
+
     if(!selected_date.length) {
-        return [null, null, null];
+        return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     }
-    return [selected_date.data("year"), selected_date.data("month"), selected_date.data("day")];
+
+    return `${selected_date.data("year")}-${selected_date.data("month").toString().padStart(2, "0")}-${selected_date.data("day").toString().padStart(2, "0")}`;
 }
 
 if($("#full_calendar").length) {
