@@ -37,8 +37,12 @@ public class ScheduleMember {
     @JoinColumn(name = "schedule_idx", referencedColumnName = "idx")
     private Schedule schedule;
 
-    @Column
+    @Column(name = "member_idx", insertable = false, updatable=false)
     private Long memberIdx;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_idx", referencedColumnName = "idx")
+    private Member member;
 
     @CreatedDate
     @Column(updatable = false)
@@ -56,18 +60,21 @@ public class ScheduleMember {
                 .scheduleDate(schedule == null ? null : schedule.getScheduleDate())
                 .scheduleTime(schedule == null ? null : schedule.getScheduleTime())
                 .scheduleRegistDate(schedule == null ? null : schedule.getRegistDate())
-                .memberIdx(memberIdx)
+                .memberIdx(member == null ? null : member.getIdx())
+                .memberProfileIdx(member == null ? null : member.getProfileIdx())
+                .memberName(member == null ? null : member.getName())
                 .registDate(registDate)
                 .register(register)
                 .build();
     }
 
     @Builder
-    public ScheduleMember(Long idx, Long scheduleIdx, Schedule schedule, Long memberIdx, Timestamp registDate, Long register) {
+    public ScheduleMember(Long idx, Long scheduleIdx, Schedule schedule, Long memberIdx, Member member, Timestamp registDate, Long register) {
         this.idx = idx;
         this.scheduleIdx = scheduleIdx;
         this.schedule = schedule;
         this.memberIdx = memberIdx;
+        this.member = member;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.register = register;
     }

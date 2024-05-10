@@ -1,8 +1,17 @@
 package com.pm.service;
 
+import com.pm.dto.CalendarDto;
+import com.pm.dto.ScheduleDto;
+import com.pm.dto.ScheduleMemberDto;
+import com.pm.entity.Schedule;
 import com.pm.repository.ScheduleMemberRepository;
 import com.pm.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -25,19 +34,62 @@ public class ScheduleService {
         this.scheduleMemberRepository = scheduleMemberRepository;
     }
 
-    // TODO: 달력 조회
+    // 달력 조회
+    public List<CalendarDto> getCalendars(Long memberIdx) {
+        List<CalendarDto> resultList = new ArrayList<>();
+        scheduleRepository.getCalendarList().forEach(calendar -> {
+            resultList.add(CalendarDto.builder().year(calendar.getYear()).month(calendar.getMonth()).day(calendar.getDay()).build());
+        });
+
+        return resultList;
+    }
+
+    // 목록 조회
+    public List<ScheduleDto> getList(Date scheduleDate, Long memberIdx) {
+        List<ScheduleDto> resultList = new ArrayList<>();
+        scheduleRepository.findByMemberIdx(scheduleDate, memberIdx).forEach(schedule -> {
+            resultList.add(schedule.toDto());
+        });
+
+        return resultList;
+    }
     
-    // TODO: 목록 조회
+    // 단건 조회
+    public ScheduleDto getOne(Long idx) {
+        return scheduleRepository.findById(idx).map(Schedule::toDto).orElse(null);
+    }
     
-    // TODO: 단건 조회
+    // 생성/수정
+    public Long saveItem(ScheduleDto scheduleDto) {
+        return scheduleRepository.save(scheduleDto.toEntity()).getIdx();
+    }
     
-    // TODO: 생성/수정
+    // 삭제
+    public void deleteItem(Long idx) {
+        scheduleRepository.deleteById(idx);
+    }
     
-    // TODO: 삭제
+    // 공유 멤버 목록
+    public List<ScheduleMemberDto> getMemberList(Long scheduleIdx) {
+        List<ScheduleMemberDto> resultList = new ArrayList<>();
+        scheduleMemberRepository.findByScheduleIdx(scheduleIdx).forEach(scheduleMember -> {
+            resultList.add(scheduleMember.toEntity());
+        });
+
+        return resultList;
+    }
     
-    // TODO: 공유 멤버 목록
+    // 공유 멤버 추가
+    public void saveMember(Long scheduleIdx, Long[] idxArray, Long register) {
+        List<Long> idxList = Arrays.asList(idxArray);
+        idxList.forEach(memberIdx -> {
+            scheduleMemberRepository.save(ScheduleMemberDto.builder().scheduleIdx(scheduleIdx).memberIdx(memberIdx).register(register).build().toEntity());
+        });
+    }
     
-    // TODO: 공유 멤버 추가
-    
-    // TODO: 공유 멤버 삭제
+    // 공유 멤버 삭제
+    public void deleteMember(Long[] idxArray) {
+        List<Long> idxList = Arrays.asList(idxArray);
+        idxList.forEach(scheduleMemberRepository::deleteById);
+    }
 }

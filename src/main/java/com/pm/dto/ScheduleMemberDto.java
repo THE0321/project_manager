@@ -1,5 +1,6 @@
 package com.pm.dto;
 
+import com.pm.entity.Member;
 import com.pm.entity.Schedule;
 import com.pm.entity.ScheduleMember;
 import lombok.*;
@@ -32,25 +33,29 @@ public class ScheduleMemberDto {
     private Time scheduleTime;
     private Timestamp scheduleRegistDate;
     private Long memberIdx;
+    private Long memberProfileIdx;
+    private String memberName;
     private Timestamp registDate;
     private Long register;
 
     // DTO 변환
     public ScheduleMember toEntity() {
         Schedule schedule = scheduleIdx == null ? null : Schedule.builder().idx(scheduleIdx).build();
+        Member member = memberIdx == null ? null : Member.builder().idx(memberIdx).build();
 
         return ScheduleMember.builder()
                 .idx(idx)
                 .scheduleIdx(scheduleIdx)
                 .schedule(schedule)
                 .memberIdx(memberIdx)
+                .member(member)
                 .registDate(registDate)
                 .register(register)
                 .build();
     }
 
     @Builder
-    public ScheduleMemberDto(Long idx, Long scheduleIdx, String scheduleTitle, Date scheduleDate, Time scheduleTime, Timestamp scheduleRegistDate, Long memberIdx, Timestamp registDate, Long register) {
+    public ScheduleMemberDto(Long idx, Long scheduleIdx, String scheduleTitle, Date scheduleDate, Time scheduleTime, Timestamp scheduleRegistDate, Long memberIdx, Long memberProfileIdx, String memberName, Timestamp registDate, Long register) {
         this.idx = idx;
         this.scheduleIdx = scheduleIdx;
         this.scheduleTitle = scheduleTitle;
@@ -58,6 +63,8 @@ public class ScheduleMemberDto {
         this.scheduleTime = scheduleTime;
         this.scheduleRegistDate = scheduleRegistDate;
         this.memberIdx = memberIdx;
+        this.memberProfileIdx = memberProfileIdx;
+        this.memberName = memberName;
         this.registDate = registDate;
         this.register = register;
     }

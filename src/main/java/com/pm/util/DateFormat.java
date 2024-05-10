@@ -1,5 +1,6 @@
 package com.pm.util;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,6 +50,18 @@ public class DateFormat {
             return new java.sql.Date(date.getTime());
         } catch (ParseException e) {
             return null;
+        }
+    }
+
+    // Time 변환
+    public Time parseTime(String value) {
+        formatter.setLenient(false);
+
+        try {
+            long time = formatter.parse(value).getTime();
+            return new Time(time);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
     }
 }
