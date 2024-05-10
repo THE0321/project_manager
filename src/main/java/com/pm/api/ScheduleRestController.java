@@ -3,6 +3,7 @@ package com.pm.api;
 import com.pm.dto.CalendarDto;
 import com.pm.dto.ScheduleDto;
 import com.pm.service.ScheduleService;
+import com.pm.util.Controller;
 import com.pm.util.DateFormat;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/api/schedule")
-public class ScheduleRestController {
+public class ScheduleRestController extends Controller {
     private final ScheduleService scheduleService;
     public ScheduleRestController(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
@@ -51,6 +52,8 @@ public class ScheduleRestController {
             return new ResponseData(false, "날짜를 선택해주세요.", null);
         }
 
+        Long loginIdx = super.getLoginData(request).getIdx();
+
         DateFormat dateFormat = new DateFormat();
         Date scheduleDate = dateFormat.parseDate(scheduleDateStr);
 
@@ -67,7 +70,7 @@ public class ScheduleRestController {
                     .scheduleDate(scheduleDate)
                     .scheduleTime(scheduleTime)
                     .place(place)
-                    .register(1L)
+                    .register(loginIdx)
                     .build();
         } else {
             scheduleDto = scheduleService.getOne(idx);
@@ -76,7 +79,7 @@ public class ScheduleRestController {
             scheduleDto.setScheduleTime(scheduleTime);
             scheduleDto.setPlace(place);
             scheduleDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
-            scheduleDto.setModifier(1L);
+            scheduleDto.setModifier(loginIdx);
         }
 
         // 일정 저장
@@ -88,7 +91,7 @@ public class ScheduleRestController {
         }
 
         if(memberList != null && memberList.length > 0) {
-            scheduleService.saveMember(result, memberList, 1L);
+            scheduleService.saveMember(result, memberList, loginIdx);
         }
 
         return new ResponseData(true, "저장되었습니다.", result);
@@ -97,7 +100,9 @@ public class ScheduleRestController {
     // 달력 조회
     @GetMapping("/get_calendar")
     public ResponseData getCalendar(HttpServletRequest request) {
-        List<CalendarDto> result = scheduleService.getCalendars(1L);
+        Long loginIdx = super.getLoginData(request).getIdx();
+
+        List<CalendarDto> result = scheduleService.getCalendars(loginIdx);
         return new ResponseData(true, "OK", result);
     }
 
@@ -105,9 +110,10 @@ public class ScheduleRestController {
     @GetMapping("/get_list")
     public ResponseData getList(@RequestParam(required = false, value = "date") String dateStr,
                                 HttpServletRequest request) {
-        DateFormat dateFormat = new DateFormat();
+        Long loginIdx = super.getLoginData(request).getIdx();
 
-        return new ResponseData(true, "OK", scheduleService.getList(dateFormat.parseDate(dateStr), 1L));
+        DateFormat dateFormat = new DateFormat();
+        return new ResponseData(true, "OK", scheduleService.getList(dateFormat.parseDate(dateStr), loginIdx));
     }
 
     // 일정 상세 조회

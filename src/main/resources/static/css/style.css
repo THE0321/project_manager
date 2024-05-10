@@ -167,6 +167,10 @@ div:first-of-type > input[type="checkbox"] + label, div:first-of-type > input[ty
 /* SEARCH FORM */
 .search-form table {border: 2px solid var(--dark); border-radius: 10px; padding: 20px;}
 
+/* LOGIN FORM */
+.login-form {display: flex; justify-content: center;}
+.login-form table {border: 2px solid var(--dark); width: 500px; border-radius: 10px; padding: 20px;}
+
 /* FORM */
 .detail-form table {border: 2px solid var(--dark); border-radius: 10px; padding: 20px;}
 .detail-form tr {height: 40px;}
@@ -181,6 +185,8 @@ div:first-of-type > input[type="checkbox"] + label, div:first-of-type > input[ty
 .select-ul li:hover {background-color: var(--dark); font-weight: bold; color: var(--white);}
 
 /* STYLE */
+.bg_dark {background-color: var(--deep-dark);}
+
 .flex {display: flex;}
 .inline-flex {display: inline-flex;}
 
@@ -191,6 +197,7 @@ div:first-of-type > input[type="checkbox"] + label, div:first-of-type > input[ty
 .center_t {text-align: center !important;}
 .right_t {text-align: right !important;}
 .bold_t {font-weight: bold !important;}
+
 .field_t {color: fieldtext !important;}
 
 .select_none {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}

@@ -101,6 +101,21 @@ function alertMsg(msg, clicked = function() {}) {
     onPopup("alert_pop");
 }
 
+// 프로젝트 선택
+$("#project_select").change(function() {
+    $.ajax({
+        url: '/api/session_project',
+        method: 'post',
+        data: {project: $("#project_select").val()},
+        success: function (data) {
+            const code = data.code ?? null;
+            if (code === 200) {
+                location.replace("");
+            }
+        }
+    });
+});
+
 // history back
 $("#history_back").on("click", function() {
     history.back();

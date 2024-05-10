@@ -41,12 +41,14 @@ public class IssueController extends com.pm.util.Controller {
                        HttpServletRequest request, Model model) {
         model = super.setModel(request, model);
 
+        Long projectIdx = super.getProjectData(request);
+
         model.addAttribute("param_title", title);
         model.addAttribute("param_status_idx", statusIdx);
 
         model.addAttribute("status_list", issueService.getStatus());
-        model.addAttribute("list", issueService.getList(3L, title, statusIdx, page));
-        model.addAttribute("page", new Paging(page, issueService.getCount(3L, title, statusIdx)));
+        model.addAttribute("list", issueService.getList(projectIdx, title, statusIdx, page));
+        model.addAttribute("page", new Paging(page, issueService.getCount(projectIdx, title, statusIdx)));
 
         return "issue/list";
     }

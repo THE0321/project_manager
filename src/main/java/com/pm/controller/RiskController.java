@@ -45,12 +45,14 @@ public class RiskController extends com.pm.util.Controller {
                        HttpServletRequest request, Model model) {
         model = super.setModel(request, model);
 
+        Long projectIdx = super.getProjectData(request);
+
         model.addAttribute("param_title", title);
         model.addAttribute("param_status_idx", statusIdx);
 
         model.addAttribute("status_list", issueService.getStatus());
-        model.addAttribute("list", riskService.getList(3L, title, statusIdx, page));
-        model.addAttribute("page", new Paging(page, riskService.getCount(3L, title, statusIdx)));
+        model.addAttribute("list", riskService.getList(projectIdx, title, statusIdx, page));
+        model.addAttribute("page", new Paging(page, riskService.getCount(projectIdx, title, statusIdx)));
 
         return "risk/list";
     }
