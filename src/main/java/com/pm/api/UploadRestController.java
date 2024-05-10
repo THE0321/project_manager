@@ -4,7 +4,9 @@ import com.pm.dto.DriveDto;
 import com.pm.dto.FileDto;
 import com.pm.service.DriveService;
 import com.pm.service.FileService;
+import com.pm.util.Controller;
 import com.pm.values.ResponseData;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +30,7 @@ import java.io.OutputStream;
  **/
 @RestController
 @RequestMapping("/api/upload")
-public class UploadRestController {
+public class UploadRestController extends Controller {
     private final FileService fileService;
     private final DriveService driveService;
     public UploadRestController(FileService fileService, DriveService driveService) {
@@ -38,18 +40,23 @@ public class UploadRestController {
 
     // 파일 업로드(드라이브)
     @PostMapping("/drive")
-    public ResponseData driveUpload(@RequestParam("file") MultipartFile uploadFile) throws IOException {
-        Long fileIdx = fileService.saveItem(uploadFile, 1L);
+    public ResponseData driveUpload(@RequestParam("file") MultipartFile uploadFile,
+                                    HttpServletRequest request) throws IOException {
+        Long loginIdx = super.getLoginData(request).getIdx();
+        Long projectIdx = super.getProjectData(request);
 
-        return new ResponseData(true, "저장되었습니다.", driveService.saveItem(DriveDto.builder().projectIdx(3L).fileIdx(fileIdx).build()));
+        Long fileIdx = fileService.saveItem(uploadFile, loginIdx);
+
+        return new ResponseData(true, "저장되었습니다.", driveService.saveItem(DriveDto.builder().projectIdx(projectIdx).fileIdx(fileIdx).build()));
     }
 
     // 파일 업로드
     @PostMapping(value = {"/", ""})
-    public ResponseData upload(@RequestParam("file") MultipartFile uploadFile) throws IOException {
-        Long result = fileService.saveItem(uploadFile, 1L);
+    public ResponseData upload(@RequestParam("file") MultipartFile uploadFile,
+                               HttpServletRequest request) throws IOException {
+        Long loginIdx = super.getLoginData(request).getIdx();
 
-        return new ResponseData(true, "저장되었습니다.", result);
+        return new ResponseData(true, "저장되었습니다.", fileService.saveItem(uploadFile, loginIdx));
     }
 
     // 파일 다운로드

@@ -2,6 +2,7 @@ package com.pm.api;
 
 import com.pm.dto.RiskDto;
 import com.pm.service.RiskService;
+import com.pm.util.Controller;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ import java.sql.Timestamp;
  **/
 @RestController
 @RequestMapping("/api/risk")
-public class RiskRestController {
+public class RiskRestController extends Controller {
     private final RiskService riskService;
     public RiskRestController(RiskService riskService) {
         this.riskService = riskService;
@@ -46,20 +47,22 @@ public class RiskRestController {
             return new ResponseData(false, "리스크 제목을 입력해주세요.", null);
         }
 
+        Long loginIdx = super.getLoginData(request).getIdx();
+
         RiskDto riskDto;
         if(idx == null) {
             riskDto = RiskDto.builder()
                     .title(title)
                     .description(description)
                     .statusIdx(statusIdx)
-                    .register(1L)
+                    .register(loginIdx)
                     .build();
         } else {
             riskDto = riskService.getOne(idx);
             riskDto.setTitle(title);
             riskDto.setDescription(description);
             riskDto.setStatusIdx(statusIdx);
-            riskDto.setModifier(1L);
+            riskDto.setModifier(loginIdx);
             riskDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
         }
 
@@ -72,7 +75,7 @@ public class RiskRestController {
         }
 
         if(actionItemList != null && actionItemList.length > 0) {
-            riskService.saveActionItemMapping(result, actionItemList, 1L);
+            riskService.saveActionItemMapping(result, actionItemList, loginIdx);
         }
 
         // 테스트 케이스 매핑 저장
@@ -81,7 +84,7 @@ public class RiskRestController {
         }
 
         if(testCaseList != null && testCaseList.length > 0) {
-            riskService.saveTestCaseMapping(result, testCaseList, 1L);
+            riskService.saveTestCaseMapping(result, testCaseList, loginIdx);
         }
 
         return new ResponseData(true, "저장되었습니다.", result);
@@ -92,9 +95,11 @@ public class RiskRestController {
     public ResponseData changeStatus(@RequestParam(required = false) Long idx,
                                      @RequestParam(required = false, value = "status_idx") Long statusIdx,
                                      HttpServletRequest request) {
+        Long loginIdx = super.getLoginData(request).getIdx();
+
         RiskDto riskDto = riskService.getOne(idx);
         riskDto.setStatusIdx(statusIdx);
-        riskDto.setModifier(1L);
+        riskDto.setModifier(loginIdx);
         riskDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
 
         riskService.saveItem(riskDto);

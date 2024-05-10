@@ -95,6 +95,18 @@ public class MemberService {
         return memberRepository.save(memberDto.toEntity()).getIdx();
     }
 
+    // 로그인
+    @Transactional
+    public MemberDto getLogin(String account, String password) {
+        Member member = memberRepository.findByAccount(account);
+        String encodedPassword = member.getPassword();
+        if(encoder.matches(password, encodedPassword)) {
+            return member.toDto();
+        }
+
+        return null;
+    }
+
     // 내 팀 조회
     @Transactional
     public List<TeamMemberDto> getMyTeam(Long memberIdx) {

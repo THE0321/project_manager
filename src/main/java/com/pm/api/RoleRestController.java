@@ -2,6 +2,7 @@ package com.pm.api;
 
 import com.pm.dto.RoleDto;
 import com.pm.service.RoleService;
+import com.pm.util.Controller;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/api/role")
-public class RoleRestController {
+public class RoleRestController extends Controller {
     private final RoleService roleService;
     public RoleRestController(RoleService roleService) {
         this.roleService = roleService;
@@ -38,11 +39,13 @@ public class RoleRestController {
             return new ResponseData(false, "역할명을 입력해주세요.", null);
         }
 
+        Long loginIdx = super.getLoginData(request).getIdx();
+
         RoleDto roleDto;
         if(idx == null) {
             roleDto = RoleDto.builder()
                     .name(name)
-                    .register(1L)
+                    .register(loginIdx)
                     .build();
         } else {
             roleDto = roleService.getOne(idx);

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-bs-theme="auto">
+<head th:insert="common/head.html"></head>
+<body>
+<main>
+    <div class="body">
+        <p class="title">LOGIN</p>
+
+        <!-- BEGIN::LOGIN FORM -->
+        <div class="login-form">
+            <table>
+                <colgroup>
+                    <col style="width: 20%;">
+                    <col style="width: 60%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th><label for="account">계정</label></th>
+                        <td><input type="text" id="account" placeholder="계정" /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="password">비밀번호</label></th>
+                        <td><input type="password" id="password" placeholder="비밀번호" /></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <a id="find_password_btn" class="btn light">비밀번호 찾기</a>
+                            <a id="login_btn" class="btn">로그인</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- END::LOGIN FORM -->
+    </div>
+    <div class="popup">
+        <div class="background pop_close"></div>
+        <section id="alert_pop" th:insert="popup/alert_pop.html"></section>
+    </div>
+</main>
+</body>
+<script th:src="@{/js/login/login.js}"></script>
+</html>

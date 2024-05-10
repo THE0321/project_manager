@@ -2,6 +2,7 @@ package com.pm.api;
 
 import com.pm.dto.TeamDto;
 import com.pm.service.TeamService;
+import com.pm.util.Controller;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  **/
 @RestController
 @RequestMapping("/api/team")
-public class TeamRestController {
+public class TeamRestController extends Controller {
     private final TeamService teamService;
     public TeamRestController(TeamService teamService) {
         this.teamService = teamService;
@@ -37,11 +38,13 @@ public class TeamRestController {
             return new ResponseData(false, "팀명을 입력해주세요.", null);
         }
 
+        Long loginIdx = super.getLoginData(request).getIdx();
+
         TeamDto teamDto;
         if(idx == null) {
             teamDto = TeamDto.builder()
                     .name(name)
-                    .register(1L)
+                    .register(loginIdx)
                     .build();
         } else {
             teamDto = teamService.getOne(idx);
@@ -56,7 +59,7 @@ public class TeamRestController {
         }
 
         if(memberList != null && memberList.length > 0) {
-            teamService.saveMember(result, memberList, 1L);
+            teamService.saveMember(result, memberList, loginIdx);
         }
 
         return new ResponseData(true, "저장되었습니다.", result);

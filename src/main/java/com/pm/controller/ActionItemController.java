@@ -49,6 +49,9 @@ public class ActionItemController extends com.pm.util.Controller {
                        @RequestParam(required = false, value = "page") Long page,
                        HttpServletRequest request, Model model) {
         model = super.setModel(request, model);
+
+        Long projectIdx = super.getProjectData(request);
+
         DateFormat dateFormat = new DateFormat();
 
         model.addAttribute("param_directory_idx", directoryIdx);
@@ -61,9 +64,9 @@ public class ActionItemController extends com.pm.util.Controller {
         Date sqlEndDate = endDate == null ? null : dateFormat.parseDate(endDate);
 
         model.addAttribute("status_list", actionItemService.getStatus());
-        model.addAttribute("directory_list", directoryService.getList(3L));
-        model.addAttribute("list", actionItemService.getList(3L, directoryIdx, title, statusIdx, sqlStartDate, sqlEndDate, page));
-        model.addAttribute("page", new Paging(page, actionItemService.getCount(3L, directoryIdx, title, statusIdx, sqlStartDate, sqlEndDate)));
+        model.addAttribute("directory_list", directoryService.getList(projectIdx));
+        model.addAttribute("list", actionItemService.getList(projectIdx, directoryIdx, title, statusIdx, sqlStartDate, sqlEndDate, page));
+        model.addAttribute("page", new Paging(page, actionItemService.getCount(projectIdx, directoryIdx, title, statusIdx, sqlStartDate, sqlEndDate)));
 
         return "action_item/list";
     }
@@ -74,8 +77,10 @@ public class ActionItemController extends com.pm.util.Controller {
                          HttpServletRequest request, Model model) {
         model = super.setModel(request, model);
 
+        Long projectIdx = super.getProjectData(request);
+
         model.addAttribute("status_list", actionItemService.getStatus());
-        model.addAttribute("directory_list", directoryService.getList(3L));
+        model.addAttribute("directory_list", directoryService.getList(projectIdx));
 
         if(idx == null) {
             model.addAttribute("detail", new ActionItemDto());

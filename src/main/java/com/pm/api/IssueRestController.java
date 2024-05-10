@@ -2,6 +2,7 @@ package com.pm.api;
 
 import com.pm.dto.IssueDto;
 import com.pm.service.IssueService;
+import com.pm.util.Controller;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ import java.sql.Timestamp;
  **/
 @RestController
 @RequestMapping("/api/issue")
-public class IssueRestController {
+public class IssueRestController extends Controller {
     private final IssueService issueService;
     public IssueRestController(IssueService issueService) {
         this.issueService = issueService;
@@ -46,20 +47,22 @@ public class IssueRestController {
             return new ResponseData(false, "리스크 제목을 입력해주세요.", null);
         }
 
+        Long loginIdx = super.getLoginData(request).getIdx();
+
         IssueDto issueDto;
         if(idx == null) {
             issueDto = IssueDto.builder()
                     .title(title)
                     .description(description)
                     .statusIdx(statusIdx)
-                    .register(1L)
+                    .register(loginIdx)
                     .build();
         } else {
             issueDto = issueService.getOne(idx);
             issueDto.setTitle(title);
             issueDto.setDescription(description);
             issueDto.setStatusIdx(statusIdx);
-            issueDto.setModifier(1L);
+            issueDto.setModifier(loginIdx);
             issueDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
         }
 
@@ -72,7 +75,7 @@ public class IssueRestController {
         }
 
         if(actionItemList != null && actionItemList.length > 0) {
-            issueService.saveActionItemMapping(result, actionItemList, 1L);
+            issueService.saveActionItemMapping(result, actionItemList, loginIdx);
         }
 
         // 테스트 케이스 매핑 저장
@@ -81,7 +84,7 @@ public class IssueRestController {
         }
 
         if(testCaseList != null && testCaseList.length > 0) {
-            issueService.saveTestCaseMapping(result, testCaseList, 1L);
+            issueService.saveTestCaseMapping(result, testCaseList, loginIdx);
         }
 
         return new ResponseData(true, "저장되었습니다.", result);
@@ -92,10 +95,12 @@ public class IssueRestController {
     public ResponseData changeStatus(@RequestParam(required = false) Long idx,
                                      @RequestParam(required = false, value = "status_idx") Long statusIdx,
                                      HttpServletRequest request) {
+        Long loginIdx = super.getLoginData(request).getIdx();
+
         IssueDto issueDto = issueService.getOne(idx);
         issueDto.setStatusIdx(statusIdx);
-        issueDto.setModifier(1L);
         issueDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
+        issueDto.setModifier(loginIdx);
 
         issueService.saveItem(issueDto);
 

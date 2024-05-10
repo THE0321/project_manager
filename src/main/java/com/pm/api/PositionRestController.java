@@ -2,6 +2,7 @@ package com.pm.api;
 
 import com.pm.dto.PositionDto;
 import com.pm.service.PositionService;
+import com.pm.util.Controller;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/api/position")
-public class PositionRestController {
+public class PositionRestController extends Controller {
     private final PositionService positionService;
     public PositionRestController(PositionService positionService) {
         this.positionService = positionService;
@@ -39,12 +40,14 @@ public class PositionRestController {
             return new ResponseData(false, "직급명을 입력해주세요.", null);
         }
 
+        Long loginIdx = super.getLoginData(request).getIdx();
+
         PositionDto positionDto;
         if(idx == null) {
             positionDto = PositionDto.builder()
                     .name(name)
                     .orderNumber(orderNumber)
-                    .register(1L)
+                    .register(loginIdx)
                     .build();
         } else {
             positionDto = positionService.getOne(idx);

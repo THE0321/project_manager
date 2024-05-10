@@ -2,6 +2,7 @@ package com.pm.api;
 
 import com.pm.dto.ActionItemDto;
 import com.pm.service.ActionItemService;
+import com.pm.util.Controller;
 import com.pm.util.DateFormat;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ import java.sql.Timestamp;
  **/
 @RestController
 @RequestMapping("/api/action")
-public class ActionItemRestController {
+public class ActionItemRestController extends Controller {
     private final ActionItemService actionItemService;
     public ActionItemRestController(ActionItemService actionItemService) {
         this.actionItemService = actionItemService;
@@ -49,18 +50,21 @@ public class ActionItemRestController {
             return new ResponseData(false, "액션 아이템 이름을 입력해주세요.", null);
         }
 
+        Long loginIdx = super.getLoginData(request).getIdx();
+        Long projectIdx = super.getProjectData(request);
+
         DateFormat dateFormat = new DateFormat();
         ActionItemDto actionItemDto;
         if(idx == null) {
             actionItemDto = ActionItemDto.builder()
-                    .projectIdx(3L)
+                    .projectIdx(projectIdx)
                     .directoryIdx(directoryIdx)
                     .title(title)
                     .description(description)
                     .statusIdx(statusIdx)
                     .startDate(startDate == null ? null : dateFormat.parseDate(startDate))
                     .endDate(endDate == null ? null : dateFormat.parseDate(endDate))
-                    .register(1L)
+                    .register(loginIdx)
                     .build();
         } else {
             actionItemDto = actionItemService.getOne(idx);
@@ -70,7 +74,7 @@ public class ActionItemRestController {
             actionItemDto.setStartDate(startDate == null ? null : dateFormat.parseDate(startDate));
             actionItemDto.setEndDate(endDate == null ? null : dateFormat.parseDate(endDate));
             actionItemDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
-            actionItemDto.setModifier(1L);
+            actionItemDto.setModifier(loginIdx);
 
             if(actionItemDto.getStatusIdx() == null) {
                 if(statusIdx != null) {
@@ -92,7 +96,7 @@ public class ActionItemRestController {
         }
 
         if(memberList != null && memberList.length > 0) {
-            actionItemService.saveMember(result, memberList, 1L);
+            actionItemService.saveMember(result, memberList, loginIdx);
         }
 
         return new ResponseData(true, "저장되었습니다.", result);
@@ -105,7 +109,7 @@ public class ActionItemRestController {
                                      HttpServletRequest request) {
         ActionItemDto actionItemDto = actionItemService.getOne(idx);
         actionItemDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
-        actionItemDto.setModifier(1L);
+        actionItemDto.setModifier(super.getLoginData(request).getIdx());
 
         if(actionItemDto.getStatusIdx() == null) {
             if(statusIdx != null) {
@@ -126,6 +130,6 @@ public class ActionItemRestController {
     @GetMapping("/get_list")
     public ResponseData getList(@RequestParam(required = false, value = "name") String name,
                                 HttpServletRequest request) {
-        return new ResponseData(true, "조회했습니다.", actionItemService.getListAll(3L, name));
+        return new ResponseData(true, "조회했습니다.", actionItemService.getListAll(super.getProjectData(request), name));
     }
 }

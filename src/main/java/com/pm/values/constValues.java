@@ -16,4 +16,5 @@ public class constValues {
     // SESSION KEY
     public final static String LOGIN_SESSION = "LOGIN";
     public final static String PROJECT_SESSION = "PROJECT";
+    public final static String PROJECT_LIST_SESSION = "PROJECT_LIST";
 }

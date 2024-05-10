@@ -57,4 +57,11 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "OR UPPER(A.account) LIKE CONCAT('%', UPPER(:name), '%') " +
             "ORDER BY A.name")
     List<Member> findByNameOrderByName(String name);
+
+    @Query("SELECT A " +
+            "FROM Member A " +
+            "WHERE A.account = :account " +
+            "AND A.disableYn = 'N' " +
+            "AND A.deleteYn = 'N'")
+    Member findByAccount(String account);
 }

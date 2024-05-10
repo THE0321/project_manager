@@ -2,6 +2,7 @@ package com.pm.api;
 
 import com.pm.dto.ProjectDto;
 import com.pm.service.ProjectService;
+import com.pm.util.Controller;
 import com.pm.util.DateFormat;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ import java.sql.Timestamp;
  **/
 @RestController
 @RequestMapping("/api/project")
-public class ProjectRestController {
+public class ProjectRestController extends Controller {
     private final ProjectService projectService;
     public ProjectRestController(ProjectService projectService) {
         this.projectService = projectService;
@@ -45,6 +46,8 @@ public class ProjectRestController {
             return new ResponseData(false, "프로젝트명을 입력해주세요.", null);
         }
 
+        Long loginIdx = super.getLoginData(request).getIdx();
+
         DateFormat dateFormat = new DateFormat();
         ProjectDto projectDto;
         if(idx == null) {
@@ -54,14 +57,14 @@ public class ProjectRestController {
                     .statusIdx(statusIdx)
                     .startDate(startDate == null || startDate.isEmpty() ? null : dateFormat.parseDate(startDate))
                     .endDate(endDate == null || endDate.isEmpty() ? null : dateFormat.parseDate(endDate))
-                    .register(1L)
+                    .register(loginIdx)
                     .build();
         } else {
             projectDto = projectService.getOne(idx);
             projectDto.setTitle(title);
             projectDto.setDescription(description);
             projectDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
-            projectDto.setModifier(1L);
+            projectDto.setModifier(loginIdx);
             projectDto.setStartDate(startDate == null || startDate.isEmpty() ? null : dateFormat.parseDate(startDate));
             projectDto.setEndDate(endDate == null || endDate.isEmpty() ? null : dateFormat.parseDate(endDate));
 
@@ -85,11 +88,11 @@ public class ProjectRestController {
         }
 
         if(teamList != null && teamList.length > 0) {
-            projectService.saveTeam(result, teamList, 1L);
+            projectService.saveTeam(result, teamList, loginIdx);
         }
 
         if(memberList != null && memberList.length > 0) {
-            projectService.saveMember(result, memberList, 1L);
+            projectService.saveMember(result, memberList, loginIdx);
         }
 
         return new ResponseData(true, "저장되었습니다.", result);
@@ -100,9 +103,11 @@ public class ProjectRestController {
     public ResponseData changeStatus(@RequestParam(required = false) Long idx,
                                      @RequestParam(required = false, value = "status_idx") Long statusIdx,
                                      HttpServletRequest request) {
+        Long loginIdx = super.getLoginData(request).getIdx();
+
         ProjectDto projectDto = projectService.getOne(idx);
         projectDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
-        projectDto.setModifier(1L);
+        projectDto.setModifier(loginIdx);
 
         if(projectDto.getStatusIdx() == null) {
             if(statusIdx != null) {

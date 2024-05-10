@@ -1,8 +1,8 @@
 package com.pm.api;
 
 import com.pm.dto.DirectoryDto;
-import com.pm.entity.Directory;
 import com.pm.service.DirectoryService;
+import com.pm.util.Controller;
 import com.pm.values.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ import java.sql.Timestamp;
  **/
 @RestController
 @RequestMapping("/api/directory")
-public class DirectoryRestController {
+public class DirectoryRestController extends Controller {
     private final DirectoryService directoryService;
     public DirectoryRestController(DirectoryService directoryService) {
         this.directoryService = directoryService;
@@ -40,21 +40,24 @@ public class DirectoryRestController {
             return new ResponseData(false, "디렉토리명을 입력해주세요.", null);
         }
 
+        Long loginIdx = super.getLoginData(request).getIdx();
+        Long projectIdx = super.getProjectData(request);
+
         DirectoryDto directoryDto;
         if(idx == null) {
             directoryDto = DirectoryDto.builder()
-                    .projectIdx(3L)
+                    .projectIdx(projectIdx)
                     .title(title)
                     .description(description)
                     .statusIdx(statusIdx)
-                    .register(1L)
+                    .register(loginIdx)
                     .build();
         } else {
             directoryDto = directoryService.getOne(idx);
             directoryDto.setTitle(title);
             directoryDto.setDescription(description);
             directoryDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
-            directoryDto.setModifier(1L);
+            directoryDto.setModifier(loginIdx);
 
             if(directoryDto.getStatusIdx() == null) {
                 if(statusIdx != null) {

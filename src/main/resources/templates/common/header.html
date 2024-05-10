@@ -2,9 +2,9 @@
     <div class="header-nav">
         <ul class="nav">
             <div class="logo"><span class="bold_t">PROJECT MANAGER</span></div>
-            <select class="ml_20">
-                <option th:if="${#strings.equals(session_info.adminYn, 'Y')}" th:data-idx="admin">관리자 페이지</option>
-                <option th:each="project : ${session_project_list}" th:data-idx="${project.idx}" th:text="${project.title}"></option>
+            <select id="project_select" class="ml_20">
+                <option th:if="${#strings.equals(session_info.adminYn, 'Y')}" value="-1">관리자 페이지</option>
+                <option th:each="project : ${session_project_list}" th:value="${project.idx}" th:text="${project.title}" th:selected="${session_project == project.idx}"></option>
             </select>
         </ul>
         <ul class="nav">
@@ -16,8 +16,9 @@
         </ul>
     </div>
 </nav>
-<div th:if="${false}" class="header-gnb">
-    <ul class="nav" th:data-value="${current_page}">
+<p>[[${current_project}]]</p>
+<div th:if="${session_project == -1}" class="header-gnb">
+    <ul class="nav">
         <li class="nav-item"><a href="/project" th:class='|nav-link ${#strings.equals(current_page, "project") ? "active" : ""}|'>PROJECT</a></li>
         <li class="nav-item"><a href="/member" th:class='|nav-link ${#strings.equals(current_page, "member") ? "active" : ""}|'>MEMBER</a></li>
         <li class="nav-item"><a href="/team" th:class='|nav-link ${#strings.equals(current_page, "team") ? "active" : ""}|'>TEAM</a></li>
@@ -25,7 +26,7 @@
         <li class="nav-item"><a href="/role" th:class='|nav-link ${#strings.equals(current_page, "role") ? "active" : ""}|'>ROLE</a></li>
     </ul>
 </div>
-<div th:unless="${false}" class="header-gnb">
+<div th:unless="${session_project == -1}" class="header-gnb">
     <ul class="nav">
         <li class="nav-item"><a href="/action" th:class='|nav-link ${#strings.equals(current_page, "action") ? "active" : ""}|'>ACTION-ITEM</a></li>
         <li class="nav-item"><a href="/testcase" th:class='|nav-link ${#strings.equals(current_page, "testcase") ? "active" : ""}|'>TEST-CASE</a></li>

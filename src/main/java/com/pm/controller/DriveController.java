@@ -32,7 +32,9 @@ public class DriveController extends com.pm.util.Controller {
     public String list(HttpServletRequest request, Model model) {
         model = super.setModel(request, model);
 
-        model.addAttribute("list", driveService.getList(3L));
+        Long projectIdx = super.getProjectData(request);
+
+        model.addAttribute("list", driveService.getList(projectIdx));
 
         return "drive/list";
     }
