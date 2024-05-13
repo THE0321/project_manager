@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-bs-theme="auto">
+<head th:insert="common/head.html"></head>
+<body>
+<main>
+    <div class="header-dom" th:insert="common/header.html"></div>
+
+    <input type="hidden" id="idx" th:value="${detail.idx}" />
+    <div class="side-dom">
+        <div class="side-menu">
+            <ul>
+                <li th:each="directory : ${directory_list}" class="active" th:data-idx="${directory.idx}" th:text="${directory.title}"></li>
+            </ul>
+        </div>
+        <div id="regist_directory" class="side-btn">
+            <span>등록하기</span>
+        </div>
+    </div>
+    <div class="body">
+        <div class="h_90"></div>
+        <div class="chatting-input h_10">
+            <a class="btn upload_btn">+</a>
+            <input type="text" id="chatting_input" />
+            <a class="btn">등록</a>
+        </div>
+    </div>
+<!--    <div th:unless="${detail.idx == null}" class="body"></div>-->
+
+    <div class="popup">
+        <div class="background pop_close"></div>
+        <section id="alert_pop" th:insert="popup/alert_pop.html"></section>
+    </div>
+</main>
+</body>
+</html>
