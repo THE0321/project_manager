@@ -184,6 +184,12 @@ div:first-of-type > input[type="checkbox"] + label, div:first-of-type > input[ty
 .select-ul {display: none; position: absolute; width: 200px; max-height: 100px; margin-left: 10px; font-size: 18px; background-color: var(--white); border: 2px solid var(--dark); box-sizing: border-box; white-space: nowrap; text-overflow: ellipsis; overflow-x: hidden; overflow-y: auto; z-index: 999;}
 .select-ul li:hover {background-color: var(--dark); font-weight: bold; color: var(--white);}
 
+/* CHATTING INPUT */
+.chatting-input {display: flex; align-items: center;}
+.chatting-input .upload_btn {font-size: 25px; line-height: 33px; border-top-right-radius: 0; border-bottom-right-radius: 0;}
+.chatting-input input {height: 40px;}
+.chatting-input input + .btn {border-top-left-radius: 0; border-bottom-left-radius: 0;}
+
 /* STYLE */
 .bg_dark {background-color: var(--deep-dark);}
 
