@@ -85,4 +85,13 @@ if($("#team_search_list").length) {
     for(item of $("#team_list .member")) {
         team_list.push($(item).data("team"));
     }
+
+    // 선택 팀 목록 비우기
+    function clearSelectedTeam() {
+        $("#team_search").val("");
+        $("#team_list").empty();
+        searchTeam(null);
+        while(team_list.length) team_list.pop();
+        while(delete_member_list.length) delete_member_list.pop();
+    }
 }

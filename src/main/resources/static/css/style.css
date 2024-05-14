@@ -184,7 +184,11 @@ div:first-of-type > input[type="checkbox"] + label, div:first-of-type > input[ty
 .select-ul {display: none; position: absolute; width: 200px; max-height: 100px; margin-left: 10px; font-size: 18px; background-color: var(--white); border: 2px solid var(--dark); box-sizing: border-box; white-space: nowrap; text-overflow: ellipsis; overflow-x: hidden; overflow-y: auto; z-index: 999;}
 .select-ul li:hover {background-color: var(--dark); font-weight: bold; color: var(--white);}
 
+/* PROFILE IMAGE */
+.profile_img {height: 100px; width: 100px; display: block; margin-right: 5px; border: 2px solid var(--dark); border-radius: 100%; background-size: 100px; background-repeat: no-repeat; background-position: center;}
+
 /* CHATTING INPUT */
+.image_preview {position: fixed; bottom: 60px;}
 .chatting-input {display: flex; align-items: center;}
 .chatting-input .upload_btn {font-size: 25px; line-height: 33px; border-top-right-radius: 0; border-bottom-right-radius: 0;}
 .chatting-input input {height: 40px;}
@@ -195,6 +199,7 @@ div:first-of-type > input[type="checkbox"] + label, div:first-of-type > input[ty
 
 .flex {display: flex;}
 .inline-flex {display: inline-flex;}
+.center {justify-content: center;}
 
 .m_auto {margin-left: auto !important; margin-right: auto !important;}
 .ml_20 {margin-left: 20px !important;}
@@ -208,6 +213,8 @@ div:first-of-type > input[type="checkbox"] + label, div:first-of-type > input[ty
 
 .select_none {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}
 .border_none, .border_none table {border: none !important;}
+
+.scroll {overflow-y: auto;}
 
 /* WIDTH */
 .w_10 {width: 10% !important;}

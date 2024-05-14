@@ -148,8 +148,10 @@ public class MemberRestController extends Controller {
 
     // 멤버 목록 조회
     @GetMapping("/get_list")
-    public ResponseData getList(@RequestParam(required = false, value = "name") String name,
+    public ResponseData getList(@RequestParam(required = false, value = "project_idx") Long projectIdx,
+                                @RequestParam(required = false, value = "name") String name,
                                 HttpServletRequest request) {
-        return new ResponseData(true, "조회했습니다.", memberService.getListAll(super.getProjectData(request), name));
+        projectIdx = projectIdx == null ? super.getProjectData(request) : projectIdx;
+        return new ResponseData(true, "조회했습니다.", memberService.getListAll(projectIdx, name));
     }
 }

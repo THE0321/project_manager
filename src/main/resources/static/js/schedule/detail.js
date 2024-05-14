@@ -13,8 +13,7 @@ $("#regist_btn").click(function() {
     $("#schedule_date").val("");
     $("#schedule_time").val("");
     $("#place").val("");
-    $("#member_search").val("");
-    $("#member_list").html("");
+    clearSelectedMember();
 
     onPopup("schedule_pop");
 });

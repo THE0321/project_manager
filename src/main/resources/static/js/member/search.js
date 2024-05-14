@@ -2,6 +2,11 @@
 if($("#member_search_list").length) {
     const member_search_list = $("#member_search_list");
     const member_list = [];
+    let project_idx = null;
+
+    if($("#project_idx").length) {
+        project_idx = $("#project_idx").val();
+    }
 
     function searchMember(keyword) {
         if(!keyword) {
@@ -11,7 +16,7 @@ if($("#member_search_list").length) {
 
         $.ajax({
             url: '/api/member/get_list',
-            data: {name: keyword},
+            data: {project_idx: project_idx, name: keyword},
             method: 'get',
             success: function (data) {
                 const result = data.result
@@ -93,5 +98,14 @@ if($("#member_search_list").length) {
     // INIT
     for(item of $("#member_list .member")) {
         member_list.push($(item).data("member"));
+    }
+
+    // 선택 유저 목록 비우기
+    function clearSelectedMember() {
+        $("#member_search").val("");
+        $("#member_list").empty();
+        searchMember(null);
+        while(member_list.length) member_list.pop();
+        while(delete_member_list.length) delete_member_list.pop();
     }
 }

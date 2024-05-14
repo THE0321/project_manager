@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-bs-theme="auto">
+<head th:insert="common/head.html"></head>
+<body>
+<main>
+    <div class="header-dom" th:insert="common/header.html"></div>
+    <input type="hidden" id="idx" th:value="${detail.idx}" />
+    <div class="body">
+        <p class="title">PROFILE</p>
+        <div class="detail-form">
+            <table>
+                <colgroup>
+                    <col style="width: 10%;">
+                    <col style="width: 90%;">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td colspan="2">
+                        <input type="file" id="upload_file" class="file" accept="image/jpeg, image/png" />
+                        <div class="flex center" onclick="$('#upload_file').click();">
+                            <img th:if="${detail.profileIdx == null}" class="profile_img" src="" />
+                            <img th:unless="${detail.profileIdx == null}" class="profile_img" th:style="|background-image: url('/api/upload/view/image/${session_info.profileIdx}')|" />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="name">이름</label></th>
+                    <td><input type="text" id="name" data-max="100" placeholder="이름" th:value="${detail.name}" /></td>
+                </tr>
+                <tr>
+                    <th>직급</th>
+                    <td th:text="${detail.positionName}"></td>
+                </tr>
+                <tr>
+                    <th>역할</th>
+                    <td th:text="${detail.roleName}"></td>
+                </tr>
+                <tr>
+                    <th>계정</th>
+                    <td th:text="${detail.account}"></td>
+                </tr>
+                <tr>
+                    <th><label for="password">비밀번호</label></th>
+                    <td><input type="password" id="password" data-max="100" placeholder="비밀번호" /></td>
+                </tr>
+                <tr>
+                    <th><label for="password">비밀번호 확인</label></th>
+                    <td><input type="password" id="password_check" data-max="100" placeholder="비밀번호 확인" /></td>
+                </tr>
+                <tr class="h_auto">
+                    <th></th>
+                    <td>
+                        <div id="team_list" class="manager-dom">
+                            <div th:each="team : ${team_list}" class="team" th:data-idx="${team.teamIdx}" th:data-team="${team.teamIdx}">
+                                [[${team.teamName}]]
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <a id="logout_btn" class="btn light">로그아웃</a>
+                        <a id="save_btn" class="btn">등록하기</a>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="popup">
+        <div class="background pop_close"></div>
+        <section id="alert_pop" th:insert="popup/alert_pop.html"></section>
+    </div>
+</main>
+</body>
+<script th:src="@{/js/login/my_info.js}"></script>
+<script th:src="@{/js/file.js}"></script>
+</html>

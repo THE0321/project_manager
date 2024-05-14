@@ -29,4 +29,8 @@ public interface ChattingRoomRepository extends JpaRepository<ChattingRoom, Long
             ") " +
             "ORDER BY A.idx DESC ")
     List<ChattingRoom> findByMemberIdx(Long memberIdx);
+
+    boolean existsByCode(String code);
+
+    ChattingRoom findByCode(String code);
 }

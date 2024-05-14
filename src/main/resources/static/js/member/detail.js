@@ -28,7 +28,7 @@ $("#save_btn").click(function() {
     if(password !== password_check) {
         alertMsg("비밀번호를 확인해주세요.");
         return;
-    }
+    }``
 
     const form_data = new FormData();
     form_data.append("idx", idx);

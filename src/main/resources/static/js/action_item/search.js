@@ -85,4 +85,13 @@ if($("#action_item_search_list").length) {
     for(item of $("#action_item_list .action_item")) {
         action_item_list.push($(item).data("action_item"));
     }
+
+    // 선택 액션 아이템 목록 비우기
+    function clearSelectedActionItem() {
+        $("#action_item_search").val("");
+        $("#action_item_list").empty();
+        searchActionItem(null);
+        while(action_item_list.length) action_item_list.pop();
+        while(delete_action_item_list.length) delete_action_item_list.pop();
+    }
 }

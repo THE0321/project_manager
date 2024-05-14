@@ -33,8 +33,12 @@ public class Chatting {
     @Column
     private Long chattingRoomIdx;
 
-    @Column
+    @Column(name = "file_idx", insertable = false, updatable=false)
     private Long fileIdx;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "file_idx", referencedColumnName = "idx")
+    private File file;
 
     @Column(length = 300)
     private String message;
@@ -55,7 +59,9 @@ public class Chatting {
         return ChattingDto.builder()
                 .idx(idx)
                 .chattingRoomIdx(chattingRoomIdx)
-                .fileIdx(fileIdx)
+                .fileIdx(file == null ? null : file.getIdx())
+                .fileName(file == null ? null : file.getOriginName())
+                .fileExtension(file == null ? null : file.getExtension())
                 .message(message)
                 .registDate(registDate)
                 .register(member == null ? null : member.getIdx())
@@ -65,10 +71,11 @@ public class Chatting {
     }
 
     @Builder
-    public Chatting(Long idx, Long chattingRoomIdx, Long fileIdx, String message, Timestamp registDate, Long register, Member member) {
+    public Chatting(Long idx, Long chattingRoomIdx, Long fileIdx, File file, String message, Timestamp registDate, Long register, Member member) {
         this.idx = idx;
         this.chattingRoomIdx = chattingRoomIdx;
         this.fileIdx = fileIdx;
+        this.file = file;
         this.message = message;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.register = register;

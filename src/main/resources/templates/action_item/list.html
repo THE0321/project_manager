@@ -9,7 +9,7 @@
     <div class="side-dom">
         <div class="side-menu">
             <ul>
-                <li th:each="directory : ${directory_list}" class="active" th:data-idx="${directory.idx}" th:text="${directory.title}"></li>
+                <li th:each="directory : ${directory_list}" th:class="${directory.idx == param_directory_idx ? 'active' : ''}" th:data-idx="${directory.idx}" th:text="${directory.title}"></li>
             </ul>
         </div>
         <div id="regist_directory" class="side-btn">
