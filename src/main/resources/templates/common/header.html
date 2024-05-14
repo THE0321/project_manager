@@ -11,7 +11,9 @@
             <li class="nav-item"><a href="/chat" class="nav-link">CHAT</a></li>
             <li class="nav-item"><a href="/schedule" class="nav-link">SCHEDULE</a></li>
             <li>
-                <div class="profile" style="background-image: url('/icons/x.svg')"></div>
+                <input type="hidden" id="login_idx" th:value="${session_info.idx}" />
+                <div th:if="${session_info.profileIdx == null}" class="profile" style="background-image: url('/icons/x.svg')"></div>
+                <div th:unless="${session_info.profileIdx == null}" class="profile" th:style="|background-image: url('/api/upload/view/image/${session_info.profileIdx}')|"></div>
             </li>
         </ul>
     </div>

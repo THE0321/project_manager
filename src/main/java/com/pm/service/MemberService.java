@@ -49,6 +49,7 @@ public class MemberService {
     // 목록 조회(전체)
     @Transactional
     public List<MemberDto> getListAll(Long projectIdx, String name) {
+        projectIdx = projectIdx == 0 ? null : projectIdx;
         name = name == null ? "" : name;
 
         List<MemberDto> resultList = new ArrayList<>();

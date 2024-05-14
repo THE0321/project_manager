@@ -85,4 +85,13 @@ if($("#test_case_search_list").length) {
     for(item of $("#test_case_list .test_case")) {
         test_case_list.push($(item).data("test_case"));
     }
+
+    // 선택 테스트 케이스 목록 비우기
+    function clearSelectedTestCase() {
+        $("#test_case_search").val("");
+        $("#test_case_list").empty();
+        searchTestCase(null);
+        while(test_case_list.length) test_case_list.pop();
+        while(delete_test_case_list.length) delete_test_case_list.pop();
+    }
 }

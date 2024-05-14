@@ -19,7 +19,7 @@ import java.util.List;
  **/
 @Getter
 public class Paging {
-    private final static int PER_PAGE = 5;         // 페이지 당 조회할 건수
+    private final static int PER_PAGE = 20; // 페이지 당 조회할 건수
     private Long before;                    // 이전 페이지
     private Long next;                      // 다음 페이지
     private Long before_over;               // 첫 페이지

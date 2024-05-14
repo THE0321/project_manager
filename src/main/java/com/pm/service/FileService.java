@@ -65,8 +65,8 @@ public class FileService {
             uploadPathFolder.mkdirs();
         }
 
-        builder.append(uploadPathFolder.getPath());
-        builder.append("/" + UUID.randomUUID().toString().replaceAll("-", ""));
+        builder.append("/");
+        builder.append(UUID.randomUUID().toString().replaceAll("-", ""));
         savePath = builder.toString();
 
         Path path = Paths.get(uploadPath + savePath);

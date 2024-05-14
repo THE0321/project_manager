@@ -2,6 +2,7 @@ package com.pm.controller;
 
 import com.pm.dto.ChattingDto;
 import com.pm.dto.ChattingMemberDto;
+import com.pm.dto.ChattingRoomDto;
 import com.pm.service.ChatService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -9,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -32,18 +35,25 @@ public class ChatController extends com.pm.util.Controller {
         this.chatService = chatService;
     }
 
-    // 채팅 상세
-    @GetMapping(value = {"/", "", "/{idx}"})
-    public String detail(@PathVariable(required = false) Long idx,
+    // 채팅
+    @GetMapping(value = {"/", "", "/{code}"})
+    public String detail(@PathVariable(required = false) String code,
                          HttpServletRequest request, Model model) {
         model = super.setModel(request, model);
 
-        model.addAttribute("room_list", chatService.getList(super.getLoginData(request).getIdx()));
+        List<ChattingRoomDto> roomList = chatService.getList(super.getLoginData(request).getIdx());
+        model.addAttribute("room_list", roomList);
 
-        if(idx == null) {
+        if(code == null || code.isEmpty()) {
+            if(!roomList.isEmpty())  {
+                return "redirect:/chat/" + roomList.get(0).getCode();
+            }
+
             model.addAttribute("detail", new ChattingDto());
             model.addAttribute("member_list", new ArrayList<ChattingMemberDto>());
         } else {
+            Long idx = chatService.getRoomIdx(code);
+
             model.addAttribute("detail", chatService.getOne(idx));
             model.addAttribute("member_list", chatService.getChattingMemberList(idx));
         }
