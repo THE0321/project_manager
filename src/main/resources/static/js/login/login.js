@@ -1,9 +1,16 @@
-//  비밀번호 찾기
-$("#find_password_btn").click(function() {
-    location.replace("/find_password");
+// 로그인
+$("#account").keydown(function(e) {
+    if (e.keyCode === 13) {
+        $("#password").focus();
+    }
 });
 
-// 로그인
+$("#password").keydown(function(e) {
+    if (e.keyCode === 13) {
+        $("#login_btn").click();
+    }
+});
+
 $("#login_btn").click(function() {
     const account = $("#account").val();
     const password = $("#password").val();
