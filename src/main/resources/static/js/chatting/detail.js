@@ -83,6 +83,7 @@ $("#mssage").keydown(function (e) {
         $("#save_chatting").click();
     }
 });
+
 $("#save_chatting").click(function() {
     const message = $("#message").val();
 

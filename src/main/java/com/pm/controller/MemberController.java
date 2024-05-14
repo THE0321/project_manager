@@ -66,7 +66,7 @@ public class MemberController extends com.pm.util.Controller {
     // 유저 상세
     @GetMapping(value = {"/detail", "/detail/{idx}"})
     public String detail(@PathVariable(required = false) Long idx,
-                       HttpServletRequest request, Model model) {
+                         HttpServletRequest request, Model model) {
         model = super.setModel(request, model);
 
         model.addAttribute("position_list", positionService.getList(null));
