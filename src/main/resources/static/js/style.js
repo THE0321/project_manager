@@ -110,7 +110,7 @@ $("#project_select").change(function() {
         success: function (data) {
             const code = data.code ?? null;
             if (code === 200) {
-                location.replace("");
+                location.replace("/");
             }
         }
     });

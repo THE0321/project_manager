@@ -48,10 +48,12 @@ public class IssueRestController extends Controller {
         }
 
         Long loginIdx = super.getLoginData(request).getIdx();
+        Long projectIdx = super.getProjectData(request);
 
         IssueDto issueDto;
         if(idx == null) {
             issueDto = IssueDto.builder()
+                    .projectIdx(projectIdx)
                     .title(title)
                     .description(description)
                     .statusIdx(statusIdx)

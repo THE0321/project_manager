@@ -4,6 +4,7 @@ import com.pm.entity.Risk;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -34,4 +35,12 @@ public interface RiskRepository extends JpaRepository<Risk, Long> {
             "AND (:statusIdx IS NULL OR A.statusIdx = :statusIdx) " +
             "ORDER BY A.idx DESC ")
     List<Risk> findByTitleContainingAndStatusIdxOrderByIdxDesc(Long projectIdx, String title, Long statusIdx);
+
+    @Query("SELECT A " +
+            "FROM Risk A " +
+            "LEFT JOIN A.issueStatus " +
+            "WHERE A.projectIdx = :projectIdx " +
+            "AND A.registDate >= :startDate " +
+            "ORDER BY A.idx DESC")
+    List<Risk> findByProjectIdxRecently(Long projectIdx, Timestamp startDate);
 }

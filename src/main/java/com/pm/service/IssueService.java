@@ -7,11 +7,13 @@ import com.pm.entity.Issue;
 import com.pm.repository.IssueMappingRepository;
 import com.pm.repository.IssueRepository;
 import com.pm.repository.IssueStatusRepository;
+import com.pm.util.DateFormat;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -52,6 +54,22 @@ public class IssueService {
 
         List<IssueDto> resultList = new ArrayList<>();
         issueRepository.findByTitleContainingAndStatusIdxOrderByIdxDesc(projectIdx, title, statusIdx).forEach(issue -> {
+            resultList.add(issue.toDto());
+        });
+
+        return resultList;
+    }
+
+    // 목록 조회 (최근)
+    @Transactional
+    public List<IssueDto> getListRecently(Long projectIdx) {
+        DateFormat dateFormat = new DateFormat();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -7);
+
+        List<IssueDto> resultList = new ArrayList<>();
+        issueRepository.findByProjectIdxRecently(projectIdx, dateFormat.parseTimestamp(calendar)).forEach(issue -> {
             resultList.add(issue.toDto());
         });
 
