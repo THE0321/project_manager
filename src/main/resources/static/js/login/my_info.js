@@ -55,7 +55,7 @@ function save(form_data, retry = false) {
 }
 
 // 로그아웃
-$("#login_btn").click(function() {
+$("#logout_btn").click(function() {
     logout();
 });
 

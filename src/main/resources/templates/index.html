@@ -4,7 +4,91 @@
 <body>
 <main>
     <div class="header-dom" th:insert="common/header.html"></div>
-    <div class="body"></div>
+    <div class="body">
+        <div class="flex h_60">
+            <!-- BEGIN::CHART -->
+            <div class="w_70 card">
+                <div class="flex space-between">
+                    <ul class="tabs w_80">
+                        <li class="tab">
+                            <input type="radio" id="tab1" name="tab-group" value="action" checked>
+                            <label for="tab1">ACTION ITEM</label>
+                        </li>
+                        <li class="tab">
+                            <input type="radio" id="tab2" name="tab-group" value="testcase">
+                            <label for="tab2">TEST CASE</label>
+                        </li>
+                    </ul>
+                    <div class="w_20">
+                        <select id="action_status_list">
+                            <option th:each="status : ${action_item_status_list}" th:value="${status.idx}" th:text="${status.name}" selected></option>
+                        </select>
+                    </div>
+                </div>
+                <div id="chart_dom" style="height: calc(100% - 45px);">
+
+                </div>
+            </div>
+            <!-- END::CHART -->
+
+            <!-- BEGIN::SCHEDULE LIST -->
+            <div class="w_30 card">
+                <div class="flex">
+                    <ul class="tabs">
+                        <li class="tab">
+                            <input type="radio" id="today" name="schedule-group" value="0" checked>
+                            <label for="today">TODAY</label>
+                        </li>
+                        <li class="tab">
+                            <input type="radio" id="tomorrow" value="1" name="schedule-group">
+                            <label for="tomorrow">TOMORROW</label>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul id="schedule_list" class="scroll bold_t" style="height: calc(100% - 45px);">
+                        <li class="p_20 card" data-idx="">
+                            <div class="flex">
+                                <p class="w_80 ellipsis">일정명</p>
+                                <p class="w_20 right_t">24:00</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- END::SCHEDULE LIST -->
+        </div>
+
+        <div class="flex h_40">
+            <!-- BEGIN::ISSUE LIST -->
+            <div class="w_50 card">
+                <div class="title">ISSUE</div>
+                <ul class="scroll bold_t" style="height: calc(100% - 35px);">
+                    <li th:each="issue : ${issue_list}" class="p_20 card" th:data-idx="${issue.idx}">
+                        <div class="flex">
+                            <p class="w_80 ellipsis" th:text="${issue.title}"></p>
+                            <p class="w_20 center_t" th:text="${issue.statusName}"></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- END::ISSUE LIST -->
+
+            <!-- BEGIN::RISK LIST -->
+            <div class="w_50 card">
+                <div class="title">RISK</div>
+                <ul class="scroll bold_t" style="height: calc(100% - 35px);">
+                    <li th:each="risk : ${risk_list}" class="p_20 card" th:data-idx="${risk.idx}">
+                        <div class="flex">
+                            <p class="w_80 ellipsis" th:text="${risk.title}"></p>
+                            <p class="w_20 center_t" th:text="${risk.statusName}"></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- END::RISK LIST -->
+        </div>
+    </div>
     <div class="popup">
         <div class="background pop_close"></div>
         <section id="alert_pop" th:insert="popup/alert_pop.html"></section>

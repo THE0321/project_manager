@@ -3,14 +3,15 @@ package com.pm.service;
 import com.pm.dto.RiskDto;
 import com.pm.dto.RiskMappingDto;
 import com.pm.entity.Risk;
-import com.pm.entity.RiskMapping;
 import com.pm.repository.RiskMappingRepository;
 import com.pm.repository.RiskRepository;
+import com.pm.util.DateFormat;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -49,6 +50,22 @@ public class RiskService {
 
         List<RiskDto> resultList = new ArrayList<>();
         riskRepository.findByTitleContainingAndStatusIdxOrderByIdxDesc(projectIdx, title, statusIdx).forEach(risk -> {
+            resultList.add(risk.toDto());
+        });
+
+        return resultList;
+    }
+
+    // 목록 조회 (최근)
+    @Transactional
+    public List<RiskDto> getListRecently(Long projectIdx) {
+        DateFormat dateFormat = new DateFormat();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -7);
+
+        List<RiskDto> resultList = new ArrayList<>();
+        riskRepository.findByProjectIdxRecently(projectIdx, dateFormat.parseTimestamp(calendar)).forEach(risk -> {
             resultList.add(risk.toDto());
         });
 

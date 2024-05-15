@@ -48,10 +48,12 @@ public class RiskRestController extends Controller {
         }
 
         Long loginIdx = super.getLoginData(request).getIdx();
+        Long projectIdx = super.getProjectData(request);
 
         RiskDto riskDto;
         if(idx == null) {
             riskDto = RiskDto.builder()
+                    .projectIdx(projectIdx)
                     .title(title)
                     .description(description)
                     .statusIdx(statusIdx)

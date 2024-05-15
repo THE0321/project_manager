@@ -4,6 +4,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -35,6 +36,18 @@ public class DateFormat {
 
         try {
             Date date = formatter.parse(value);
+            return new Timestamp(date.getTime());
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    public Timestamp parseTimestamp(Calendar value) {
+        formatter.setLenient(false);
+        String str = formatter.format(value.getTime());
+
+        try {
+            Date date = formatter.parse(str);
             return new Timestamp(date.getTime());
         } catch (ParseException e) {
             return null;
